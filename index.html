@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>SPA Template</title>
+  <meta name="color-scheme" content="dark light">
+  <link rel="stylesheet" href="https://unpkg.com/boltcss/bolt.min.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.5/+esm"
+      }
+    }
+  </script>
+  <style>
+    /* Demo page support */
+    .demo-body {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .demo-header {
+      margin-top: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .demo-topnav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .demo-footer {
+      padding-top: 5rem;
+    }
+
+    .demo-break {
+      margin-top: 6rem;
+    }
+
+    .demo-code {
+      display: block;
+      margin-top: 1em;
+      white-space: nowrap;
+    }
+
+    .form-example {
+      margin-bottom: 0.66em;
+    }
+
+    .misc-components {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    #fuel {
+      max-width: 600px;
+      min-width: 200px;
+    }
+
+    audio {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="demo-body">
+  <div class="demo-topnav">
+    <h1>⚡️Bolt.css</h1>
+    <div>
+      <nav>
+        <a href="/customers">Kunder</a>
+        <a href="form-elements">Form Elements</a>
+        <a href="interactive-elements">Interactive Elements</a>
+      </nav>
+    </div>
+  </div>
+  <map-view></map-view>
+  <customer-list></customer-list>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
