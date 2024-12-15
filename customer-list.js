@@ -78,12 +78,19 @@ table.onsubmit = async (evt) => {
     jobs
   }
 
-  const response = await fetch(`/api/cors?url=${encodeURIComponent('http://solver.vroom-project.org/')}`, {
+
+
+  const q = new URLSearchParams({
+    cors: JSON.stringify({
+      url: 'http://solver.vroom-project.org/',
+    })
+  })
+
+  const response = await fetch('https://adv-cors.deno.dev/?' + q, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(sample)
   })
-
   const text = await response.text()
   const { routes } = JSON.parse(text, (key, value) => {
     return key === 'location' ? { lat: value[1], lng: value[0] } : value
