@@ -1,14 +1,16 @@
 import { on } from './event.js'
 import { currentPosition, myLatLng } from './geo.js'
+import { supabase } from './db.js'
+import './info-window-content.js'
 
 import('https://maps.googleapis.com/maps/api/js?loading=async&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=beta')
-import('./db.js')
 
 const wrapperDiv = document.createElement('div')
 wrapperDiv.style.height = '400px'
 
 on(wrapperDiv, 'click', 'gmp-advanced-marker', event => {
   const [ marker ] = event.composedPath()
+  console.log(marker)
   window.m = marker
   // Create a new info window
   // new google.maps.InfoWindow({
@@ -110,13 +112,58 @@ class MapView extends HTMLElement {
       mapTypeId: google.maps.MapTypeId.SATELLITE,
       mapId: '6ff586e93e18149f',
       collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+      // mapTypeControlOptions: {
+      //   mapTypeIds: ['roadmap', 'satellite', 'terrain', 'custom']
+      // }
+    })
+
+
+    import('./karta/rita.js')
+
+    // import { ArcLayer} from "deck.gl";
+    // import { GoogleMapsOverlay } from "@deck.gl/google-maps";
+
+    const ArcLayer = deck.ArcLayer;
+    const GoogleMapsOverlay = deck.GoogleMapsOverlay;
+
+    function updateArcs (arcs) {
+      const arcLayer = new ArcLayer({
+        id: 'dynamic-arcs',
+        data: arcs,
+        getSourcePosition: d => d.source,
+        getTargetPosition: d => d.target,
+        getSourceColor: [0, 128, 255],
+        getTargetColor: [255, 0, 128],
+        getWidth: 2
+      })
+
+      const overlay = new GoogleMapsOverlay({
+        layers: [arcLayer],
+      });
+
+      // Koppla overlay till Google Maps-kartan
+      overlay.setMap(map)
+    }
+
+
+    // overlay.setMap(map);
+    map.addListener('zoom_changed', () => {
+      const zoom = map.getZoom()
+
+      if (zoom) {
+        allMarkers.forEach(marker => {
+          if (!(marker.data?.type === 'pin' || marker.data?.type === 'customer')) {
+            marker.setMap(zoom > 15 ? map : null)
+          }
+        })
+      }
     })
 
     const directionsRenderer = new google.maps.DirectionsRenderer({
       draggable: true,
       map
-    });
-    const directionsService = new google.maps.DirectionsService();
+    })
+    const directionsService = new google.maps.DirectionsService()
 
     globalThis.map = map
     globalThis.directionsService = directionsService
@@ -140,19 +187,9 @@ class MapView extends HTMLElement {
     `
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton)
 
-    // Lägg till eventlistener på knappen
-
-    const pin = new google.maps.marker.PinElement({
-      scale: .5,
-      glyphColor: "",
-      glyph: "", // hide the glyph
-    });
     const you = document.createElement('span')
     you.textContent = '🚗'
     you.style.fontSize = '1.4rem'
-
-    console.log(111, myLatLng()) // varför loggas inte detta?
-
 
     map.userMarker = new google.maps.marker.AdvancedMarkerElement({
       position: myLatLng(),
@@ -171,9 +208,11 @@ class MapView extends HTMLElement {
     placeAutocomplete.Yg.querySelector('input').style.color = 'black'
 
     placeAutocomplete.addEventListener("gmp-placeselect", async ({ place }) => {
-      await place.fetchFields({ fields: ["*"] });
+      await place.fetchFields({ fields: ["*"] })
 
       const bounds = new google.maps.LatLngBounds()
+
+      console.log(window.place = place)
 
       place.viewport
         ? bounds.union(place.viewport)
@@ -189,14 +228,87 @@ class MapView extends HTMLElement {
         gmpDraggable: true,
         gmpClickable: true,
       })
-      advanceMarker.data = place
-      globalThis.m = advanceMarker
-      advanceMarker.addEventListener("dragstart", e => {
-        console.log('dragstart', e)
-      })
+
+      advanceMarker.data = {
+        name: place.formattedAddress,
+        viewport: place.viewport.toJSON(),
+        location: place.location.toJSON(),
+        formattedAddress: place.formattedAddress,
+        addressComponents: JSON.parse(JSON.stringify(place.addressComponents))
+      }
     })
+
     // Add the control to the map
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(placeAutocomplete)
+
+    const infoHeader = document.createElement('h3')
+    infoHeader.contentEditable = true
+    infoHeader.addEventListener("input", function() {
+      infoContent.poi.name = this.innerText.trim()
+    })
+
+    const infoContent = document.createElement('info-window-content')
+    infoHeader.style.color = 'black'
+    infoHeader.style.margin = '0'
+
+    const infoWindow = new google.maps.InfoWindow({
+      headerContent: infoHeader,
+      content: infoContent,
+    })
+
+    globalThis.infoWindow = infoWindow
+
+    wrapperDiv.addEventListener('gmp-click', evt => {
+      const marker = evt.target
+      const poi = marker.data
+      window.poi = poi
+      window.marker = marker
+      infoHeader.innerText = poi?.name
+      infoWindow.setPosition(marker.position)
+      infoContent.poi = poi
+      infoContent.marker = marker
+      infoWindow.open(map)
+
+
+      // Hämta marker som klickades på
+      const customer = poi.customer
+
+      if (!customer) {
+        console.warn('Den klickade markören tillhör ingen kund.')
+        return
+      }
+
+      // Hitta alla markörer som tillhör samma kund
+      const relatedMarkers = allMarkers.filter(marker => {
+        if (marker.data.type === 'polygon') return false
+        return marker.data?.customer === customer
+      })
+
+      // Hitta huvudplatsen för kunden
+      const mainLocation = relatedMarkers.find(marker => marker.data.type === 'customer')
+
+      if (!mainLocation) {
+        console.warn(`Ingen huvudplats hittades för kunden: ${customer}`)
+        return
+      }
+
+      console.log('Relaterade markörer:', relatedMarkers)
+      console.log('Huvudplatsen:', mainLocation)
+
+      function toLatLong (latLng) {
+        return [latLng.lng, latLng.lat]
+      }
+
+      // Skapa arcs mellan huvudplatsen och de relaterade markörerna (exkludera huvudplatsen själv)
+      const arcs = relatedMarkers
+        .filter(marker => marker.data.id !== mainLocation.id)
+        .map(marker => ({
+          source: toLatLong(mainLocation.position),
+          target: toLatLong(marker.position)
+        }))
+
+      updateArcs(arcs)
+    })
 
     // fetch('/solution.json').then(async res => {
     //   const json = await res.json()
@@ -208,6 +320,86 @@ class MapView extends HTMLElement {
     //   });
     //   directions.setMap(map)
     // })
+
+    globalThis.allMarkers = []
+
+    supabase.from('poi').select('*')
+      .then(result => {
+        result.data?.forEach(poi => {
+          if (poi.type === 'polygon') {
+            if (poi.meta.paths === undefined) {
+              console.log(poi.meta, poi.id)
+            }
+
+            const polygon = new google.maps.Polygon({
+              paths: poi.meta.paths,
+              strokeColor: poi.meta.color,
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: poi.meta.color,
+              fillOpacity: 0.32,
+              editable: !true,
+              data: poi,
+              // dragable: true,
+            })
+            allMarkers.push(polygon)
+
+            polygon.addListener('rightclick', function (mev) {
+              if (mev.vertex != null && this.getPath().getLength() > 3) {
+                  this.getPath().removeAt(mev.vertex);
+              }
+              supabase
+                .from('poi')
+                .upsert({ id: this.poi.id, meta: {
+                  ...poi.meta,
+                  paths: this.getPath().getArray().map(latLng => latLng.toJSON())
+                 } })
+                .then(console.log, console.error)
+            })
+
+            polygon.setMap(map)
+          } else {
+            // console.log(poi.meta.icon)
+
+            const img = new Image()
+            img.src = `/karta/${poi.type}.png`
+            img.style.width = '30px'
+
+            const span = document.createElement('span')
+            span.textContent = '👤'
+            span.style.fontSize = '0.7rem'
+            const pin = new google.maps.marker.PinElement({
+              glyph: span,
+              // borderColor: 'transparent',
+              background: '#caff60',
+              scale: 1
+            })
+
+            const marker = new google.maps.marker.AdvancedMarkerElement({
+              position: poi.meta.position,
+              map,
+              title: poi.name,
+              content: poi.type === 'customer' ? pin.element : img,
+              gmpClickable: true,
+              gmpDraggable: true,
+            })
+
+            marker.addListener('dragend', function () {
+              poi.meta.position = this.position.toJSON()
+              console.log(poi)
+              supabase
+                .from('poi')
+                .upsert(poi)
+                .then(console.log, console.error)
+            })
+
+            marker.data = poi
+
+            allMarkers.push(marker)
+          }
+        })
+      })
+
   }
 }
 
@@ -223,37 +415,6 @@ customElements.define('map-view', MapView)
   // const trafficLayer = new google.maps.TrafficLayer();
   // trafficLayer.setMap(map);
 
-
-
-
-  const drawingManager = new google.maps.drawing.DrawingManager({
-    drawingControl: !true,
-    // markerOptions: {
-    //   // icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    // },
-    polygonOptions: {
-      fillColor: "#FF5252",
-      fillOpacity: 0.3,
-      strokeColor: "#FF0000",
-      strokeWeight: 3,
-      clickable: !true,
-      editable: !true,
-      zIndex: 1,
-    },
-    circleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: 1,
-      strokeWeight: 5,
-      clickable: !false,
-      editable: !true,
-      zIndex: 1,
-    }
-  })
-
-  drawingManager.setMap(map)
-
-  globalThis.map = map
-  globalThis.drawingManager = drawingManager
 
   // administrative.land_parcel
   // poi
@@ -352,3 +513,17 @@ customElements.define('map-view', MapView)
 
 }
 */
+
+
+// UPDATE poi
+// SET
+//   type = 'christmas-tree',
+//   meta = meta - 'icon'
+// WHERE
+//   meta->>'icon' = 'images/icon-14.png';
+
+
+
+// SELECT *
+// FROM poi
+// WHERE meta->>'icon' = 'images%';

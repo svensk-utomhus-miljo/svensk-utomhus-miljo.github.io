@@ -78,8 +78,6 @@ table.onsubmit = async (evt) => {
     jobs
   }
 
-
-
   const q = new URLSearchParams({
     cors: JSON.stringify({
       url: 'http://solver.vroom-project.org/',
@@ -91,6 +89,7 @@ table.onsubmit = async (evt) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(sample)
   })
+
   const text = await response.text()
   const { routes } = JSON.parse(text, (key, value) => {
     return key === 'location' ? { lat: value[1], lng: value[0] } : value

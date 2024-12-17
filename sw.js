@@ -25,10 +25,11 @@ router
   //   ].includes(ctx.request.destination),
   //   ctx => cacheFirst(ctx.request)
   // )
-  .all('*', e => {
-    return e.request.method === 'GET'
-      ? fetch(e.request)
-      : fetch(e.request)
+  .all('*', ctx => {
+    if (ctx.request.destination === 'document') {
+      return fetch('/index.html')
+    }
+    return fetch(ctx.request)
   })
 
 /**

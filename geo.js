@@ -1,9 +1,27 @@
+globalThis.xFetch = function xFetch (url, opts, settings) {
+  const q = new URLSearchParams({
+    cors: JSON.stringify({
+      ...settings,
+      url,
+    })
+  })
+
+  return fetch('https://adv-cors.deno.dev/?' + q, opts).then(r => r.json())
+}
+
+// const info = await xFetch('https://httpbin.org/get')
+// const myIp = info.origin.split(',', 1)[0]
+// const myLocation = await xFetch(`https://ipapi.co/${myIp}/json/`)
+
+const info = await xFetch('https://ipapi.co/json')
+
+
 let currentPosition = {
   timestamp: Date.now(),
   coords: {
     accuracy: 13.157,
-    latitude: 0,
-    longitude: 0,
+    latitude: info.latitude,
+    longitude: info.longitude,
     altitude: null,
     altitudeAccuracy: null,
     heading: null,
