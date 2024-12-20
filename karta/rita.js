@@ -6,16 +6,16 @@ const drawingManager = new globalThis.google.maps.drawing.DrawingManager({
     fillOpacity: 0.3,
     strokeColor: "#FF0000",
     strokeWeight: 3,
-    clickable: !true,
-    editable: !true,
+    clickable: true,
+    editable: false,
     zIndex: 1,
   },
   circleOptions: {
     fillColor: "#ffff00",
     fillOpacity: 1,
     strokeWeight: 5,
-    clickable: !false,
-    editable: !true,
+    clickable: true,
+    editable: false,
     zIndex: 1,
   },
   map: globalThis.map,
@@ -52,5 +52,6 @@ google.maps.event.addListener(drawingManager, 'overlaycomplete', overlay => {
     cancelable: true,
     composed: true,
   })
+
   globalThis.map.getDiv().dispatchEvent(evt)
 })

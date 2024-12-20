@@ -5,7 +5,7 @@ import cssModule from 'https://unpkg.com/boltcss@0.8.0/bolt.min.css' with { type
 const { data: customers } = await supabase
   .from('customers')
   .select('*')
-  .order('city')
+  .order('id')
 
 // globalThis.customers = customers
 

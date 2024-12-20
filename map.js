@@ -8,9 +8,27 @@ import('https://maps.googleapis.com/maps/api/js?loading=async&key=AIzaSyB41DRUbK
 const wrapperDiv = document.createElement('div')
 wrapperDiv.style.height = '400px'
 
+// Lägg till event listeners för alla ändringar
+function listenToPolygonChanges(polygon) {
+  const path = polygon.getPath()
+
+  const onChange = () => {
+    polygon.data.meta.paths = path.getArray().map(latLng => latLng.toJSON())
+
+    supabase
+      .from('poi')
+      .upsert(polygon.data)
+      .then(console.log, console.error)
+  }
+
+  path.addListener('set_at', onChange)
+  path.addListener('insert_at', onChange)
+  path.addListener('remove_at', onChange)
+}
+
 on(wrapperDiv, 'click', 'gmp-advanced-marker', event => {
   const [ marker ] = event.composedPath()
-  console.log(marker)
+
   window.m = marker
   // Create a new info window
   // new google.maps.InfoWindow({
@@ -117,7 +135,6 @@ class MapView extends HTMLElement {
       // }
     })
 
-
     import('./karta/rita.js')
 
     // import { ArcLayer} from "deck.gl";
@@ -197,6 +214,11 @@ class MapView extends HTMLElement {
       map,
     })
 
+    google.maps.event.addListener(map, 'click', (evt) => {
+      globalThis.infoWindow.close()
+      console.log(evt.domEvent, evt.domEvent.currentTarget, evt.domEvent.fromElement, evt.domEvent.srcElement)
+    })
+
     // Adds a search box to the map
     // Create the input HTML element, and append it.
     const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement()
@@ -225,7 +247,6 @@ class MapView extends HTMLElement {
         position: place.location,
         map,
         title: place.name,
-        gmpDraggable: true,
         gmpClickable: true,
       })
 
@@ -258,7 +279,12 @@ class MapView extends HTMLElement {
 
     globalThis.infoWindow = infoWindow
 
+    on(wrapperDiv, 'gmp-click', 'gmp-advanced-marker', evt => {
+      globalThis.marker = evt.target
+    })
+
     wrapperDiv.addEventListener('gmp-click', evt => {
+      console.log(1)
       const marker = evt.target
       const poi = marker.data
       window.poi = poi
@@ -323,14 +349,41 @@ class MapView extends HTMLElement {
 
     globalThis.allMarkers = []
 
+
+    // Skapa en custom Tile Overlay
+    const customTileLayer = new google.maps.ImageMapType({
+      getTileUrl (coord, zoom) {
+        return `https://api.hitta.se/image/v2/realestate/g/${zoom}/${coord.x}/${coord.y}?v=18032023`
+      },
+      tileSize: new google.maps.Size(256, 256),
+      maxZoom: 19,
+      name: 'Hitta.se Estate'
+    })
+
+    // Lägg till tile-lagret på kartan
+    map.overlayMapTypes.insertAt(0, customTileLayer)
+
+    // support for adding hole into an existing polygon
+    wrapperDiv.addEventListener('overlaycomplete', event => {
+      const overlay = event.detail
+      const newHole = overlay.getPath().getArray()
+      // remove the new hole from the map
+      if (window.e === 1) {
+        overlay.setMap(null)
+        addHoleToPolygon(newHole)
+      }
+    })
+
+    function addHoleToPolygon(hole) {
+      const paths = polygon.getPaths()
+      console.log(paths)
+      paths.push(new google.maps.MVCArray(hole)) // Lägg till hålet som en ny del i paths
+    }
+
     supabase.from('poi').select('*')
       .then(result => {
         result.data?.forEach(poi => {
           if (poi.type === 'polygon') {
-            if (poi.meta.paths === undefined) {
-              console.log(poi.meta, poi.id)
-            }
-
             const polygon = new google.maps.Polygon({
               paths: poi.meta.paths,
               strokeColor: poi.meta.color,
@@ -338,23 +391,28 @@ class MapView extends HTMLElement {
               strokeWeight: 2,
               fillColor: poi.meta.color,
               fillOpacity: 0.32,
-              editable: !true,
+              editable: false,
+              clickable: true,
               data: poi,
-              // dragable: true,
             })
+
+            listenToPolygonChanges(polygon)
+
             allMarkers.push(polygon)
 
-            polygon.addListener('rightclick', function (mev) {
+            polygon.addListener('contextmenu', function (mev) {
+              globalThis.polygon = this
               if (mev.vertex != null && this.getPath().getLength() > 3) {
-                  this.getPath().removeAt(mev.vertex);
+                this.getPath().removeAt(mev.vertex);
               }
-              supabase
-                .from('poi')
-                .upsert({ id: this.poi.id, meta: {
-                  ...poi.meta,
-                  paths: this.getPath().getArray().map(latLng => latLng.toJSON())
-                 } })
-                .then(console.log, console.error)
+            })
+
+            polygon.addListener('click', function (evt) {
+              infoHeader.innerText = poi.name
+              infoWindow.setPosition(evt.latLng)
+              infoWindow.open(map)
+              infoContent.poi = poi
+              infoContent.marker = polygon
             })
 
             polygon.setMap(map)
@@ -386,7 +444,7 @@ class MapView extends HTMLElement {
 
             marker.addListener('dragend', function () {
               poi.meta.position = this.position.toJSON()
-              console.log(poi)
+
               supabase
                 .from('poi')
                 .upsert(poi)
@@ -527,3 +585,11 @@ customElements.define('map-view', MapView)
 // SELECT *
 // FROM poi
 // WHERE meta->>'icon' = 'images%';
+
+
+// context = new AudioContext()
+// source = context.createBufferSource()
+// source.connect(context.destination)
+// source.start(0)
+
+/* <audio loop controls src="https://github.com/anars/blank-audio/raw/refs/heads/master/1-hour-of-silence.mp3"></audio> */

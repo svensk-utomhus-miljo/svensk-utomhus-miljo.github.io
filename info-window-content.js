@@ -36,6 +36,7 @@ class InfoWindowContent extends HTMLElement {
       <select name="type">
         <option value="type" disabled>Typ</option>
         <option value="customer">Kund</option>
+        <option value="polygon">Polygon</option>
         <option value="trash_bin">Soptunna</option>
         <option value="sandbox">Sandlåda</option>
         <option value="gate">Bom/Grind</option>
@@ -43,10 +44,13 @@ class InfoWindowContent extends HTMLElement {
         <option value="destination">Destination</option>
         <option value="christmas-tree">Julgran</option>
         <option value="pin">Okänt</option>
+        <option value="info">Info</option>
         <option value="recycle">Återvinning</option>
       </select>
       <br>
-      <a href="#" onclick=${save.bind(this)}>Spara</a>
+      <a href="#" onclick=${save.bind(this)}>Spara</a><br>
+      <a href="#" onclick=${this.move.bind(this)}>flytta</a><br>
+      <a href="#" onclick=${this.showOnGoogleMaps.bind(this)}>Visa på google maps</a>
     `)
 
     this.#customerDiv = nn(wrapperDiv.querySelector('#customer'))
@@ -64,8 +68,76 @@ class InfoWindowContent extends HTMLElement {
         .then(console.log, console.error)
     }
 
+    const addNew = this.select.cloneNode(true)
+    this.select.after(addNew)
+
+    addNew.addEventListener('change', (evt) => {
+      infoWindow.close()
+      const type = addNew.value
+      addNew.selectedIndex = 0
+      globalThis.infoWindow.close()
+      if (type === 'polygon') {
+        drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON)
+        globalThis.map.getDiv().addEventListener('overlaycomplete', async (evt) => {
+          const overlay = evt.detail
+          const paths = overlay.getPath().getArray().map(e => e.toJSON())
+
+          const poi = {
+            type,
+            images: [],
+            name: 'area',
+            meta: { paths, color: "#ff5252" },
+            customer: this.#poi.customer
+          }
+
+          const { data } = await supabase
+            .from('poi')
+            .insert(poi)
+            .single()
+
+        }, { once: true })
+      } else {
+        drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER)
+        globalThis.map.getDiv().addEventListener('overlaycomplete', async (evt) => {
+          const overlay = evt.detail
+          var {altitude, ...position} = overlay.position.toJSON()
+          const poi = {
+            type,
+            images: [],
+            name: 'marker',
+            meta: { position },
+            customer: this.#poi.customer
+          }
+
+          const { data } = await supabase
+            .from('poi')
+            .insert(poi)
+            .single()
+
+        }, { once: true })
+      }
+    })
+
     // shadow.adoptedStyleSheets = [cssModule];
     shadow.append(wrapperDiv)
+  }
+
+  showOnGoogleMaps() {
+    const url = `https://www.google.com/maps/search/?api=1&query=${this.poi.meta.position.lat},${this.poi.meta.position.lng}`
+    window.open(url, '_blank')
+  }
+
+  move () {
+    globalThis.infoWindow.close()
+    globalThis.map.addEventListener('click', async (evt) => {
+      this.marker.setPosition(evt.latLng)
+    //   this.poi.coords = { lat: evt.latLng.lat(), lng: evt.latLng.lng() }
+
+    //   supabase
+    //     .from('poi')
+    //     .upsert(this.poi)
+    //     .then(console.log, console.error)
+    }, { once: true })
   }
 
   set poi (poi) {
