@@ -353,12 +353,15 @@ class MapView extends HTMLElement {
     // Skapa en custom Tile Overlay
     const customTileLayer = new google.maps.ImageMapType({
       getTileUrl (coord, zoom) {
+        if (zoom < 17 || zoom > 20 || map.mapTypeId !== 'satellite') return ''
         return `https://api.hitta.se/image/v2/realestate/g/${zoom}/${coord.x}/${coord.y}?v=18032023`
       },
       tileSize: new google.maps.Size(256, 256),
-      maxZoom: 19,
+      opacity: 1,
       name: 'Hitta.se Estate'
     })
+
+    globalThis.customTileLayer = customTileLayer
 
     // Lägg till tile-lagret på kartan
     map.overlayMapTypes.insertAt(0, customTileLayer)
