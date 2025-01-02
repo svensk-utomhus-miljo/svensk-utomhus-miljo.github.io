@@ -15,7 +15,6 @@ globalThis.xFetch = function xFetch (url, opts, settings) {
 
 const info = await xFetch('https://ipapi.co/json')
 
-
 let currentPosition = {
   timestamp: Date.now(),
   coords: {
@@ -52,10 +51,38 @@ async function getCoords (resolve, reject) {
 
 // currentPosition = await new Promise(getCoords)
 
+
+// Lägg till en "Find My Location"-knapp
+const locationButton = document.createElement('button')
+locationButton.textContent = 'Find My Location'
+locationButton.style.cssText = `
+  background: white;
+  border: 2px solid #4285F4;
+  border-radius: 5px;
+  padding: 8px 12px;
+  color: #4285F4;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+`
+// map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton)
+
+const you = document.createElement('span')
+you.textContent = '🚗'
+you.style.fontSize = '1.4rem'
+
+const userMarker = new google.maps.marker.AdvancedMarkerElement({
+  position: myLatLng(),
+  content: you,
+  map,
+})
+
 function onUpdate (evt) {
   // update currentPosition
   currentPosition = evt
-  globalThis.map.userMarker.position = myLatLng()
+  userMarker.position = myLatLng()
 }
 
 window.addEventListener('click', () => {

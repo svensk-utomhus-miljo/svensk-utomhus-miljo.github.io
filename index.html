@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="dark light">
+  <!-- <meta name="color-scheme" content="dark light"> -->
   <title>SPA Template</title>
-  <meta name="color-scheme" content="dark light">
-  <link rel="stylesheet" href="https://unpkg.com/boltcss/bolt.min.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/boltcss/bolt.min.css"> -->
 
   <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
   <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
@@ -18,71 +17,89 @@
       }
     }
   </script>
-  <style>
-    /* Demo page support */
-    .demo-body {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
+</head>
+<style>
+  html, body, gmpx-split-layout {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-    .demo-header {
-      margin-top: 40px;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .demo-topnav {
+  .carousel {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .demo-footer {
-      padding-top: 5rem;
-    }
-
-    .demo-break {
-      margin-top: 6rem;
-    }
-
-    .demo-code {
-      display: block;
-      margin-top: 1em;
+      line-height: normal;
+      /* margin-inline: ${getTypeScaleSizeFromPx(-20)}; */
+      overflow-x: auto;
+      /* padding-inline: ${getTypeScaleSizeFromPx(20)}; */
       white-space: nowrap;
     }
 
-    .form-example {
-      margin-bottom: 0.66em;
+    .carousel[no-data] {
+      /* margin-bottom: ${getTypeScaleSizeFromPx(-12)}; */
     }
 
-    .misc-components {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
+</style>
+<body>
+  <!-- Configure and load the Maps JS SDK with your API key -->
+  <gmpx-api-loader key="AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"></gmpx-api-loader>
+  <gmpx-split-layout>
+    <div slot="fixed" style="background: white;">
 
-    #fuel {
-      max-width: 600px;
-      min-width: 200px;
-    }
+      <gmpx-place-picker for-map="main-map" type="geocode"
+      placeholder="sök"
+      @gmpx-placechange=${this.updateSearchLocation}>
+  </gmpx-place-picker>
 
-    audio {
-      width: 100%;
+
+    <gmpx-place-data-provider id="place" place="x">
+      <!-- <gmpx-place-overview auto-fetch-disabled></gmpx-place-overview> -->
+      <h2>
+        <gmpx-place-field-text field="displayName"></gmpx-place-field-text>
+      </h2>
+      <!-- <gmpx-place-field-text field="formattedAddress"></gmpx-place-field-text> -->
+      <gmpx-place-photo-gallery class="carousel"></gmpx-place-photo-gallery>
+      <gmpx-place-field-link></gmpx-place-field-link>
+      <gmpx-place-reviews></gmpx-place-reviews>
+      <gmpx-place-directions-button></gmpx-place-directions-button>
+
+      <gmpx-place-opening-hours></gmpx-place-opening-hours>
+
+      <gmpx-place-field-boolean field="hasDelivery">
+        <span slot="true">has delivery.</span>
+        <span slot="false">will not deliver your food.</span>
+      </gmpx-place-field-boolean>
+      <span class="no-data-fallback">does not have delivery information available.</span>
+
+    </gmpx-place-data-provider>
+
+    <!-- <gmpx-place-overview
+        id="place"
+        auto-fetch-disabled
+        google-logo-already-displayed
+        size="x-large"
+        [travelOrigin]="userLocation">
+
+      <gmpx-icon-button
+          slot="action"
+          variant="filled"
+          icon="restaurant"
+          (click)="beginOrder()">
+        Order Online
+      </gmpx-icon-button> -->
+
+    </gmpx-place-overview>
+    <!-- <customer-list></customer-list> -->
+    </div>
+    <gmp-map slot="main" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f"></gmp-map>
+  </gmpx-split-layout>
+
+  <style>
+    gmpx-optional-data-container-internal .title-large {
+      display: none;
     }
   </style>
-</head>
-<body class="demo-body">
-  <div class="demo-topnav">
-    <h1>Kund karta</h1>
-    <div>
-      <nav>
-        <a href="/customers">Kunder</a>
-      </nav>
-    </div>
-  </div>
-  <map-view></map-view>
-  <customer-list></customer-list>
-
+  <!-- <map-view></map-view> -->
   <script type="module" src="/main.js"></script>
 </body>
 </html>

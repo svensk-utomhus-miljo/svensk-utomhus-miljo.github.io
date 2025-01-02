@@ -1,3 +1,4 @@
+const encoder = new TextEncoder()
 
 /**
  * Non-null casting like TypeScript's [Non-null Assertion Operator][1].
@@ -61,7 +62,43 @@ globalThis.centerMapOnMarker = function centerMapOnMarker(marker) {
   }
 }
 
+/**
+ * @template T
+ * @param {T[]} items array of object to search from
+ * @param {string} query
+ */
+function filter (items, query) {
+  query = query.toLowerCase()
+  return items.filter(item => {
+    return Object.values(item).some(value =>
+      String(value).toLowerCase().includes(query)
+    )
+  })
+}
+
+/**
+ * @template T
+ * @param {T[]} items
+ * @param {string} query
+ */
+function find(items, query) {
+  return filter(items, query)[0]
+}
+
+// use webcrypto to create sha1 hash
+async function sha1(string) {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(string)
+  const hashBuffer = await crypto.subtle.digest('sha-256', data)
+  const hashArray = [...new Uint8Array(hashBuffer)]
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+  return hashHex
+}
+
 export {
   nn,
-  html
+  html,
+  filter,
+  find,
+  sha1
 }

@@ -12,6 +12,9 @@ router
   .all('*', ctx => {
     // console.log('fetching', ctx.request.destination, ctx.request.url)
   })
+  .get('https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true', () => {
+    return Response.json({})
+  })
   .get(...proxyGoogleMapsAPI)
   .post(...proxyGoogleMapsAPI)
   // .get(
@@ -58,8 +61,8 @@ function isPlainObject (o) {
 }
 
 // A generic error handler
-function errorHandler (error) {
-  console.error(error)
+function errorHandler (error, request) {
+  console.error(error, request)
   return new Response(error.stack || 'Server Error', {
     status: error.status || 200
   })
@@ -70,7 +73,7 @@ sw.addEventListener('fetch', evt => {
   const handler = router
     .handle(evt)
     .then(convertToResponse)
-    .catch(errorHandler)
+    .catch(err => errorHandler(err, evt.request))
 
   evt.respondWith(handler)
 })
