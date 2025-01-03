@@ -70,6 +70,18 @@ function errorHandler (error, request) {
 
 // attach the router "handle" to the event handler
 sw.addEventListener('fetch', evt => {
+  const url = new URL(evt.request.url)
+  if (
+    url.pathname.startsWith('/favicon') ||
+    url.hostname === 'api.hitta.se' ||
+    url.hostname === 'supabase.co' ||
+    url.hostname === 'adv-cors.deno.dev' ||
+    url.hostname === 'cdn.jsdelivr.net' ||
+    url.hostname.endsWith('gstatic.com')
+  ) {
+    return
+  }
+
   const handler = router
     .handle(evt)
     .then(convertToResponse)

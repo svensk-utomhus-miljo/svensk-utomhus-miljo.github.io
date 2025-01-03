@@ -32,6 +32,14 @@ globalThis.placeElement = $place
 import('./map.js')
 // import('./customer-list.js')
 
+// let installPrompt = null;
+
+// window.addEventListener("beforeinstallprompt", (event) => {
+//   event.preventDefault();
+//   console.log(event);;
+//   installPrompt = event;
+// });
+
 export {
   components,
   $map,
