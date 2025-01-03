@@ -2,13 +2,27 @@ import { on, dispatch } from './event.js'
 import { currentPosition, myLatLng } from './geo.js'
 import { supabase } from './db.js'
 import './info-window-content.js'
-import { placeElement } from './main.js'
+import { $place, $map } from './main.js'
 import { makePlaceFromMarker } from './fake.js'
 globalThis.supabase = supabase
 const allMarkers = []
 globalThis.allMarkers = allMarkers
 
 let zoomedIn = map.getZoom() > 16.48
+
+const options = {
+  root: map.getDiv(),
+  rootMargin: "0px",
+  threshold: 1.0,
+};
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry) => {
+    entry.target.gmpClickable = entry.isIntersecting
+  });
+}, options);
+
+globalThis.observer = observer
 
 map.addListener('zoom_changed', () => {
   const zoom = map.getZoom()
@@ -144,7 +158,7 @@ supabase.from('poi').select('*')
         map,
         title: poi.name,
         content: poi.type === 'customer' ? pin.element : img,
-        gmpClickable: true,
+        gmpClickable: false, // Enabling this causes render issues...
         gmpDraggable: false,
       })
 
@@ -159,6 +173,7 @@ supabase.from('poi').select('*')
 
       marker.data = poi
 
+      observer.observe(marker)
       allMarkers.push(marker)
     }
   })
@@ -186,7 +201,7 @@ function updateArcs (arcs) {
   overlay.setMap(map)
 }
 
-document.body.addEventListener('gmp-click', evt => {
+$map.addEventListener('gmp-click', evt => {
   const marker = evt.target
   const poi = marker.data
   window.poi = poi
@@ -230,7 +245,7 @@ document.body.addEventListener('gmp-click', evt => {
   updateArcs(arcs)
 
   makePlaceFromMarker(marker, relatedMarkers).then(place => {
-    placeElement.place = place
+    $place.place = place
   })
 })
 
@@ -242,9 +257,20 @@ Object.defineProperties(google.maps.LatLngAltitude.prototype, {
 
 Object.defineProperties(google.maps.LatLng.prototype, {
   latLng: {
-    get () { return [this.lng, this.lat] }
+    get () { return [this.lng(), this.lat()] }
   }
 })
+
+document.querySelector('#move')?.addEventListener('click', () => {
+  $map.addEventListener('wis-click', (evt) => {
+    marker.setPosition(evt.position)
+  }, { once: true })
+})
+
+google.maps.event.addListener(map, 'click', function(event) {
+  dispatch($map, 'wis-click', { position: event.latLng })
+})
+
 
 /*
     function calculateAndDisplayRoute(directionsService, directionsRenderer) {

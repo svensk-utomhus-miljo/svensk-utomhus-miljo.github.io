@@ -20,20 +20,22 @@ setStringLiterals({
   PLACE_OPEN_NOW: 'Ska göras idag'
 })
 
-const placeElement = nn(document.querySelector('#place'))
-const map = nn(document.querySelector('gmp-map'))['innerMap']
+const $place = nn(document.querySelector('#place'))
+const $map = nn(document.querySelector('gmp-map'))
+const map = $map['innerMap']
 
 map.setMapTypeId('satellite')
 
 globalThis.map = map
-globalThis.placeElement = placeElement
+globalThis.placeElement = $place
 
 import('./map.js')
 // import('./customer-list.js')
 
 export {
   components,
+  $map,
   maps,
   map,
-  placeElement,
+  $place,
 }

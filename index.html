@@ -57,6 +57,16 @@
       <h2>
         <gmpx-place-field-text field="displayName"></gmpx-place-field-text>
       </h2>
+
+      <gmpx-place-field-boolean field="hasDelivery">
+        <span slot="true">
+          <gmpx-icon-button icon="open_with" variant="filled" id="move">
+            Flytta
+          </gmpx-icon-button>
+        </span>
+        <span slot="false">will not deliver your food.</span>
+      </gmpx-place-field-boolean>
+
       <!-- <gmpx-place-field-text field="formattedAddress"></gmpx-place-field-text> -->
       <gmpx-place-photo-gallery class="carousel"></gmpx-place-photo-gallery>
       <gmpx-place-field-link></gmpx-place-field-link>
@@ -64,12 +74,6 @@
       <gmpx-place-directions-button></gmpx-place-directions-button>
 
       <gmpx-place-opening-hours></gmpx-place-opening-hours>
-
-      <gmpx-place-field-boolean field="hasDelivery">
-        <span slot="true">has delivery.</span>
-        <span slot="false">will not deliver your food.</span>
-      </gmpx-place-field-boolean>
-      <span class="no-data-fallback">does not have delivery information available.</span>
 
     </gmpx-place-data-provider>
 
@@ -91,7 +95,18 @@
     </gmpx-place-overview>
     <!-- <customer-list></customer-list> -->
     </div>
-    <gmp-map slot="main" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f"></gmp-map>
+    <gmp-map slot="main" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f">
+
+      <gmp-advanced-marker
+      position="37.4220656,-122.0840897"
+      title="Mountain View, CA"
+    ></gmp-advanced-marker>
+    <gmp-advanced-marker
+      position="47.648994,-122.3503845"
+      title="Seattle, WA"
+    ></gmp-advanced-marker>
+
+    </gmp-map>
   </gmpx-split-layout>
 
   <style>
@@ -101,5 +116,6 @@
   </style>
   <!-- <map-view></map-view> -->
   <script type="module" src="/main.js"></script>
+
 </body>
 </html>
