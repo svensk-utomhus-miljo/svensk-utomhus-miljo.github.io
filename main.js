@@ -1,6 +1,6 @@
 import './reg-sw.js'
 import { nn } from './util.js'
-import {ai} from './ai.js'
+// import {ai} from './ai.js'
 
 const components = await import('https://unpkg.com/@googlemaps/extended-component-library')
 
