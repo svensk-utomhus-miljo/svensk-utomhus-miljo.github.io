@@ -1,5 +1,5 @@
 import { on, dispatch } from './event.js'
-import { currentPosition, myLatLng } from './geo.js'
+// import { currentPosition, myLatLng } from './geo.js'
 import { supabase } from './db.js'
 import './info-window-content.js'
 import { $place, $map } from './main.js'
@@ -11,6 +11,7 @@ import './karta/rita.js'
 
 const { InfoWindow, LatLng, Polygon, Size, ImageMapType, StreetViewService } = google.maps
 const { PinElement, AdvancedMarkerElement } = google.maps.marker
+const { Marker3DElement, Marker3DInteractiveElement } = google.maps.maps3d
 
 globalThis.supabase = supabase
 globalThis.allMarkers = {}
@@ -24,20 +25,21 @@ function getAllCustomers () {
       .map(key => allMarkers[key])
 }
 
-let zoomedIn = map.getZoom() > 16.48
+// let zoomedIn = map.getZoom() > 16.48
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    entry.target.gmpClickable = entry.isIntersecting
-  })
-}, {
-  root: map.getDiv(),
-  rootMargin: "0px",
-  threshold: 1.0
-})
+// const observer = new IntersectionObserver(entries => {
+//   entries.forEach(entry => {
+//     entry.target.gmpClickable = entry.isIntersecting
+//   })
+// }, {
+//   root: map.getDiv(),
+//   rootMargin: "0px",
+//   threshold: 1.0
+// })
 
-globalThis.observer = observer
+// globalThis.observer = observer
 
+/*
 map.addListener('zoom_changed', () => {
   const zoom = map.getZoom()
 
@@ -53,6 +55,7 @@ map.addListener('zoom_changed', () => {
     }
   }
 })
+*/
 
 // Skapa en custom Tile Overlay
 const customTileLayer = new ImageMapType({
@@ -64,7 +67,7 @@ const customTileLayer = new ImageMapType({
   opacity: 1,
   name: 'Hitta.se Estate'
 })
-
+/*
 on(map, 'zoomedIn', () => {
   Object.values(allMarkers).forEach(marker => {
     if (!(marker.data?.type === 'pin' || marker.data?.type === 'customer')) {
@@ -94,6 +97,7 @@ on(map, 'zoomedOut', () => {
   // ta bort tile-lagret på kartan
   map.overlayMapTypes.removeAt(0)
 })
+*/
 
 // Lägg till event listeners för alla ändringar
 function listenToPolygonChanges(polygon) {
@@ -109,14 +113,28 @@ function listenToPolygonChanges(polygon) {
 }
 
 // Lägg till tile-lagret på kartan
-map.overlayMapTypes.insertAt(0, customTileLayer)
+// map.overlayMapTypes.insertAt(0, customTileLayer)
 
+const blob = new Blob([
+  `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/></svg>`
+], { type: 'image/svg+xml' })
+
+const parser = new DOMParser();
+const pinSvgString =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none"><rect width="56" height="56" rx="28" fill="#7837FF"></rect><path d="M46.0675 22.1319L44.0601 22.7843" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M11.9402 33.2201L9.93262 33.8723" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.9999 47.0046V44.8933" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M27.9999 9V11.1113" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M39.1583 43.3597L37.9186 41.6532" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.8419 12.6442L18.0816 14.3506" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.93262 22.1319L11.9402 22.7843" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M46.0676 33.8724L44.0601 33.2201" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M39.1583 12.6442L37.9186 14.3506" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.8419 43.3597L18.0816 41.6532" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M28 39L26.8725 37.9904C24.9292 36.226 23.325 34.7026 22.06 33.4202C20.795 32.1378 19.7867 30.9918 19.035 29.9823C18.2833 28.9727 17.7562 28.0587 17.4537 27.2401C17.1512 26.4216 17 25.5939 17 24.7572C17 23.1201 17.5546 21.7513 18.6638 20.6508C19.7729 19.5502 21.1433 19 22.775 19C23.82 19 24.7871 19.2456 25.6762 19.7367C26.5654 20.2278 27.34 20.9372 28 21.8649C28.77 20.8827 29.5858 20.1596 30.4475 19.6958C31.3092 19.2319 32.235 19 33.225 19C34.8567 19 36.2271 19.5502 37.3362 20.6508C38.4454 21.7513 39 23.1201 39 24.7572C39 25.5939 38.8488 26.4216 38.5463 27.2401C38.2438 28.0587 37.7167 28.9727 36.965 29.9823C36.2133 30.9918 35.205 32.1378 33.94 33.4202C32.675 34.7026 31.0708 36.226 29.1275 37.9904L28 39Z" fill="#FF7878"></path></svg>';
+const pinSvg = parser.parseFromString(
+  pinSvgString,
+  "image/svg+xml",
+).documentElement;
+
+const url = new URL(URL.createObjectURL(blob))
 
 supabase.from('poi').select('*')
 .then(result => {
   result.data?.forEach(poi => {
     poi = Poi(poi)
     if (poi.type === 'polygon') {
+      return
       const polygon = new Polygon({
         paths: poi.meta.paths,
         strokeColor: poi.meta.color,
@@ -151,27 +169,37 @@ supabase.from('poi').select('*')
       polygon.setMap(map)
     } else {
       const img = new Image()
-      img.src = `/karta/${poi.type}.png`
+      img.src = new URL('http://localhost:5173/karta/pin.png')+''
       img.style.width = '30px'
 
       const span = document.createElement('span')
       span.textContent = '👤'
       span.style.fontSize = '0.7rem'
       const pin = new PinElement({
-        glyph: span,
-        // borderColor: 'transparent',
-        background: '#caff60',
+        glyph: pinSvg,
+        // background: '#caff60',
         scale: 1
       })
 
-      const marker = new AdvancedMarkerElement({
-        position: new LatLng(poi.meta.position),
-        map,
-        title: poi.name,
-        content: poi.type === 'customer' ? pin.element : img,
-        gmpClickable: false, // Enabling this causes render issues...
-        gmpDraggable: false,
+      const marker = new Marker3DInteractiveElement({
+        position: poi.meta.position,
+        label: poi.name,
+        // altitudeMode: 'ABSOLUTE',
+        // extruded: true,
       })
+      marker.append(pinSvg)
+
+      marker.addEventListener('click', (e) => {
+        console.log('clicked', e)
+      })
+      // const marker = new AdvancedMarkerElement({
+      //   position: poi.meta.position,
+      //   map,
+      //   title: poi.name,
+      //   content: poi.type === 'customer' ? pin.element : img,
+      //   gmpClickable: false, // Enabling this causes render issues...
+      //   gmpDraggable: false,
+      // })
 
       // marker.addListener('dragend', function () {
       //   poi.meta.position = this.position.toJSON()
@@ -184,11 +212,12 @@ supabase.from('poi').select('*')
 
       marker.data = poi
 
-      observer.observe(marker)
+      // observer.observe(marker)
       const key = poi.meta.owner || (poi.type === 'customer' ? poi.id : undefined)
       allCustomersMarkers[key] ??= []
       allCustomersMarkers[key].push(marker)
       allMarkers[poi.id] = marker
+      $map.append(marker)
     }
   })
 })
@@ -222,6 +251,8 @@ $map.addEventListener('gmp-click', evt => {
   const poi = marker.data
   window.poi = poi
   window.marker = marker
+
+  return
 
   document.querySelector('info-window-content').poi = marker.data
 
@@ -270,6 +301,7 @@ Object.defineProperties(google.maps.LatLng.prototype, {
   lngLat: { get () { return [this.lng(), this.lat()] } }
 })
 
+/*
 google.maps.event.addListener(map, 'contextmenu', function(evt) {
   xFetch(
     'https://api.hitta.se/service-aggregator/v1/map/borders/at/' + evt.latLng.latLng.join(':'),
@@ -351,50 +383,7 @@ google.maps.event.addListener(map, 'click', function(event) {
 })
 
 globalThis.infoWindow = new InfoWindow()
-
-function sortMarkers (markers, referenceLocation) {
-  // First calculate distances
-  return markers.map(marker => ({
-      marker,
-      distance: google.maps.geometry.spherical.computeDistanceBetween(
-        referenceLocation,
-        marker.position
-      )
-    }))
-    // then sort by distance
-    .sort((a, b) => a.distance - b.distance)
-    .map(item => item.marker)
-}
-
-/**
- * returns the 3 nearest customers to the referenceLocation
- * @param {*} [referenceLocation] - Defaults users own location
- */
-function getNearestCustomers (referenceLocation = myLatLng()) {
-  return sortMarkers(getAllCustomers(), referenceLocation).slice(0, 3)
-}
-
-function getNearestItems() {
-  const referenceLocation = mousePosition // myLatLng()
-
-  // Get the 3 nearest customers
-  const nearestCustomers = getNearestCustomers(referenceLocation)
-
-  // Get all markers for the 3 nearest customers
-  let items = nearestCustomers.map(marker => allCustomersMarkers[marker.data.id]).flat()
-    // exclude customers and polygons
-    .filter(e => !['customer', 'polygon'].includes(e.data.type))
-
-  return sortMarkers(items, referenceLocation)
-}
-
-let mousePosition
-google.maps.event.addListener(map, 'mousemove', function (event) {
-  mousePosition = event.latLng
-});
-
-window.e = getNearestItems
-
+*/
 
 /**
     function calculateAndDisplayRoute(directionsService, directionsRenderer) {

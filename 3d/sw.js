@@ -73,7 +73,6 @@ sw.addEventListener('fetch', evt => {
   const url = new URL(evt.request.url)
   if (
     url.pathname.startsWith('/favicon') ||
-    url.pathname.includes('hotword') ||
     url.hostname === 'api.hitta.se' ||
     url.hostname === 'supabase.co' ||
     url.hostname === 'adv-cors.deno.dev' ||

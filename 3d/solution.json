@@ -1,0 +1,1748 @@
+{
+  "code": 0,
+  "summary": {
+    "cost": 21110,
+    "routes": 1,
+    "unassigned": 0,
+    "setup": 0,
+    "service": 29700,
+    "duration": 21110,
+    "waiting_time": 0,
+    "priority": 0,
+    "distance": 208333,
+    "violations": [],
+    "computing_times": {
+      "loading": 63,
+      "solving": 211,
+      "routing": 21
+    }
+  },
+  "unassigned": [],
+  "routes": [
+    {
+      "vehicle": 1,
+      "cost": 21110,
+      "setup": 0,
+      "service": 29700,
+      "duration": 21110,
+      "waiting_time": 0,
+      "priority": 0,
+      "distance": 208333,
+      "steps": [
+        {
+          "type": "start",
+          "location": [
+            17.877675,
+            59.252735
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "arrival": 0,
+          "duration": 0,
+          "violations": [],
+          "distance": 0
+        },
+        {
+          "type": "job",
+          "description": "Brf SÃ¶dra Rosenhill",
+          "location": [
+            17.9569391,
+            59.2324494
+          ],
+          "id": 48,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 48,
+          "arrival": 527,
+          "duration": 527,
+          "violations": [],
+          "distance": 5923
+        },
+        {
+          "type": "job",
+          "description": "VisÃ¤ttra Ã¤ngar 3",
+          "location": [
+            17.9448751,
+            59.2102383
+          ],
+          "id": 46,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 46,
+          "arrival": 1206,
+          "duration": 906,
+          "violations": [],
+          "distance": 9287
+        },
+        {
+          "type": "job",
+          "description": "VisÃ¤ttra Ã¤ngar 1 ",
+          "location": [
+            17.9472593,
+            59.2139562
+          ],
+          "id": 47,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 47,
+          "arrival": 1564,
+          "duration": 964,
+          "violations": [],
+          "distance": 9674
+        },
+        {
+          "type": "job",
+          "description": "EkdalsvÃ¤gen ",
+          "location": [
+            17.999013,
+            59.23326409999999
+          ],
+          "id": 45,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 45,
+          "arrival": 2432,
+          "duration": 1532,
+          "violations": [],
+          "distance": 15722
+        },
+        {
+          "type": "job",
+          "description": "Brf tÃ¥get",
+          "location": [
+            17.9957734,
+            59.25450629999999
+          ],
+          "id": 49,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 49,
+          "arrival": 3167,
+          "duration": 1967,
+          "violations": [],
+          "distance": 19572
+        },
+        {
+          "type": "job",
+          "description": "Brf TÃ¤get ",
+          "location": [
+            17.9957845,
+            59.2544236
+          ],
+          "id": 44,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 44,
+          "arrival": 3468,
+          "duration": 1968,
+          "violations": [],
+          "distance": 19581
+        },
+        {
+          "type": "job",
+          "description": "SnÃ¶sÃ¤tra parkering Sno ",
+          "location": [
+            18.0305029,
+            59.2527053
+          ],
+          "id": 15,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 15,
+          "arrival": 4131,
+          "duration": 2331,
+          "violations": [],
+          "distance": 22687
+        },
+        {
+          "type": "job",
+          "description": "Porlabacken",
+          "location": [
+            18.0217285,
+            59.2629773
+          ],
+          "id": 16,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 16,
+          "arrival": 4678,
+          "duration": 2578,
+          "violations": [],
+          "distance": 24338
+        },
+        {
+          "type": "job",
+          "description": "KrakstÃ¶ren 1 ",
+          "location": [
+            18.0072323,
+            59.26775740000001
+          ],
+          "id": 14,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 14,
+          "arrival": 5162,
+          "duration": 2762,
+          "violations": [],
+          "distance": 26033
+        },
+        {
+          "type": "job",
+          "description": "HerrgÃ¤rden 1 (SBB) ",
+          "location": [
+            18.0097618,
+            59.2770609
+          ],
+          "id": 8,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 8,
+          "arrival": 5661,
+          "duration": 2961,
+          "violations": [],
+          "distance": 27847
+        },
+        {
+          "type": "job",
+          "description": "Brf SnÃ¤ckan",
+          "location": [
+            18.0016037,
+            59.2785658
+          ],
+          "id": 7,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 7,
+          "arrival": 6161,
+          "duration": 3161,
+          "violations": [],
+          "distance": 28996
+        },
+        {
+          "type": "job",
+          "description": "Brf Liuspunkten",
+          "location": [
+            18.0415115,
+            59.2628526
+          ],
+          "id": 43,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 43,
+          "arrival": 6805,
+          "duration": 3505,
+          "violations": [],
+          "distance": 32523
+        },
+        {
+          "type": "job",
+          "description": "Brf Ljuspunkten",
+          "location": [
+            18.0415115,
+            59.2628526
+          ],
+          "id": 3,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 3,
+          "arrival": 7105,
+          "duration": 3505,
+          "violations": [],
+          "distance": 32523
+        },
+        {
+          "type": "job",
+          "description": "CirkelbÃ¤gens SFF ",
+          "location": [
+            18.0509356,
+            59.25082049999999
+          ],
+          "id": 23,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 23,
+          "arrival": 7654,
+          "duration": 3754,
+          "violations": [],
+          "distance": 34600
+        },
+        {
+          "type": "job",
+          "description": "TrÃ¤dkorsets SFF ",
+          "location": [
+            18.0588268,
+            59.25089389999999
+          ],
+          "id": 21,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 21,
+          "arrival": 8088,
+          "duration": 3888,
+          "violations": [],
+          "distance": 35260
+        },
+        {
+          "type": "job",
+          "description": "Brf JÃ¤verÃ¶ ",
+          "location": [
+            18.0851961,
+            59.24746330000001
+          ],
+          "id": 22,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 22,
+          "arrival": 8878,
+          "duration": 4378,
+          "violations": [],
+          "distance": 39167
+        },
+        {
+          "type": "job",
+          "description": "Brf Klockelund ",
+          "location": [
+            18.1163232,
+            59.24379219999999
+          ],
+          "id": 20,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 20,
+          "arrival": 9514,
+          "duration": 4714,
+          "violations": [],
+          "distance": 41985
+        },
+        {
+          "type": "job",
+          "description": "Brf Geografin ",
+          "location": [
+            18.1319581,
+            59.1368941
+          ],
+          "id": 41,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 41,
+          "arrival": 10749,
+          "duration": 5649,
+          "violations": [],
+          "distance": 56340
+        },
+        {
+          "type": "job",
+          "description": "Brf Aby Ã¤ngar ",
+          "location": [
+            18.10356,
+            59.1348794
+          ],
+          "id": 42,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 42,
+          "arrival": 11729,
+          "duration": 6329,
+          "violations": [],
+          "distance": 63164
+        },
+        {
+          "type": "job",
+          "description": "Brf Ã…by Ã¤ngar",
+          "location": [
+            18.10356,
+            59.1348794
+          ],
+          "id": 2,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 2,
+          "arrival": 12029,
+          "duration": 6329,
+          "violations": [],
+          "distance": 63164
+        },
+        {
+          "type": "job",
+          "description": "Balder Ã„lta ",
+          "location": [
+            18.183809,
+            59.26129880000001
+          ],
+          "id": 4,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 4,
+          "arrival": 13945,
+          "duration": 7945,
+          "violations": [],
+          "distance": 85644
+        },
+        {
+          "type": "job",
+          "description": "LagavÃ¤gen",
+          "location": [
+            18.1304198,
+            59.2777372
+          ],
+          "id": 11,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 11,
+          "arrival": 15040,
+          "duration": 8740,
+          "violations": [],
+          "distance": 94898
+        },
+        {
+          "type": "job",
+          "description": "Vattenkonsten 5 ",
+          "location": [
+            18.0907346,
+            59.2836527
+          ],
+          "id": 19,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 19,
+          "arrival": 15701,
+          "duration": 9101,
+          "violations": [],
+          "distance": 98048
+        },
+        {
+          "type": "job",
+          "description": "Brf FrimÃ¤rket ",
+          "location": [
+            18.0664788,
+            59.2735194
+          ],
+          "id": 18,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 18,
+          "arrival": 16320,
+          "duration": 9420,
+          "violations": [],
+          "distance": 101103
+        },
+        {
+          "type": "job",
+          "description": "SkebokvarnsvÃ¤gen",
+          "location": [
+            18.042041,
+            59.2699084
+          ],
+          "id": 13,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 13,
+          "arrival": 16817,
+          "duration": 9617,
+          "violations": [],
+          "distance": 103312
+        },
+        {
+          "type": "job",
+          "description": "Brf Hammarbandet ",
+          "location": [
+            18.0432184,
+            59.26971810000001
+          ],
+          "id": 12,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 12,
+          "arrival": 17132,
+          "duration": 9632,
+          "violations": [],
+          "distance": 103413
+        },
+        {
+          "type": "job",
+          "description": "Brf Ã–stberga",
+          "location": [
+            18.0425615,
+            59.2839505
+          ],
+          "id": 6,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 6,
+          "arrival": 17683,
+          "duration": 9883,
+          "violations": [],
+          "distance": 106171
+        },
+        {
+          "type": "job",
+          "description": "Brf Ã–stberga ",
+          "location": [
+            18.0426787,
+            59.28346179999999
+          ],
+          "id": 5,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 5,
+          "arrival": 17987,
+          "duration": 9887,
+          "violations": [],
+          "distance": 106200
+        },
+        {
+          "type": "job",
+          "description": "Brf PortrÃ¤ttmedaljongen 4 ",
+          "location": [
+            18.0749689,
+            59.29617909999999
+          ],
+          "id": 50,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 50,
+          "arrival": 18490,
+          "duration": 10090,
+          "violations": [],
+          "distance": 108871
+        },
+        {
+          "type": "job",
+          "description": "KommunalvÃ¤gen 10-16 (SBB) ",
+          "location": [
+            18.253274,
+            59.322423
+          ],
+          "id": 75,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 75,
+          "arrival": 19542,
+          "duration": 10842,
+          "violations": [],
+          "distance": 121434
+        },
+        {
+          "type": "job",
+          "description": "KommunalvÃ¤gen 8 (SBB) ",
+          "location": [
+            18.25393,
+            59.3224419
+          ],
+          "id": 76,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 76,
+          "arrival": 19854,
+          "duration": 10854,
+          "violations": [],
+          "distance": 121516
+        },
+        {
+          "type": "job",
+          "description": "Hedin Bil Nacka ",
+          "location": [
+            18.1590833,
+            59.31259
+          ],
+          "id": 77,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 77,
+          "arrival": 20733,
+          "duration": 11433,
+          "violations": [],
+          "distance": 128811
+        },
+        {
+          "type": "job",
+          "description": "Helgessons vÃ¤g 6 ",
+          "location": [
+            18.1435328,
+            59.3092145
+          ],
+          "id": 84,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 84,
+          "arrival": 21384,
+          "duration": 11784,
+          "violations": [],
+          "distance": 131283
+        },
+        {
+          "type": "job",
+          "description": "Helgessons vÃ¤g 12 ",
+          "location": [
+            18.1425618,
+            59.3102007
+          ],
+          "id": 83,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 83,
+          "arrival": 21718,
+          "duration": 11818,
+          "violations": [],
+          "distance": 131461
+        },
+        {
+          "type": "job",
+          "description": "Brf Sickla Kanal",
+          "location": [
+            18.1035503,
+            59.3038446
+          ],
+          "id": 39,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 39,
+          "arrival": 22438,
+          "duration": 12238,
+          "violations": [],
+          "distance": 135240
+        },
+        {
+          "type": "job",
+          "description": "Brf SiÃ¶stadsesplanaden ",
+          "location": [
+            18.0900521,
+            59.3028481
+          ],
+          "id": 40,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 40,
+          "arrival": 22936,
+          "duration": 12436,
+          "violations": [],
+          "distance": 136391
+        },
+        {
+          "type": "job",
+          "description": "Brf Mejeriet",
+          "location": [
+            18.0594758,
+            59.29284489999999
+          ],
+          "id": 9,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 9,
+          "arrival": 23655,
+          "duration": 12855,
+          "violations": [],
+          "distance": 139566
+        },
+        {
+          "type": "job",
+          "description": "Brf Lindes Terass",
+          "location": [
+            18.0459442,
+            59.29858319999999
+          ],
+          "id": 10,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 10,
+          "arrival": 24108,
+          "duration": 13008,
+          "violations": [],
+          "distance": 140662
+        },
+        {
+          "type": "job",
+          "description": "SturehillshÃ¶jden ",
+          "location": [
+            18.0312774,
+            59.30313899999999
+          ],
+          "id": 74,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 74,
+          "arrival": 24606,
+          "duration": 13206,
+          "violations": [],
+          "distance": 142555
+        },
+        {
+          "type": "job",
+          "description": "JM Vinter ",
+          "location": [
+            18.0320459,
+            59.3036733
+          ],
+          "id": 70,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 70,
+          "arrival": 24948,
+          "duration": 13248,
+          "violations": [],
+          "distance": 142652
+        },
+        {
+          "type": "job",
+          "description": "Brf VinbÃ¤ret 1 JM? ",
+          "location": [
+            18.0309391,
+            59.30362329999999
+          ],
+          "id": 71,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 71,
+          "arrival": 25270,
+          "duration": 13270,
+          "violations": [],
+          "distance": 142713
+        },
+        {
+          "type": "job",
+          "description": "Vinodlar/VingÃ¤rdsgatan ",
+          "location": [
+            18.0301445,
+            59.3068905
+          ],
+          "id": 72,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 72,
+          "arrival": 25687,
+          "duration": 13387,
+          "violations": [],
+          "distance": 143415
+        },
+        {
+          "type": "job",
+          "description": "Brf Sofieberg ",
+          "location": [
+            18.0293188,
+            59.3065641
+          ],
+          "id": 64,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 64,
+          "arrival": 26001,
+          "duration": 13401,
+          "violations": [],
+          "distance": 143483
+        },
+        {
+          "type": "job",
+          "description": "Brf Byggledaren ",
+          "location": [
+            18.0265595,
+            59.3069412
+          ],
+          "id": 65,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 65,
+          "arrival": 26333,
+          "duration": 13433,
+          "violations": [],
+          "distance": 143685
+        },
+        {
+          "type": "job",
+          "description": "Brf Vinlunden ",
+          "location": [
+            18.0281499,
+            59.30733639999999
+          ],
+          "id": 68,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 68,
+          "arrival": 26648,
+          "duration": 13448,
+          "violations": [],
+          "distance": 143782
+        },
+        {
+          "type": "job",
+          "description": "Brf SjÃ¶vikskajen ",
+          "location": [
+            18.0275173,
+            59.3079954
+          ],
+          "id": 69,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 69,
+          "arrival": 26968,
+          "duration": 13468,
+          "violations": [],
+          "distance": 143886
+        },
+        {
+          "type": "job",
+          "description": "Brf Liljeholmsblick ",
+          "location": [
+            18.019764,
+            59.308918
+          ],
+          "id": 67,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 67,
+          "arrival": 27379,
+          "duration": 13579,
+          "violations": [],
+          "distance": 144704
+        },
+        {
+          "type": "job",
+          "description": "Brf Vinodlaren takskottning ",
+          "location": [
+            18.0256259,
+            59.31008800000001
+          ],
+          "id": 66,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 66,
+          "arrival": 27742,
+          "duration": 13642,
+          "violations": [],
+          "distance": 145103
+        },
+        {
+          "type": "job",
+          "description": "Rosteriet ",
+          "location": [
+            18.0224723,
+            59.3120097
+          ],
+          "id": 73,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 73,
+          "arrival": 28118,
+          "duration": 13718,
+          "violations": [],
+          "distance": 145687
+        },
+        {
+          "type": "job",
+          "description": "Brf StjÃ¤rnhusen ",
+          "location": [
+            18.0110134,
+            59.31738659999999
+          ],
+          "id": 24,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 24,
+          "arrival": 28581,
+          "duration": 13881,
+          "violations": [],
+          "distance": 146802
+        },
+        {
+          "type": "job",
+          "description": "Brf Galionsbilden",
+          "location": [
+            18.0075292,
+            59.31562020000001
+          ],
+          "id": 25,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 25,
+          "arrival": 28971,
+          "duration": 13971,
+          "violations": [],
+          "distance": 147378
+        },
+        {
+          "type": "job",
+          "description": "Barlasten 6 (SBB) ",
+          "location": [
+            18.0063867,
+            59.3142434
+          ],
+          "id": 26,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 26,
+          "arrival": 29418,
+          "duration": 14118,
+          "violations": [],
+          "distance": 148231
+        },
+        {
+          "type": "job",
+          "description": "StendÃ¶rren Bergsklacken Bromma ",
+          "location": [
+            17.9750655,
+            59.3386219
+          ],
+          "id": 17,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 17,
+          "arrival": 30302,
+          "duration": 14702,
+          "violations": [],
+          "distance": 154992
+        },
+        {
+          "type": "job",
+          "description": "Brf ProvrÃ¶ret ",
+          "location": [
+            17.9864304,
+            59.3054575
+          ],
+          "id": 29,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 29,
+          "arrival": 31465,
+          "duration": 15565,
+          "violations": [],
+          "distance": 164034
+        },
+        {
+          "type": "job",
+          "description": "InstrumentvÃ¤gen 19 ",
+          "location": [
+            17.9826895,
+            59.3050598
+          ],
+          "id": 37,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 37,
+          "arrival": 31851,
+          "duration": 15651,
+          "violations": [],
+          "distance": 164596
+        },
+        {
+          "type": "job",
+          "description": "HÃ¤gersten 2:2 (SBB) ",
+          "location": [
+            17.972546,
+            59.3075368
+          ],
+          "id": 30,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 30,
+          "arrival": 32314,
+          "duration": 15814,
+          "violations": [],
+          "distance": 165574
+        },
+        {
+          "type": "job",
+          "description": "Bostadslotten Norrboda ",
+          "location": [
+            17.9592638,
+            59.3037432
+          ],
+          "id": 1,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 1,
+          "arrival": 32870,
+          "duration": 16070,
+          "violations": [],
+          "distance": 167166
+        },
+        {
+          "type": "job",
+          "description": "Kvittensen 1 ",
+          "location": [
+            17.9840442,
+            59.30027679999999
+          ],
+          "id": 32,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 32,
+          "arrival": 33480,
+          "duration": 16380,
+          "violations": [],
+          "distance": 169231
+        },
+        {
+          "type": "job",
+          "description": "Avdragaren 3 ",
+          "location": [
+            17.9855665,
+            59.30076449999999
+          ],
+          "id": 36,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 36,
+          "arrival": 33799,
+          "duration": 16399,
+          "violations": [],
+          "distance": 169328
+        },
+        {
+          "type": "job",
+          "description": "Ombrytaren 1 ",
+          "location": [
+            17.9858777,
+            59.3023681
+          ],
+          "id": 31,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 31,
+          "arrival": 34165,
+          "duration": 16465,
+          "violations": [],
+          "distance": 169651
+        },
+        {
+          "type": "job",
+          "description": "Lotteriet 10 ",
+          "location": [
+            17.9799381,
+            59.2985833
+          ],
+          "id": 38,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 38,
+          "arrival": 34570,
+          "duration": 16570,
+          "violations": [],
+          "distance": 170327
+        },
+        {
+          "type": "job",
+          "description": "Brf GÃ¥voskatten 3 o 4",
+          "location": [
+            17.9800401,
+            59.29927470000001
+          ],
+          "id": 27,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 27,
+          "arrival": 34886,
+          "duration": 16586,
+          "violations": [],
+          "distance": 170426
+        },
+        {
+          "type": "job",
+          "description": "Lotteriet 11 ",
+          "location": [
+            17.981575,
+            59.29839430000001
+          ],
+          "id": 34,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 34,
+          "arrival": 35234,
+          "duration": 16634,
+          "violations": [],
+          "distance": 170711
+        },
+        {
+          "type": "job",
+          "description": "KÃ¶peskillingen 1 ",
+          "location": [
+            17.9823364,
+            59.29556520000001
+          ],
+          "id": 33,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 33,
+          "arrival": 35609,
+          "duration": 16709,
+          "violations": [],
+          "distance": 171139
+        },
+        {
+          "type": "job",
+          "description": "Bang Sirenen 5 ",
+          "location": [
+            17.9960072,
+            59.29443389999999
+          ],
+          "id": 35,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 35,
+          "arrival": 36136,
+          "duration": 16936,
+          "violations": [],
+          "distance": 172783
+        },
+        {
+          "type": "job",
+          "description": "MÃ¤larhÃ¶jdsparken",
+          "location": [
+            17.9537609,
+            59.2873374
+          ],
+          "id": 28,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 28,
+          "arrival": 36856,
+          "duration": 17356,
+          "violations": [],
+          "distance": 176459
+        },
+        {
+          "type": "job",
+          "description": "Sea Sea ",
+          "location": [
+            17.944674,
+            59.2833597
+          ],
+          "id": 89,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 89,
+          "arrival": 37298,
+          "duration": 17498,
+          "violations": [],
+          "distance": 177508
+        },
+        {
+          "type": "job",
+          "description": "Kevser/Frijo ",
+          "location": [
+            17.9476929,
+            59.2824439
+          ],
+          "id": 87,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 87,
+          "arrival": 37670,
+          "duration": 17570,
+          "violations": [],
+          "distance": 177872
+        },
+        {
+          "type": "job",
+          "description": "Valvia Fastigheter AB ",
+          "location": [
+            17.9446869,
+            59.2814569
+          ],
+          "id": 92,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 92,
+          "arrival": 38015,
+          "duration": 17615,
+          "violations": [],
+          "distance": 178133
+        },
+        {
+          "type": "job",
+          "description": "Delicato ",
+          "location": [
+            17.9478598,
+            59.2814
+          ],
+          "id": 91,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 91,
+          "arrival": 38367,
+          "duration": 17667,
+          "violations": [],
+          "distance": 178427
+        },
+        {
+          "type": "job",
+          "description": "MÃ¤larvÃ¤gen ",
+          "location": [
+            17.9479527,
+            59.28219790000001
+          ],
+          "id": 88,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 88,
+          "arrival": 38686,
+          "duration": 17686,
+          "violations": [],
+          "distance": 178541
+        },
+        {
+          "type": "job",
+          "description": "Brf GÃ¤rdsvÃ¤gen ",
+          "location": [
+            17.9338962,
+            59.2769462
+          ],
+          "id": 93,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 93,
+          "arrival": 39141,
+          "duration": 17841,
+          "violations": [],
+          "distance": 179831
+        },
+        {
+          "type": "job",
+          "description": "BÃ¤ckens SFF",
+          "location": [
+            17.9507796,
+            59.27622479999999
+          ],
+          "id": 90,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 90,
+          "arrival": 39623,
+          "duration": 18023,
+          "violations": [],
+          "distance": 181230
+        },
+        {
+          "type": "job",
+          "description": "Segeltorps Orangeri SnÃ¶ ",
+          "location": [
+            17.9330506,
+            59.28207310000001
+          ],
+          "id": 94,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 94,
+          "arrival": 40154,
+          "duration": 18254,
+          "violations": [],
+          "distance": 183242
+        },
+        {
+          "type": "job",
+          "description": "Hedin Stockholm Bil Smista AllÃ© 36 ",
+          "location": [
+            17.932865,
+            59.2828196
+          ],
+          "id": 97,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 97,
+          "arrival": 40486,
+          "duration": 18286,
+          "violations": [],
+          "distance": 183413
+        },
+        {
+          "type": "job",
+          "description": "HjÃ¤lmvÃ¤gen Vinter ",
+          "location": [
+            17.9307262,
+            59.2817446
+          ],
+          "id": 86,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 86,
+          "arrival": 40811,
+          "duration": 18311,
+          "violations": [],
+          "distance": 183578
+        },
+        {
+          "type": "job",
+          "description": "MG-Electric -Smista 140 ",
+          "location": [
+            17.9302742,
+            59.28244369999999
+          ],
+          "id": 96,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 96,
+          "arrival": 41162,
+          "duration": 18362,
+          "violations": [],
+          "distance": 183897
+        },
+        {
+          "type": "job",
+          "description": "Hedin bil Smista AllÃ© 34 ",
+          "location": [
+            17.9315745,
+            59.28270810000001
+          ],
+          "id": 85,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 85,
+          "arrival": 41479,
+          "duration": 18379,
+          "violations": [],
+          "distance": 183988
+        },
+        {
+          "type": "job",
+          "description": "Car Store ",
+          "location": [
+            17.9208714,
+            59.27924329999999
+          ],
+          "id": 95,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 95,
+          "arrival": 41895,
+          "duration": 18495,
+          "violations": [],
+          "distance": 184819
+        },
+        {
+          "type": "job",
+          "description": "Brf Ryttaren ",
+          "location": [
+            17.9224642,
+            59.2762452
+          ],
+          "id": 98,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 98,
+          "arrival": 42326,
+          "duration": 18626,
+          "violations": [],
+          "distance": 185487
+        },
+        {
+          "type": "job",
+          "description": "Dametric",
+          "location": [
+            17.9241563,
+            59.2725884
+          ],
+          "id": 58,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 58,
+          "arrival": 42815,
+          "duration": 18815,
+          "violations": [],
+          "distance": 186704
+        },
+        {
+          "type": "job",
+          "description": "Orbit",
+          "location": [
+            17.9235674,
+            59.2727683
+          ],
+          "id": 60,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 60,
+          "arrival": 43144,
+          "duration": 18844,
+          "violations": [],
+          "distance": 186819
+        },
+        {
+          "type": "job",
+          "description": "SkÃ¤rholmsvÃ¤gen 181 ",
+          "location": [
+            17.9110744,
+            59.2770691
+          ],
+          "id": 63,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 63,
+          "arrival": 43594,
+          "duration": 18994,
+          "violations": [],
+          "distance": 188002
+        },
+        {
+          "type": "job",
+          "description": "Scandic Kungens kurva",
+          "location": [
+            17.9163816,
+            59.2720096
+          ],
+          "id": 57,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 57,
+          "arrival": 44083,
+          "duration": 19183,
+          "violations": [],
+          "distance": 189881
+        },
+        {
+          "type": "job",
+          "description": "Gamla sÃ¶dertÃ¤ljevagen ",
+          "location": [
+            17.9151715,
+            59.27152049999999
+          ],
+          "id": 56,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 56,
+          "arrival": 44395,
+          "duration": 19195,
+          "violations": [],
+          "distance": 189982
+        },
+        {
+          "type": "job",
+          "description": "Jysk/Cervera",
+          "location": [
+            17.9230997,
+            59.26775800000001
+          ],
+          "id": 54,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 54,
+          "arrival": 44857,
+          "duration": 19357,
+          "violations": [],
+          "distance": 191024
+        },
+        {
+          "type": "job",
+          "description": "EllipsvÃ¤gen 15-17 ",
+          "location": [
+            17.9284733,
+            59.2669142
+          ],
+          "id": 59,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 59,
+          "arrival": 45226,
+          "duration": 19426,
+          "violations": [],
+          "distance": 191399
+        },
+        {
+          "type": "job",
+          "description": "City Gross",
+          "location": [
+            17.9237508,
+            59.2665086
+          ],
+          "id": 52,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 52,
+          "arrival": 45606,
+          "duration": 19506,
+          "violations": [],
+          "distance": 191838
+        },
+        {
+          "type": "job",
+          "description": "Jula/Ã–&B/Plantagen",
+          "location": [
+            17.9195255,
+            59.2677395
+          ],
+          "id": 51,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 51,
+          "arrival": 45965,
+          "duration": 19565,
+          "violations": [],
+          "distance": 192093
+        },
+        {
+          "type": "job",
+          "description": "Lager 157",
+          "location": [
+            17.9208768,
+            59.26601969999999
+          ],
+          "id": 53,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 53,
+          "arrival": 46317,
+          "duration": 19617,
+          "violations": [],
+          "distance": 192299
+        },
+        {
+          "type": "job",
+          "description": "Chilli",
+          "location": [
+            17.9215077,
+            59.26582799999999
+          ],
+          "id": 55,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 55,
+          "arrival": 46633,
+          "duration": 19633,
+          "violations": [],
+          "distance": 192359
+        },
+        {
+          "type": "job",
+          "description": "MÃ¤nskÃ¤rsvÃ¤gen 10B ",
+          "location": [
+            17.9034758,
+            59.26436280000001
+          ],
+          "id": 62,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 62,
+          "arrival": 47147,
+          "duration": 19847,
+          "violations": [],
+          "distance": 193815
+        },
+        {
+          "type": "job",
+          "description": "mÃ¥nskÃ¤rsvÃ¤gen 10b",
+          "location": [
+            17.9034758,
+            59.26436280000001
+          ],
+          "id": 0,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 0,
+          "arrival": 47447,
+          "duration": 19847,
+          "violations": [],
+          "distance": 193815
+        },
+        {
+          "type": "job",
+          "description": "Euromaster N",
+          "location": [
+            17.9043932,
+            59.2638596
+          ],
+          "id": 61,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 61,
+          "arrival": 47812,
+          "duration": 19912,
+          "violations": [],
+          "distance": 194085
+        },
+        {
+          "type": "job",
+          "description": "Second Hand ",
+          "location": [
+            17.8328068,
+            59.2334416
+          ],
+          "id": 79,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 79,
+          "arrival": 48664,
+          "duration": 20464,
+          "violations": [],
+          "distance": 201419
+        },
+        {
+          "type": "job",
+          "description": "Epiroc ",
+          "location": [
+            17.8657417,
+            59.25823810000001
+          ],
+          "id": 82,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 82,
+          "arrival": 49352,
+          "duration": 20852,
+          "violations": [],
+          "distance": 205927
+        },
+        {
+          "type": "job",
+          "description": "Din Bil ",
+          "location": [
+            17.8656718,
+            59.2563333
+          ],
+          "id": 80,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 80,
+          "arrival": 49678,
+          "duration": 20878,
+          "violations": [],
+          "distance": 206109
+        },
+        {
+          "type": "job",
+          "description": "VÃ¤derholmen/Tumba glas ",
+          "location": [
+            17.8656718,
+            59.2563333
+          ],
+          "id": 81,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 81,
+          "arrival": 49978,
+          "duration": 20878,
+          "violations": [],
+          "distance": 206109
+        },
+        {
+          "type": "job",
+          "description": "Direktglas/Autover ",
+          "location": [
+            17.8673465,
+            59.2561498
+          ],
+          "id": 78,
+          "setup": 0,
+          "service": 300,
+          "waiting_time": 0,
+          "job": 78,
+          "arrival": 50324,
+          "duration": 20924,
+          "violations": [],
+          "distance": 206534
+        },
+        {
+          "type": "end",
+          "location": [
+            17.877675,
+            59.252735
+          ],
+          "setup": 0,
+          "service": 0,
+          "waiting_time": 0,
+          "arrival": 50810,
+          "duration": 21110,
+          "violations": [],
+          "distance": 208333
+        }
+      ],
+      "violations": [],
+      "geometry": "}vshJ}yblBLXb@bAJRPWFTDXDTBR@PBd@?XBlB@f@@b@V?p@DdCj@v@TVCBq@Fu@D]@SDYJs@Ly@|@aFVuA\\aBXuATeALg@F[FSH[JYJ[L]J[Na@N]Rc@R]LYFKLSRYRW\\a@b@m@f@o@V_@R[NUTe@Vg@Ti@Re@^_Ab@iAx@uBtA{DbB{Ev@{Bn@oB^kAZeAv@kCZeAPoAzCgKfDiKjB}FBGzAwE@EpAsGrAkI\\uBTwA@Il@uDtBqMnDiU@IvBmLZgAPu@nAwGTeABK^oBRmBDO@I`@qB`@kB@C^aBBGz@uD`BaHJe@d@mBPs@f@uBTcANs@Ls@Nw@Lw@Ho@Hk@Hu@Hy@LkANsA`@mEBWFw@VyBRkB^_Db@yDf@iER}AZmCRcB@INeADWFY@GLy@Py@R_AR{@Tw@^qATw@HUh@kBNk@La@Je@Pu@FW@EFc@Jo@L{@TsBVcEJuCB{@By@JaG@k@@MVkOHkI@o@?e@HmHBeD@u@?g@?u@?YAWCUCc@KeAS{A[oBDIBM?OAMEGECE?C@s@iHcAgQ_@gHUoGViFBGDO@O?SASEMCGECECI?IDGJCHCR?T@JQCSNOLEHXbAHdBu@d@KFJGt@e@IeBYcADINMROPBBLFLLHHAHGBGr@JjA?lBnAFF`CrApA`@fARv@NZFlB\\H@bCZfBd@hBPZUZOb@@|DlHbC|D|D`Hr@pAp@nAVj@t@`B`A`CfAjBfAjBj@`AfBtDbBxC|@tAPTBq@Du@H_BFoAHmC@Yj@gMJiCFi@`@q@L`@hAtClBlGb@xAn@jGHf@P`BTz@Hh@Lz@J|@RxA\\fB\\bA~@fChBtEZz@\\l@^^b@P`@FVA\\St@y@Vw@b@_Bd@cBFQv@aClA{CP[N]d@k@X]ZbBZNnArAbAfAXXpBfC\\n@????]o@qBgCYYcAgAoAsA[O[cBYqAw@{A}@u@i@e@h@d@|@t@v@zAXpAY\\e@j@O\\QZmAzCw@`CGPe@bBc@~AWv@u@x@]RW@a@Gc@Q_@_@]m@[{@iBuE_AgC]cA]gBSyAK}@M{@Ii@U{@QaBIg@o@kGc@yAmBmG{@iDKa@K]MRc@|@Ij@InCm@jMa@lGK`@CHGDO@qByCkByDy@}Aq@kAoBmDa@}@s@iBu@eBm@mAmDaGcJwO[k@sCcG_CwGeCgJqC_JmBoFwB}FmCsFwDiJaAyCsBqH_AuC{@_C[w@u@uA{@qAgAiAWm@WUKWKYGm@Go@UeCWwAWaAUi@a@m@a@e@WQUEOBULW^Kb@Gt@?j@Dh@Pj@R\\x@bARGx@uDh@gBj@yA`@w@xAiBlDoDj@u@T[`AaBNm@^aAlAaDpCuMHe@d@wBReAJi@Z_Bb@mBdDeNwBaCoDaEiEmFOQuAcB]k@BM?OCOGCGCCk@IaBGmACg@IkBSuEQ_EEq@UwFCg@bAS?e@B_@Pu@{@oAEIU]IWg@wA}@_C}@gAu@wBiAwEeB_FuB~D}DnE[^i@`@}@p@c@XQLo@`@MxEMxAkAdCe@|AeBzJGnAYZg@X_Ab@o@ZYNUDSEQE_@UEGG?KEII{@}@OUKSGS@QCOEMGEGAGDEHW\\W\\{BhAOL}BzAkAx@QLkDiNy@aESkAwAeIQaAc@wBk@}BaA_Dw@qBk@sAiIiQaEyIaDkGi@q@Y]SSEn@?TA`@?~CFp@?ZBfEFrED~FBfBCfBK|BSrAu@`Cs@xAsCtCeBlC_@l@SZ_AxA}@hBe@~AUrBOrCEvBCzAAVCNENIHCHMJCDQNQJIL_A\\QsFJILMYVPrF~@]ZCT?JBHNFFD?JCDIBKBG@SAOCKAIAAAWAs@Am@Cc@DwBNsCTsBd@_B|@iB~@yAR[^m@dBmCrCuCr@yAt@aCRsAJ}BBgBCgBE_GGsECgE?[Fq@@qCBq@Do@SSmJyHmCcC_CoCMMGIWYSS}@eA{@_Ae@i@a@a@e@_@]SWOa@Qg@Mo@Iw@Ky@A]@?c@?mBFyAHq@LmA^eBtBkJBO@IFg@@oAW_JLEFCp@i@p@y@V[xBeC\\a@Xg@Rg@Ts@Na@HUfAcDXo@LWHOjAgBv@uATk@Na@BMB_@@_@@e@Ac@CWCy@S}CE_AEaAEs@_@}GCc@Bb@^|GDr@D`AD~@R|CBx@BV@b@Ad@A^C^CLO`@Uj@w@tAkAfBINMVYn@gAbDITO`@Ur@Sf@Yf@]`@yBdCWZq@x@q@h@GBMDKQ}AyCORUNoBr@WFGBcAXiBn@MDOFOWgAuB[p@g@d@mAj@m@^o@Zm@\\i@Ze@d@SRWb@i@|@Of@GXMIS_@U_@_@o@a@s@o@wAIOGQM[Qc@a@y@Yk@Ym@Yk@Xj@Xl@Xj@`@x@Pb@LZFPHNn@vA`@r@^n@T^R^LHAV?PAp@?DCnAIp@AJIf@ITa@fA[z@MVb@pAX~@BHN`@PhANvABTLfA??DZLvBF|@ZnBPx@`@fBJh@`@|BCF[j@cBvB_BnBYj@kA`A_KzIs@v@aFlF_A`As@d@q@Rw@J}@Iq@Sq@Ym@a@u@u@m@w@EGaBmCwA{Bu@kAwD{F_BeB_CqBS_@aAy@eA{@KMGSE_@?UFe@Lu@Ls@BKp@aC`AgDFYD_@@]?[O_A]sAIEQEmAhBcAzAS\\yBdDs@hAcCnDkDdF{BdD]RYDOCIGIMGMCQCW?[BSDUJ]h@oAIUQg@sAoDITc@rAOd@?@Y|@oBhEm@rAGJ|@bC}@cCFKl@sAnBiEX}@?ANe@b@sAHUrAnDPf@[p@Ul@I`@Eh@?t@JnB?XCZUz@iA`BeA`BcAjBoCxEK^Nd@Jv@BlABx@@j@@l@BnADfBPhGHpDAVKd@g@q@GTQ`@KTGBGKISSSMMIAGBCJBKFCH@LLRRHRFJFCJUPa@FUf@p@Je@@WIqDQiGEgBCoAAm@Ak@Cy@CmAKw@Oe@RIbBuCn@gAbAcB`AuAj@aA~CsEbCyDxCuErCkE|DaGfA{ArAoBJM\\q@HK~MsSh[ye@hBwDdAeDpAiFn@_Dp@{E`AoIj@}Cr@oC`ByElCaGM_@GSYmAIu@?cABs@Ns@Zw@r@eARY]gAq@wBsA{CmAeBsA}AOM}A}Ag@k@WU??VTf@j@E\\SrAIl@u@oAOQK]I[Ke@AGCOAUB[^eCHi@ZuAF]PTXZd@b@\\PB@XDB?`AF~@QTM^WRMv@q@r@oAFOVq@Pa@nBuFL]J\\FNL\\Rf@JXLZZ]p@a@NW\\Cd@?fB@f@EdA_@n@g@zC_Gf@u@z@aAxAiAl@a@x@_@p@Kl@Ej@AVI`Bm@x@a@bAm@tB}Av@kAn@_Bn@cCTmAL{@JgBDmBRHnC|@PHYbEGj@YvAOr@MOEOIU????HTDNLNNs@XwAFk@XcEN@T@NEPKLMJOHOHW\\mBBK`@aCHe@gAyBKQYeDc@mAA[Ei@C[KWYs@[s@KUUo@Qc@e@mAc@aAd@uAe@tAb@`Ad@lAPb@Tn@JTZr@Xr@JVBZDh@@Zb@lAXdDJPfAxBId@a@`CCJ]lBIVINKNMLQJODUAOAQIoC}@SIEaBI_BSmBi@cEO{AMgBC{A@iADuAHoAP}ARkAz@aDJ_@Ni@h@kBh@yAv@qBx@{A~@}Av@sAtAsBpCaExAsB~AmCxAaCz@sA`CsDhAeBrAeCt@_B`AsCv@uChBsIpBcQ\\gB`AgHJFb@Tr@ZNBH?JEPKP[Lk@B[Bw@CaAE[IYc@}@a@y@{AoDoAuCa@sAK_AC[WRURKPGVSnAI`@AJW`BMn@Ol@IXQd@Ud@KLq@z@KNUXW^IRIRIRMb@GZKh@Od@M`@SZUVWRa@JSBKAYCs@_@][Wa@U_@Oa@Yw@Yy@Mc@Ok@SaAM}@S{ACQGk@QeCO_CEe@Aq@AyB@u@F{@FkAZFNHLiKMhKOI[GDaADcBJsG@aALoG?SAW?YAe@QiBGk@Q}AMcAE_@DKFQBEb@iAj@gBHa@BOF[WSi@q@O[m@uAaA{Bi@kAUe@Ui@_@y@kAeCoAmCGMACIS[o@c@cAIg@AGKcAI_BC_@PGHCXKLOHSPsATqBHe@Nc@RYd@g@pA_ATa@vA_A~CyD|CmFvHiMlC_EFKJORSTO^K^Cb@Db@JPBHBFU@SEW{AcBg@o@mAwA_@c@}@gA`BuDz@uBNe@Jm@Fg@Di@Bi@B}@@_G@wEH{CPwCLmBTmBDUOS[e@BW?Q?Ka@_@`@^?J?PCVZd@NR`AqEb@qBnAoGLURk@Pc@d@a@^Q\\ADALBdAVD?RDJ@H?T?d@Q|@YZOjEyAjAKnFb@nEXv@CjAI~@O~@c@\\OfAe@pCaBHGXSxByAbA_@\\?HLXv@LZPn@R[xBmDfAcBzHqJxA}AlAeAfC}Av@c@nC{AbBuAvA{@pBwBlByBn@kATa@hFkJrBgDdCoDbCqCjB_BdFiDdHaC|@OdBSrDSvC`@|C~@~CfBhExD`DhD~CbCpBtAdCbAjA\\PDpB`@dEFlEIvWkBzIsAvEoAdCs@|DmBdEsC|DiDbDqDrCwDhFsHjHiL~@}AlM_UfDuFpA{BrGkJtCqDjD{D`CiCfKgKbDaD`AeA~BoBnGqFrBaB|FeErA_AbAi@nC_BtEsBpBs@dCm@hCe@zDm@vEWdEU`EM`EIrDIzDBjGCxDPnDV|Dd@bE|@zKtDjLzEvBtA|@h@^Zb@`@^b@f@r@Xh@Xh@\\v@^~@\\`ATh@Zh@PTXXb@VZJ\\Bn@DTFPLNRLRJ`@Fh@XpF\\tQRjOPhTHlEP`D`@vGDp@FjABz@Cx@CZId@KFKNGZAZBb@BLBFHLLHLAJIDGVEP?JBJHLJLVbAbEp@xBtAbD`AhBHJr@~@x@n@x@f@`Bp@hBj@zBt@nBl@zDnABc@NaCRmDp@Tj@Vt@Zr@f@j@n@j@r@p@hAd@fAh@zAf@fB`AdDtAfChAz@f@Pn@TrBd@x@Z\\HtDbA^EtE~BxFdDv@ZpAXtAC`@In@a@dA}@fAsBn@kBf@uCPqCHaDCyBG}DSuFRtFF|DBxBI`DQpCg@tCo@jBgArBeA|@o@`@a@HuABqAYw@[yFeDuE_Ca@_@qD{@[Iu@WwBc@c@QKEc@S_Ao@sAcC{@kCs@kCw@sBm@sAa@o@c@m@k@o@y@m@m@Yq@Y{@MAVSlDO`CCb@vBl@pBnAjA`Bz@lBd@lBjAjFr@rCf@pAl@~@h@n@h@j@fAp@fA\\d@Fd@@vAAbAIhAAlAHlAThA\\fAd@hAb@hAl@t@`@h@Zb@f@@J@JBFDDF@DAVJd@VdG~EvBjBjR`Tp@r@j@d@fAn@fAj@`UtIj@Zf@j@f@x@b@jAh@bBpDdQd@bCn@hDl@vDNx@Jj@TvANf@N\\LTJRJPFVBP@V@JBRFPHHH@z@~A`@t@^v@Xj@Tp@Ph@TpATlBLxAFn@n@nHJz@YVIN_A~B}@~BqC|G_@n@]Xi@X_@@w@EUKiAy@_@Kc@Km@EeAJaAXs@VuBb@gAZYF_@By@Fc@Ba@FYHa@\\]`@KPKVi@~Ae@|AoAnEQl@u@fCKDKEsAeCWq@c@cBk@{Ci@cDaAuFW_AqAcDKa@_@aBYmBg@eD]iBGe@GYESW_@SWIK[c@??Zb@HJRVV^DRFXFd@\\hBf@dDXlB^`BJ`@pAbDV~@`AtFh@bDj@zCb@bBVp@rAdCJDJEt@gCPm@nAoEd@}Ah@_BJWJQ\\a@`@]XI`@Gb@Cx@G^CXGfA[tBc@r@W`AYdAKl@Db@J^JhAx@TJv@D^Ah@Y\\Y^o@pC}G|@_C~@_CHOXWJEI}@k@qHEo@OcBK{@Ki@QcAYaAWq@Uk@[m@k@gAMWIWG_@Ei@?UCSXYRWj@{@lBmCT_@FKlEwG`A}BHFHBHAHEHMDOBS?SASEQEaCCyB?uIAaDXy`B?eCD}N}@k@}CgBiC}A{@i@q@k@iBuAmDmF{IkNcBwC}AkCuAiC_AmBuEaKoGePaDkJcC_J}G_WeCqI}@aCgCuFqAwBaAuAoBsBiBcBuBkAoD{A_E{@wF[}CTsDj@oD~@sDlBgC`BkC|BiH~FyAdAsBtAs@b@kB`AoAh@qAf@_Cr@gB`@yBZkCPsCFaEMqBYeDo@_FuAaDsAqKuEoJ_DwDy@oFm@}Fg@kFK{ODuCH_DPcFXaGZaDh@iDp@s@PaCl@yCjAuFvCgATyA^{@Fo@Kc@g@Sy@IcADiAP_A^k@RMTI\\FPLHAHEFIJ[Bc@Gk@MWOGW{Bc@yEUqBMaAa@{BC[AW@Y@MBOAYCUEMGKAAM]Og@K_@Ok@_@cBYqAS}@g@gBa@qAi@{Ao@uA]_ASa@We@uAaCw@uA}@wAu@eA[a@]c@c@g@][y@y@]Yy@o@kAw@{BuAuBoA{BsA{BsAg@[m@_@u@k@{@q@g@a@w@s@oAkAiAqAu@{@i@s@i@s@aAwAsA}Bi@mAQi@@[CUEQGIKCI@y@q@iHyN}EmKsCgF}AoBsAcBoFgFuFsFsE_GkCmFFQBUAWESIKICI@IHcJqTiC_IcCkI_FiUFIDO@QAOCOEKGGIAEBsAwFk@yBm@mBkA}CYm@u@}AeBsCkBeCkBqBqBcBSOiBiA_CeAyBu@YKgAUeAKg@GSAcAEgEM{@?{@LaBj@gAj@]PkA~@sCdDgArAeAvA_CdC_BbBsBrBiBhA{StHaBZo@Fy@?g@GWQCOGIECEAC?EBIH_@Ha@?cAC_@Bi@Fi@J]L]Pc@Xc@ZsA~@qAr@eBv@q@Ts@TcBd@eBj@q@XmAt@}AtAaA|AcBtDwAnDcAbCsAdC}ArBmAtAwA~AuDbE{@fAMRkAxB_@|@g@nA{BdDeCnB{FlDiFhFiFrGg@f@}@jAUZy@x@eAr@g@Xw@ToAV{AZuAj@eAr@eD`E_CbD_CtDkBfDkBrDoBvDUh@}Mx[gBhCoA`AuALwBCi@HgA^QDk@_HMwAMq@S_AIYUw@Yk@Qa@cA_BsDoCgCwBmCoBoAeAOOUUc@e@q@}@e@u@kAuBsDoEIMoFaHeC_De@o@OQi@o@c@g@a@][My@G_@NMBCOCGECEAC@EBCHCH?F@PMJURSZIXOl@[bBa@zAPXh@p@F@n@iCo@hCGAi@q@QY`@{AZcBNm@HYR[TSLKBLDDB@F?@ADGBK@K?ILC^Ox@FZL`@\\b@f@h@n@NPd@n@dC~CnF`HHLrDnEjAtBb@hAFJh@x@^f@d@^JJxAhAp@d@dAv@ZVlAt@b@RrDnCbA~AP`@d@pBZxAHn@LtAl@zGBf@NENGf@SZA\\NV`@P~@Dv@Ar@Kt@Sn@i@v@kAzAqAp@mA^}AT{AL}@@{C@cBRqAXuAh@mAv@wAvAwA|A_BpDaCrFgDxJwBzGyBdIgBrHkC`NcAbFyAfG}BzHaC|HgAlEqA`Go@dDi@hDe@dEK`CGhC@fDFbBN|B^rCX~AhC~Ix@|BbAnCjBnFh@zBb@`Cb@jDRbDHtDAlDGtCYtD[dCg@rCgCjNw@pDk@~BeA|Cc@bAWd@M\\MTH^bAtEJ^U^_@h@SZeAfBaDvFaCzEyAlCYf@kBlDcG`LkCtE?@mBrDIP_GrKo@lAaAhBw@zAk@t@g@b@m@Tg@NIBG@EBQFe@DkBXg@BQ?SCKEUGOGUMyA{@wAw@g@Qg@Ia@Ao@FoALI@oALe@F[JiDbBIDKFiAj@aB~@uAp@]NCBIDWLGm@EUUaBIk@AM?I@Mb@cGHu@^wCZoBDe@Ba@@c@?[?q@?MAw@Ai@C}CGcCEm@Eg@Ko@]wBaAeFc@aCEYKk@WuAScAu@aE{@sECKCMIc@GWa@cBq@oBEo@Fe@`@_A|CuGVq@L[Ls@Dg@Pu@BGBIVWH@j@ARAPC|CU~@GB?L{@XyADo@WyLAW?S?MA{@Bm@JiAz@b@Bn@`@R??Bi@i@Y{@c@KhACl@@z@?L?R@VVxLEn@YxAMz@C?_AF}CTQBS@k@@IA[MEEGAGBCFCJ?J@J@HDDAt@Ef@Mr@MZWp@}CtGa@~@Gd@Dn@p@nB`@bBFVHb@BLBJz@rEt@`ERbAVtAJj@DXb@`C`AdF\\vBJn@Df@Dl@FbCB|C@h@@v@?L?p@?ZAb@C`@Ed@[nB_@vCIt@c@bGAL?H@LHj@T`BDTFl@Dp@?R@t@DnF@p@HbHDvF@H?TFlFFpGHtEB|B@j@HtHJbI@ZDpC?T?FBhCBvC@hCArC?XUFq@Rg@NSDaBX[HmAZiBb@eDr@aCv@s@^y@ZaIzCGBwAf@o@RMFKDwAl@w@LSR_@VoA\\}@^m@Ro@PUDMDQKO@OJGVAv@@\\D`@F\\DHDHFFLd@H\\FZL`ABT?R@ZELAP?R@RDNFJDDPf@H^DR`AdGbCjNh@zCtAtHpBvKrBzKVpADPNVDDxDzEh@r@FJn@x@LR?LDRBDFJHDH?FGLLRV`@d@BBhAnAjE`Fd@h@NP`@d@j@l@x@h@t@@V?h@AdGEV@\\FPFFZLPLHLALGHSBQBQJMBALITGpB?xAIbBCf@Fn@FT@~@?`BAj@Bj@PhA`@~@dAhA|AZ`@LNCLAR?V@ZDXITSr@Kf@a@pBEJDK`@qBJg@Rs@HUHHNDLABJV~@dEdMf@vBHp@BTFb@@DLdBZ~D?BR~AD`@b@fDx@hFNj@DHJ^Pn@dBdG\\rARbAH^l@|BQ^mAzCqBdFyGxPi@rAq@tBg@~As@lCwChMoAxFSp@T^f@l@TP??d@`@fBz@bARt@DL?TCpE_@FAVENEH^rAnHDZTjBUkBp@c@t@e@HGIFu@d@q@b@E[sAoHI_@ODWDG@qE^UBM?u@EcASgB{@e@a@??UQg@m@U_@Op@IXs@`Di@bBc@pAq@~As@vAaA~AcAtAiAlAgA~@_FpDmGlEyCzBgCjBYqAo@oC}@qDiAaFaAmEg@kB_@mAe@mA{@oBg@kAcAoBiAyBsAwBs@kA[a@WYQIQGWAUDYRQRo@hAWXUFa@C_Bc@OECj@Ch@GhACz@tCbE`BbCf@f@b@P`@H\\CNGrBaATIDd@FX??Tp@JZK[Uq@GYEe@UHsB`AOF]Ba@Ic@Qg@g@aBcCuCcEFWFe@HgABc@Dk@OESGUIOMKKMQO_@M]K]c@cB_@uAiB}Go@oBc@oA]_Ag@gAi@mAoBeEcAuBcAyB_A{B_@_A_@aAcB}Fs@gBu@oAg@o@eAaAsBcAy@WyCs@}Am@}@o@m@u@e@y@i@iAa@gAc@kBYsBO}A[mH?oKAmV@kg@?{L?a_@?wFEiFMqFSuF[qGc@oGo@cHk@kFu@oFyCoPgNqq@m@iDk@mD[sBiAwHa@qCk@yDk@_DWkA{@oDw@iCq@mB_A}B}@wBaBaD_BgCiBcCqImJiDkDaBwB}@_C[oA[kBSyCGqAEaBCwB@aA@qAd@eKDaBBkBA}ACmAOwDI}AGmAUcBQaA]uByAuHk@sDe@qDQiBMcBKmBSwFMuHo@wZKkDMiDWoDOgBG_AUuBSwBo@iF]cDY{CMkBUiEEiAE}ACiAAkA?cCB_CHyCJ{Cl@aKXoFRsFFsDBcE?iCCcCGeDOyESiDy@cJ_@aE{H_|@kCaZqA_Qe@}H]eGg@aKi@wKe@_OU_JOeJGoCCoCEsGD}EF_ER}Fd@gH`@mEh@qEv@oFfBiLXmBTiBPyALgBLaBHyBD{BAwDAyAYif@BoCD_BJ{ANyA^cDVmCLyBB}@@}@@qBE{FMaJOcJQaJScJm@}N[wF]oF_AgNa@cGMcCKaCKqCIqCIuEOgMBwE@w@@wBDsABcAHcAFs@Jo@Je@Va@TQ`@E`@NPVPb@DXDn@?n@Ef@K`@o@~@]Xw@j@q@^o@Xw@P]DM?MEMCIFELS@g@?w@Ew@Ki@Mi@Qe@Qe@UuAcAoAeAmBwAw@g@y@a@aA_@aAYsB{@eAc@cCmAk@[WEQ@MHKXj@bDJh@VnCA\\AJCNGXKF@^B|@^rBi@h@G\\?Df@rDJr@Fh@g@Tf@UGi@Ks@S{ASwA?EF]h@i@_@sBC}@A_@QFQ?]Ik@[UMUMeAo@?K?KAIBq@f@aFh@X|@d@nA^`@Jb@JdANxANf@Fh@FlAVp@Rn@TrBhAj@`@l@f@bBpAl@d@n@b@b@Vb@NlA^l@LxB`@b@DFXFJLZH\\H\\F^F|@RtD\\nE~@~PLfCT|DV~DbAtN`@zG^`HTbGJdCFfCNjG\\jRPzKF`G@hAAhAAz@Ex@I`BQzAi@bFKjAInAIfB?jA?dAXpf@@`BAbBCrCMrCSxCYpCWbBWdB{AxJoCjTo@pKItCEhAAhAEtCAtC@`C@~BHdGXbOP|GPzGbBp`@TdJFnI?lEFvBLv@Pp@r@jA`@Tz@FL@j@Tf@\\`@j@Zx@Nd@Pl@h@lCJl@Ll@PfAl@pCVfAzAbHd@tBVtA@R?VEREJENAP@L@LBJDFEt@MdA]zBQvACRI~@?TGrB?xCFjBJrBPfB\\vCbAhIL`B@bA?PAf@CL?L?JDJBFHb@JbANtDLlDLbCd@zICXCRGROJM?eDWaCQWGKICQEKKKKCMFINETAVBRBPDJB^@V@^BVA~@C`AAz@ElAx@p@\\SRIV?x@A?dCKhBg@Zf@[JiB?eCy@@W?SH]Ry@q@DmA@{@BaA@_ABUB_@@SDQDKJSRKLAhCPdDXLFPTDNHHJDJCJKFSPKdCm@BAXKZQxBqA|AqA\\YNGN@PHPNNVJRPRBLR~@XvATbBVzCH~BDvB?~@?~@AjCAt@IlDAfACvAI~CAz@EtAYdEc@vCAf@?d@DvABd@Dl@Jh@Q\\KPQP?f@E|COl@uBxCA@{AxBm@h@QLE@K?Oj@IZOj@Q`@Qb@e@p@EDBzDLp@P\\lAw@d@[h@OL?B@FBTj@Jn@Hx@Bj@@PHpB?F@x@?JLhAv@vD}@bAe@DK@A_AAo@@Y?G?FAX@n@@~@cADO?C@]@UJ]ZGWGOEA_@h@^i@D@FNFV\\[TK\\ABAN?bAEJAd@E|@cAVjAJj@JbBA|C?PW|CQ~CCt@U~D@hABhAVFTBnB^^CLAVMNSHa@B]BwDD_@FSDKD?FAZCBpFFdAFhADlCQlZBlI@vCCbA?r@EvC?xB@~BBhCBjAH~DDnBChGEjBIpAOtAKv@Kp@Qv@EREZ?L?N?VBfA?d@H?bAA^DRDx@b@lA|@V`@PNbAt@PLLHt@`@HFB@PHZJrArCTXCRATBRA~@KvAQpBEPETUPQ\\Kh@Cl@@l@Ln@T`@ZNj@\\b@|@t@rAz@tBx@bCf@rANd@^rA^xAl@jDb@zC`@lC`@tCl@pEP`BP|BF~@DbADdABbABdCBrF?b@C^EZIPe@i@OWIOqAkBSYIK?c@GUIQKGM@KBKXEPCV?R@PEXu@bDENEGgA}AOU_AsAOU]g@GKk@w@j@v@FJ\\f@NT~@rANTfA|ADFwAfGEPwAdGGVwA|FGTLPBFJPBHJ\\Jb@Fd@Dd@Bf@?f@?`@C`@C\\E\\GZIZIVIVKRMPKLIHEDQPLz@z@zFBPDXz@hFD\\dAxGz@nFJIFELK{@kFHIXWYVIHgAaHE[w@kFG[KLGDMLDXz@hFD\\dAxGz@nFJIFELKFE~DuDpAoAPK`Be@VH?NBLBHDHH`@Hv@LzANxBNpARtANfA`@fC\\nCFd@F^TUXYvA}@pBaA?v@F|IBnC?f@?^E`@ERO^QXiAz@i@\\WXMRGRGBEFEJAHCL?L?L?LBL@DBHFHB@DDBDBJ@HALC^R|EFhBDnA?R?J@jAAvC@lB?n@Bd@Dl@Fp@Lz@TdARx@T|@j@tB`@tAb@lAdHdR^~@V`AFZAT@`@F\\?@FPFNLJ@?L?LGFBJDfDvIvDvKd@pBN~@NfAHt@HtABx@DrANbHBvBNvBVzAA@ADAB?B?D@B?B@@BB@?@?BA@CXp@JVFHX`@FWNe@Ps@Qr@Od@GVYa@GIKWYq@@G?E?EAEACCAA?C@A@ADAB?B?D@B?B@@AHcBtDWj@gBzDYt@Od@KZo@vB_@nAe@|AIXOb@Ux@M^Y`A[dAiAtD]`AIVACGGG@EDABCJ?F?J@HDHIXi@lC}@`EU`ACNKd@K^iAhFmAnFKb@[pASt@I^IZDDLPfCrDJNLPdBbC~@rAPXN\\DLH\\F\\Dd@Bp@Bl@?lCAxDAp@AnC?zA@f@@l@Bl@JrBBh@@\\?ZAf@EVGZIVQ^S`@Yj@OZK\\I^Mz@OdASfBCl@A`@@TDXFRDZD\\@PCl@Iz@UfAMp@Mj@e@tBu@fCUt@{@|BKZKRORYRKHOFMDSLMH_@\\[\\q@fAcAbBeAnB_AdBa@p@S\\c@t@m@dA_@r@Oe@CISk@I_@IYGa@EYE_@G]G}@Ey@Ew@Gu@Qs@KSQe@y@cBKSKSS_@]i@KKOKMCC]Em@C[A[Gy@Eo@Cc@OmBCMGAa@ABf@NlBLbBBPDHPJRFBZDl@B\\K?M@SRMVOn@WtBIZKXQPOJSDOAOIOSIUAIIa@KmAEc@WcCE[Kc@iAoAq@q@{AwAIIOMIKWUWW@G?CAGAEAACAA?C?ABADAF?F@DBDKb@q@hDEPCJs@dDCLBMHT`AlCf@vAGVq@lCGXIT{@tCSj@Dj@Bf@Cg@Ek@K_@}@oDI]GUQj@_A|CQ[PZI^Or@EXC\\CRG?GBCDEN?H?L@FBJ@DATAJWbAGLIFO@[i@kAkB[c@_BaCMIK?GFEJg@zBCZAr@?^BTCDAFAD?H?L?F@F@DBDBBBB@?B@BAFC@EBE`BbCXd@PZLZBNDZ@XD\\Cp@Cr@Iz@Af@Er@@ZB`AF~@RvCBl@@l@?n@Cz@AH@IB{@?o@Am@Cm@SwCG_ACaAA[Ds@@g@H{@Bs@Bq@@W?i@E]G]IUK[KUQY_@k@o@aAOKIE?I?EAEAGCGAACCCAC?C?C@CBA@CDIKK?GBOJGHKFELU~@q@`Bq@lAGHMFYDMAo@U[Qm@e@w@k@ECOIICAXANGf@Ib@mA|HALKj@HFJFBB`BlAZHJwAA_@@^KvA[IaBmACCKGIGOt@w@|Di@lC]bBi@zCSfAi@rDKp@a@dCCLCLAJI\\G`@Mj@U|@Wx@wBvEMVQ\\y@hBUt@EZC^?^Dp@b@fHRnCDl@KLMPSd@i@B]a@OQc@g@s@w@o@u@[]Z\\n@t@r@v@b@f@NP\\`@J`Ae@|A[`AIX_@fAIXc@pAM^St@Q^SRFv@Hn@JZX\\RFNANIPOh@u@j@}@Xa@XQPGZ@FG@S?O?NARGF[AQFYPY`@k@|@i@t@QNOHO@SGY]K[Io@Gw@RSP_@Ru@L_@b@qAHY^gAHYZaAd@}A\\eARe@LQJMFn@n@lGr@~EBPHh@DZF\\XrBVvBBR?P`@_@HSFYD_@@YTBZFFFGG[GUCF{D?[a@@i@BQEE?E?SHABGDOJQTELCLCP?N@f@D|B@`A?~@C~@C~@I|@Ix@KbAg@hEGZKXOVaEbG{@vAsCrFaDzEk@x@}@dAu@|@MNc@`@c@Xi@Ro@JiATa@Ce@Ei@K]G]Oc@S_@YcA_AaAmAuCsFsCcGk@qAe@yAq@iCQq@}@kDYoAe@uB{@uDcAmEW_ASs@Um@k@sAi@eA[k@KOsAsAwA_AqDuB]S_@U{CwAgBi@w@M_@Ca@Am@?{@Fy@HYDg@SMGOKIMGSCU?Q?S@ODQBKDILKLCXCRBRHPLNPT`@Nb@J`@Hv@BfACfAI~Bi@`F]|Ck@bGuA`N}@jJe@xEg@xEWnCGfAGhAE~BEpCKtHMtHArB?`A@z@B|@Dx@Bn@Dj@JjA^vC\\zCXxCN|BHfB@~@@|@@nBC~AEdBQjFKrCOtCe@tJO~BW`FGtAI`BAp@?^?ZF|@D~AJlBJrBB\\?V?b@Eb@UpBgClTKh@[rBEPEJEHMHSHKHGJGLAHCJAHCd@Ad@KTIPMPsAdBaBpBw@dAaD|D{BtCMNGHgAvAeC|CeC~CEOGUG[KcAw@oE_@sCKqCDmCJc@d@wBj@mCh@aD@k@CeAa@cHYiECiAAoA?mB?{@^OdFsCeFrC_@N?z@?lB@nABhAXhE`@bHBdAAj@i@`Dk@lCe@vBKb@ElCJpC^rCv@nEJbAFZFTDNuDpEDXtDyEhGyHhAyAFGLO|BoCzCwD|@mAhB_Cn@u@V[JIJIDAFCNAB?F?P?XCHGFKNYDg@@UNkDHkAH}@~BuSTcBNaB@SAeAAm@[_GCc@G_AA[?[BcAJyBVaFJaCRyDR{DLsCLsCPoFFgBBcBAwBCmBEw@Cw@MiBWsC[sCGm@]iDGo@Es@ImBCq@Au@A}@?_A@_AJqHLmHDqCFcCDiAFeAReCd@}Ed@{E~@iJrAeNx@oHX_BVwA\\aBTmAH_@DUJUJUV[LIHEJCHAn@Cv@F`AZpAj@v@^f@VtCnA^TtAfArAvApAvBd@hAb@vAn@`Cl@bC`CbKTdArBhId@jA`@~@`FbKhApB`BtBbAp@zAn@dAP`AB`BUlAk@nAaAx@{@jAoAjA}ApBaDlAeBxA}BdD}EbBaCl@q@jCkCrCgClGyFhByA~A}ApDiDhEqD|AuAdAgAbA}@hAsAXc@n@iAt@{Ap@wAl@}A`@eA`@gA|@eCNKLAHBRN@BJRJ`@RlENpCD~@Dt@Dl@HtBDpABf@@~@@pB@dB@^?V?J?lAFpA@hJ?t@?h@J~J?T@v@?`@HpHBzF@TC?EDCFAJ?J?HDH@BBDD?@TXfMPlICp@BnA@r@Br@BdAHf@XpN@VHbDYDs@Jo@Hm@HKp@_@jD^v@VpCWqC_@w@^kDJq@l@In@Ir@KXEBt@b@~MFnBR~NB`ADpBJlHHtFBv@@ZBXDXDXPbARbAJ^CDCH?L?H@HQJ[Nc@PC@GDEDELCPOI]COPMb@Wz@CJ_@vAKXMRmAdAc@Hi@WQGICWCS?OJQLOVMXM`@E^Ed@A^@ZB^ZvDVhC]bAkBlAOeACk@EEDDBj@NdAjBmA\\cAWiC[wDC_@A[@_@De@D_@La@LYNWPMNKR?VBHBPFh@Vb@IlAeALSJY^wABKV{@Lc@NQ\\BNHAVFjCBnAHzDBrA@n@@R@j@B|B?NBnC@`A@z@@r@BjB?HD`DB~@BrC?@HbGH|DJhF@lA@`@B`@HlAF~@Dl@D`@B`@D^BXBp@@t@@r@FvAFtABfAEh@KdC?|@@VRXJXHh@Ii@KYSYAW?}@JeCDi@CgAGuAGwAAs@Au@Cq@f@U\\U\\U^Y\\YXWtBiBp@v@j@h@FDD@D@JCVGLIzBkAVGh@ONCq@qPKaA}AuKYsBs@{Ea@uAx@cAz@cA]sCIw@c@uDMeAE]G_@Mk@Qw@NIVI\\Id@MJEJKJORg@Tm@b@iALYNYNYHOHSJ]`@eB@s@KgBCy@Ba@D[J[`@iAnAqELq@?y@BABE@G@IAGAGAECECAE@CBABAFQIOQWk@[iAI[_B}FK[jA{AV]iAqF?Ck@oDAg@cBnBFp@BZgBdCg@gEaAp@`Aq@f@fEfBeCh@jD`A|EJZ~A|FHZZhAVj@NPPHAH?F@FBFBBB@BA?x@r@jBtB~El@}Am@|AoAwCe@gAs@kB?y@BABE@G@IAGAG\\UTULUt@oAXY`@O`@IF`BD\\DHJ@????KAEIE]GaB^IJClAWjAY`AOXErA]p@[d@YLGBTl@vEn@c@JK|@q@TU`CsBTj@BhB@T@`@Fb@Xv@lAiCbAoCNe@T{@`A{CRu@Bc@?_@Zm@Na@HUFQ@Ej@qBr@_CL]Va@`@_@h@UROJIHQHSFUBW?E@O@WAO?OE_@G_AUuDG[I]BC@E?C?G?ICEACCAC?CBABAHAF@FOJ_Ap@k@Vm@Hi@Bm@C}DUuESaAEH{IJaEJeE\\iCN{AJkA@GHw@LqAFm@BBVDtBJdAJp@Lt@p@`@l@h@pAPb@fCvIDLDHHFLFJ?JEl@c@@Hj@`Dl@pDJl@`BmB`AmA`AkAXSFr@BTJbCDt@PdBZxCNlBLxCThFFhAH~@Jp@D^JZRb@Xf@Z`@TZIrFAV?Z?b@B`ANzFBhB?pAC^CBCFCHAL?RBLBHBDFFF@JEFMJ@HBH@p@nAJXxAfDr@~At@`BpBjE|AhDzAbDNZxAdD^z@vAdDXpAH\\H`@Hx@F`AFfCB~@FbFAr@RrAX|AzAdHnCxLFh@Bh@J~@@t@?b@?d@Ep@Gf@aA`FKh@Ot@mBbKETo@zCk@|Bm@rBOf@Sd@s@xAu@tAs@bAk@t@_CdCSTgAlAUXS^Ur@Kv@G~@?t@@^MB[FQD}AZo@NA]EcBDbB@\\n@O|A[PEZGLCXnHBd@TbGEz@EXGb@EVAZBXJTDFHDPEJKBKBOZGNDj@Xj@h@\\j@Zp@f@nBTtALzACPAP?LFVFJHDJCJOBM@Q?QCMVQ^Wp@Fz@o@bAvI?|@m@BqA~@\\pC]qCpA_Al@C?}@cAwItCqBNnBRxBr@lD@FlAzFbBcALdAMeAcBbAmA{FAGjC}GDUCW??m@iCU}@kAx@jAy@x@o@LOnBaDVIr@FMjDKxDAZApA?f@?x@Dx@Hz@Hp@TnAThAnAnGNx@Jh@NrADn@CPAZBPFLDFHDNh@Rp@RfA`@~BdA~GHj@Jj@vApIlBpLV~ALBrBe@h@xD????i@yDsBd@MCW_BmBqLwAqIKk@Ik@eA_Ha@_CSgAE{@Gq@DM\\Yt@_@POn@k@VQROpBsAbAkA|BgDJOn@mAVo@f@kATo@v@aCdCaIQu@Mu@KuAEg@QiDQ}Au@h@t@i@P|APhDDf@JtALt@Pt@eC`Iw@`CUn@g@jAWn@o@lAKN}BfDkAn@mBxASJ}A~@o@XEBYDGKKGMBEFEHCPYTmEbBuClAu@L}@?e@Ig@Sq@k@k@q@O[Ks@GYGOKKM?IDIJGPCV?XCv@Mx@Mn@SvAk@vFMlASvBOxBApB?L?n@D~@HdAPpAZxAT|@r@jC\\zANdANfBJEbBy@\\WHKlAhCp@lAq@mAmAiCIJd@jFz@pJdAhCjArCSn@}@zCM`@_A}Am@{A_@qA]}AHK`@m@a@l@IJe@wCEi@Dh@d@vC\\|A^pAl@zA~@|AvAjBn@hAN^Nj@Hd@Hh@H~@FdAJ~CH~@Lz@RdAd@~AtAfDrA`DjAxCKRELTl@\\dA@z@QFa@q@aCsD\\sAxAdCFCDMJSp@jBb@`BbA`ENd@NU^c@jC{CdCqCP[\\u@Pm@FDP@?iC?hCQAGEQl@]t@QZeCpCkCzC_@b@OT??Nh@Pd@Xh@^d@d@b@d@Xl@Pd@Bd@Cr@Sx@e@vA{@@DDHBBF@DAFGDI@OLWZ_@p@u@|BqDPOTBHDF?FEDIDMBUAQCQEMIIM?C@Ki@Ks@rAiAXUFEh@a@\\Wd@_@l@_@VQRMZSNKXQ@AFIP[AoA?OJMWaAV`AKL?N@nAQZUk@_@eA^dATj@GHA@YPOJ[RSLWPm@^e@^]Vi@`@GDYTsAhAJr@Jh@EDGNAHAR@XDPFFHDF?FEDIT[NEP@RHRLVXJPXfADZ?\\AVMr@_@^uD~D}DhEoApB}@tBk@rBa@xBWdBKzAMlCCpA?vAFjEe@HsATW@eBF{@BgC?aBGm@Kw@_@{@{@o@y@]q@m@eBSVn@fBb@|@p@~@v@t@`Af@n@JhBHhC?r@CfBIVCxB]RCAm@GgEAwA@kANmCLuATeB`@qBh@kBt@kBnAqBtBuB`GwGl@q@XMHF`@f@f@|AjAtDhAvDPn@bAvD@j@@R@NBFFHDBD@FAFGDKBQ?SCSEKGIWQ_AkDoAoEMi@[iAm@oBY_AI]Kq@@Q?O?STaAxAcCrAgBj@a@FDHAHGDMBSRo@~BuCdAoAn@WDDVj@XxAf@nBHSHORW`AeA\\a@HM~B_DCQ|AyADEXYf@UNG`@SCc@QkCAYFEFM@OAc@IOGEI@Y_GEiAbD]VQWPcD\\DhAX~FGDGRAH@TBRBBDFL@@XPjCBb@Dh@PtCRGFCZM\\K\\GZDB?p@pHB`@w@`@]B[GMz@YdBAl@SGQMPLRF@m@XeBRFTBTATGrAm@TjCUkC^Q`B{@?oAh@YTOHKBNFHFDLn@^pCb@lCTzCLfDRnX?~@HnJAv@Eb@GNEZARDXDRLdBJnGFxBH|@J`ATfAXhA^hAITyDdKFNVr@h@jAGLIPM@]GOEI@I@{@xBENe@nAN`@Tj@|@_C??}@~BUk@Oa@d@oAHCz@wBDOHAND\\FLAHQFMd@hATh@LZr@bBJVvAfDHRJBLK`DgIRYFJFBV^NRN\\Tf@n@zAf@dBd@xB^tBJxABrCAlAKdAMf@E@EBILENAPG|@Kd@O\\e@r@i@j@a@XkC~@y@ZsAd@_@NW@WIQAMHO^IRWTcC|@_AP]FgAJ]EYQGKICIBGHEJEP?F?TBLBJFHD`ADl@Jl@Pp@T^XT|@LdB\\LCHGFKBQB_@DWDSNWNGNAPHTRrClGn@dB`AdCpDrG`D~DnFdFfGvFlBtBdBdCtA~B`BpDnArDbAdDdArEz@~ETfBn@~EHr@VhDJtBFtAFdC@lDArCEvCUlGG|AoAtWErCAvEFtF\\jGx@fIrA|Gx@~CdF|RnDpMnDzMhBdHdAxDlDvMnD~MhCtJpAbEbAnCzA~CfDdFzAvDfAfCVj@Xd@h@p@Zb@^Zb@Zh@V`ANVCLATNZ@v@FZFVJTJXVV\\NXZj@Vj@v@nBh@tAPZFJJLDJHP@VDVDTJPJHHBP@FANOTUN]L_@BUDc@?SAUAUDi@Hg@Vw@Rm@Z{@Zo@Xc@LSRQPMLINERIb@E`@G`@CZ?n@@vBLX?X^HLFRBRBjBBb@?\\APEFCHAJAJ@J@JBF@BBDDBD?DADCBGBKTUNWLQb@s@Xc@VUZKf@Lt@tA|@vB~AzD@DrCvGf@oAg@nAsCwGAE_B{D}@wBu@uAg@M[JWTYb@c@r@MPSBIAICAGEECQAWCiD?c@Kc@Ao@_ALi@@}@C_AEo@?m@Bw@HUFOF[RYVSX[l@c@~@[|@[`Ac@PK?IGg@w@s@yAw@qAu@cA}AcBiA}@{A_AeAm@wDoBsAy@y@q@yBkBkBcBw@s@y@yAqAsCgAuCoAwDeW}`AgCmJ_@yBa@gBYwAMmAGq@Aw@@i@Fs@Ni@N]TO`@E`@@\\JNN@PBNC\\CXu@jDq@hDs@lDQfAIp@Ix@I|@EdAA|@?z@?VAVG^GLENCRa@BYEUYUa@Om@Gq@?o@@m@PsA`@{DHgALoA@w@I{AMs@{@iDa@aBm@cC_C}Iu@uCg@}B[mBQyCi@DkBN]CWKQYyEmG_CuC~BtCvCzD??`ApAPXVJ\\BjBOh@EUwNGqAOoASa@u@aASWRVt@`AR`@Pc@Zo@VO^Ax@?`@QpAiBh@_@r@Qn@L|An@v@AfAQDAh@@XRT^Rt@Fd@d@tBZvAh@bC\\fBF`ACJAJ@RDJBDFBF?DEDKr@NVR@XFTJLJFHAJGHOBKBW?YCWDeBTyCr@sJL}ADuA?wAAgACy@Ck@MeBOoA]oBg@uBQs@Mm@G]Ic@E_@Ea@Ea@Ek@Cq@C]A[Aq@AY?]@o@B_@SQcCs@{Aa@SAY@Ag@CmB?YCe@AQCSEUEYGUQVKSc@cAMY"
+    }
+  ]
+}

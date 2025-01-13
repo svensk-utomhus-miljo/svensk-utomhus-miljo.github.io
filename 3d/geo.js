@@ -73,16 +73,6 @@ const you = document.createElement('span')
 you.textContent = '🚗'
 you.style.fontSize = '1.4rem'
 
-const accuracyCircle = new google.maps.Circle({
-  map,
-  radius: 0, // Radie i meter
-  fillColor: '#66aaff',
-  fillOpacity: 0.2,
-  strokeColor: '#66aaff',
-  strokeOpacity: 0.4,
-  strokeWeight: 1
-})
-
 const userMarker = new google.maps.marker.AdvancedMarkerElement({
   position: myLatLng(),
   content: you,
@@ -92,11 +82,6 @@ const userMarker = new google.maps.marker.AdvancedMarkerElement({
 function onUpdate (evt) {
   // update currentPosition
   currentPosition = evt
-
-  // Uppdatera cirkelns position och radie
-  accuracyCircle.setCenter(myLatLng())
-  accuracyCircle.setRadius(evt.coords.accuracy)
-
   userMarker.position = myLatLng()
 }
 
@@ -110,8 +95,6 @@ function myLatLng() {
     lng: currentPosition.coords.longitude
   }
 }
-
-globalThis.myLatLng = myLatLng
 
 export {
   currentPosition,

@@ -60,6 +60,8 @@
   <gmpx-split-layout>
     <div slot="fixed" style="background: white;">
 
+
+
       <gmpx-place-picker for-map="main-map" type="geocode"
         placeholder="sök"
         @gmpx-placechange=${this.updateSearchLocation}>
@@ -193,18 +195,28 @@
     </gmpx-place-overview>
     <!-- <customer-list></customer-list> -->
   </div>
-  <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f">
+
+  <gmp-map-3d
+    slot="main"
+    center="59.253335263192554,17.878510185709075,5.742569702942788"
+    range="813.4283258060168"
+    roll="0"
+    tilt="0"
+    zoom="17"
+  ></gmp-map-3d>
+
+  <!-- <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="x">
 
     <div class="overlay" slot="control-inline-start-block-start">
       <div class="controls">
         <input type="text" class="query-input" />
         <button class="search-button">Search</button>
       </div>
-      <div hidden class="list-container">
+      <div class="list-container">
         <gmp-place-list selectable></gmp-place-list>
       </div>
     </div>
-    <gmp-place-details hidden size="large"></gmp-place-details>
+    <gmp-place-details size="large"></gmp-place-details>
 
     <gmp-advanced-marker
       position="37.4220656,-122.0840897"
@@ -215,7 +227,7 @@
       title="Seattle, WA"
     ></gmp-advanced-marker>
 
-    </gmp-map>
+    </gmp-map> -->
   </gmpx-split-layout>
 
   <style>
@@ -255,7 +267,7 @@
 
   </style>
   <!-- <map-view></map-view> -->
-  <script type="module" src="/main.js"></script>
+  <script type="module" src="./main.js"></script>
 
 </body>
 </html>

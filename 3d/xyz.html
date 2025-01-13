@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    gmp-map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- See https://github.com/googlemaps/extended-component-library for docs and updates. -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
+
+  <gmpx-api-loader key="AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg" solution-channel="GMP_GCC_mapandmarker_v2"></gmpx-api-loader>
+  <gmpx-split-layout>
+    <gmpx-overlay-layout slot="fixed">
+      <div slot="main">
+        <gmpx-place-picker placeholder="Enter a college in the US or Canada" for-map="gmap" type="university" country="us ca">
+        </gmpx-place-picker>
+        <gmpx-place-overview size="large" google-logo-already-displayed>
+          <gmpx-icon-button slot="action" variant="filled" id="open-button">
+            See Reviews
+          </gmpx-icon-button>
+          <gmpx-place-directions-button slot="action" variant="filled">
+            Directions
+          </gmpx-place-directions-button>
+        </gmpx-place-overview>
+      </div>
+      <div slot="overlay">
+        <gmpx-icon-button id="close-button" autofocus>
+          Close
+        </gmpx-icon-button>
+        <gmpx-place-data-provider>
+          <gmpx-place-reviews></gmpx-place-reviews>
+        </gmpx-place-data-provider>
+      </div>
+    </gmpx-overlay-layout>
+    <gmp-map id="gmap" slot="main" center="39.46598273118431,-0.3835740844457525" zoom="4" map-id="DEMO_MAP_ID">
+      <gmp-advanced-marker
+        position="39.46598273118431,-0.3835740844457525"
+        title="Resto"
+        gmp-clickable
+    ></gmp-advanced-marker>
+    </gmp-map>
+  </gmpx-split-layout>
+
+  <gmpx-icon-button icon="my_location" variant="filled" id="order-button">
+
+  </gmpx-icon-button>
+
+  <script>
+    const DEFAULT_CENTER = {lat:45, lng:-98};
+    const map = document.querySelector('gmp-map');
+    const picker = document.querySelector('gmpx-place-picker');
+    const overview = document.querySelector('gmpx-place-overview');
+    const marker = document.querySelector('gmp-advanced-marker');
+    const overlay = document.querySelector('gmpx-overlay-layout');
+    const dataProvider = document.querySelector('gmpx-place-data-provider');
+    const openButton = document.getElementById('open-button');
+    const closeButton = document.getElementById('close-button');
+
+    picker.addEventListener('gmpx-placechange', () => {
+      overview.place = picker.value;
+      if (picker.value == null) {
+        map.center = DEFAULT_CENTER;
+        marker.position = undefined;
+        map.zoom = 4;
+      } else {
+        dataProvider.place = picker.value;
+        map.center = picker.value.location;
+        marker.position = picker.value.location;
+        map.zoom = 16;
+      }
+    });
+    openButton.addEventListener('click', () => {overlay.showOverlay();});
+    closeButton.addEventListener('click', () => {overlay.hideOverlay();});
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const locator = document.querySelector('gmpx-store-locator');
+    locator.listings = [
+      {
+        title: 'Bryce Canyon National Park',
+        addressLines: ['Utah', 'USA'],
+        position: {'lat': 37.6404, 'lng': -112.1696},
+        placeId: 'ChIJLevDAsZrNYcRBm2svvvY6Ws',
+        actions: [{
+          label: 'Website',
+          defaultUri:
+              'https://www.nps.gov/brca/index.htm'
+        }]
+      },
+      {
+        title: 'Everglades National Park',
+        addressLines: ['Florida', 'USA'],
+        position: {'lat': 25.3952, 'lng': -80.5831},
+        placeId: 'ChIJ2wVsejCo0IgRlzEvdlY-4A8',
+        actions: [{
+          label: 'Website',
+          defaultUri:
+              'https://www.nps.gov/ever/index.htm'
+        }]
+      }
+    ];
+  });
+  </script>
+</body>
+</html>

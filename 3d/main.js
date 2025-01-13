@@ -1,6 +1,5 @@
 import './reg-sw.js'
 import { nn } from './util.js'
-import {ai} from './ai.js'
 
 const components = await import('https://unpkg.com/@googlemaps/extended-component-library')
 
@@ -24,12 +23,11 @@ setStringLiterals({
 })
 
 const $place = nn(document.querySelector('#place'))
-const $map = nn(document.querySelector('gmp-map'))
-const map = $map['innerMap']
+const $map = nn(document.querySelector('gmp-map-3d'))
 
-map.setMapTypeId('satellite')
+// map.setMapTypeId('satellite')
 
-globalThis.map = map
+globalThis.$map = $map
 globalThis.placeElement = $place
 
 import('./map.js')
@@ -43,22 +41,22 @@ import('./map.js')
 //   installPrompt = event;
 // });
 
-const sv = map.streetView
-globalThis.sv = sv
+// const sv = map.streetView
+// globalThis.sv = sv
 
 // https://developers.google.com/maps/documentation/javascript/streetview#StreetViewControls
-sv.setOptions({
-  linksControl: true,
-  panControl: true,
-  zoomControl: true,
-  addressControl: true,
-  fullscreenControl: true,
-  motionTrackingControl: false,
-  enableCloseButton: true,
-  addressControlOptions: {
-    position: google.maps.ControlPosition.BOTTOM_CENTER,
-  },
-})
+// sv.setOptions({
+//   linksControl: true,
+//   panControl: true,
+//   zoomControl: true,
+//   addressControl: true,
+//   fullscreenControl: true,
+//   motionTrackingControl: false,
+//   enableCloseButton: true,
+//   addressControlOptions: {
+//     position: google.maps.ControlPosition.BOTTOM_CENTER,
+//   },
+// })
 
 
 // map.setOptions({
@@ -68,22 +66,22 @@ sv.setOptions({
 
 globalThis.$place = $place
 
-google.maps.places.AutocompleteService.prototype.getPredictions = console.log
+// google.maps.places.AutocompleteService.prototype.getPredictions = console.log
 
-const placeList = document.querySelector("gmp-place-list");
+// const placeList = document.querySelector("gmp-place-list");
 const searchButton = document.querySelector(".search-button");
 const placeDetails = document.querySelector("gmp-place-details");
 const input = document.querySelector(".query-input");
 
-globalThis.placeList = placeList
+// globalThis.placeList = placeList
 // placeList.configureFromSearchByTextRequest({
 //   textQuery: 'vårby allé 53',
 //   locationBias: map.getBounds()
 // }).then(addMarkers);
 
-placeList.addEventListener("gmp-placeselect", ({ place }) => {
-    console.log(place)
-});
+// placeList.addEventListener("gmp-placeselect", ({ place }) => {
+//     console.log(place)
+// });
 
 const markers = {}
 
@@ -93,6 +91,11 @@ const options = {
   strictBounds: false,
 }
 
+google.maps.event.addListener($map, 'click', (evt) => {
+  console.log(evt.location)
+})
+
+/*
 const autocomplete = new google.maps.places.Autocomplete(input, options);
 autocomplete.bindTo("bounds", map);
 globalThis.autocomplete = autocomplete
@@ -134,11 +137,11 @@ async function addMarkers() {
       map.fitBounds(bounds);
   });
 }
+*/
 
 export {
   components,
   $map,
   maps,
-  map,
   $place,
 }
