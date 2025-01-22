@@ -300,27 +300,48 @@ async function makePlaceFromMarker (marker, relatedMarkers) {
     // iconBackgroundColor: '#123456',
     // internationalPhoneNumber: '+1 234-567-8910',
     // nationalPhoneNumber: '(234) 567-8910',
-    // regularOpeningHours: {
-    //   periods: [
-    //     {
-    //       close: {day: 0, hour: 18, minute: 0},
-    //       open: {day: 0, hour: 11, minute: 0},
-    //     },
-    //     {
-    //       open: {day: 1, hour: 12, minute: 30},
-    //       close: {day: 1, hour: 23, minute: 59},
-    //     },
-    //   ],
-    //   weekdayDescriptions: [
-    //     'Monday: Closed',
-    //     'Tuesday: Closed',
-    //     'Wednesday: Closed',
-    //     'Thursday: Closed',
-    //     'Friday: Closed',
-    //     'Saturday: 11:00 AM - 6:00 PM',
-    //     'Sunday: 12:30 PM - 6:00 PM',
-    //   ],
-    // },
+    regularOpeningHours: {
+      periods: [
+        {
+          close: {day: 0},
+          open: {day: 0},
+        },
+        {
+          close: {day: 6, hour: 18, minute: 0},
+          open: {day: 6, hour: 12, minute: 30},
+        },
+      ],
+
+      // returns localized strings using Date().toLocaleString
+      get weekdayDescriptions() {
+        const periods = this.periods
+        if (!periods) return []
+
+        const opening_hours = periods.map(({open, close}) => {
+          const openTime = new Date()
+          openTime.setHours(open.hour, open.minute)
+          const closeTime = new Date()
+          closeTime.setHours(close.hour, close.minute)
+
+          return `${openTime.toLocaleString(
+            undefined, {
+              hour: 'numeric',
+              minute: 'numeric',
+              weekday: 'short'
+            })} - ${closeTime.toLocaleString(
+            undefined, {
+              hour: 'numeric',
+              minute: 'numeric',
+              weekday: 'short'
+            })}`
+        })
+
+        return [
+          ...opening_hours,
+        ]
+
+      }
+    },
     photos: images.map(uri => makeFakePhoto({
         authorAttributions: [
           // new AuthorAttribution(find(staff, 'jimmy'))
@@ -335,7 +356,7 @@ async function makePlaceFromMarker (marker, relatedMarkers) {
     // svgIconMaskURI: 'https://maps.gstatic.com/mapfiles/msask.png',
     // types: [/* 'restaurant', 'food', 'establishment' */],
     // // userRatingCount: 123,
-    // utcOffsetMinutes: -60,
+    utcOffsetMinutes: -60,
     // websiteURI: 'https://svenskutemiljo.se',
   })
 }

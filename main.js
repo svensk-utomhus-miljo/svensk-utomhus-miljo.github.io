@@ -18,9 +18,9 @@ await Promise.all([
 ])
 
 setStringLiterals({
-  PLACE_REVIEWS_SECTION_HEADING: 'Kommentarer från oss',
-  PLACE_REVIEWS_SECTION_CAPTION: 'Senaste',
-  PLACE_OPEN_NOW: 'Ska göras idag'
+  // PLACE_REVIEWS_SECTION_HEADING: 'Kommentarer från oss',
+  // PLACE_REVIEWS_SECTION_CAPTION: 'Senaste',
+  // PLACE_OPEN_NOW: 'Ska göras idag'
 })
 
 const $place = nn(document.querySelector('#place'))

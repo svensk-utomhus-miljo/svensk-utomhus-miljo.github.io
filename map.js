@@ -9,7 +9,7 @@ import { Poi } from './poi.js'
 import './karta/rita.js'
 
 
-const { InfoWindow, LatLng, Polygon, Size, ImageMapType, StreetViewService } = google.maps
+const { UnitSystem, TravelMode, InfoWindow, LatLng, Polygon, Size, ImageMapType, StreetViewService } = google.maps
 const { PinElement, AdvancedMarkerElement } = google.maps.marker
 
 globalThis.supabase = supabase
@@ -124,7 +124,7 @@ supabase.from('poi').select('*')
         strokeWeight: 2,
         fillColor: poi.meta.color,
         fillOpacity: 0.32,
-        editable: false,
+        editable: !false,
         clickable: false,
         data: poi,
       })
@@ -217,12 +217,13 @@ function updateArcs (arcs) {
 
 const sv = new StreetViewService()
 
+globalThis.markHistory = []
 $map.addEventListener('gmp-click', evt => {
   const marker = evt.target
   const poi = marker.data
-  window.poi = poi
-  window.marker = marker
-
+  globalThis.poi = poi
+  globalThis.marker = marker
+  markHistory.push(marker)
   document.querySelector('info-window-content').poi = marker.data
 
   if (poi.type !== 'customer' && !poi.meta.owner) {
@@ -395,71 +396,132 @@ google.maps.event.addListener(map, 'mousemove', function (event) {
 
 window.e = getNearestItems
 
+function summarize(result) {
+  let meter = 0, sec = 0;
+  const myroute = result.routes[0];
 
-/**
-    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-      const d = globalThis.workWork
+  if (!myroute) {
+    return;
+  }
 
-      directionsService
-        .route({
-          origin: myLatLng(),
-          destination: d.pop().location,
-          travelMode: google.maps.TravelMode.DRIVING,
-          unitSystem: google.maps.UnitSystem.METRIC,
-          provideRouteAlternatives: false,
-          waypoints: d,
-          optimizeWaypoints: !true,
-        })
-        .then(result => {
-          // Hämta start, slut och waypoints från result
-          const origin = result.routes[0].legs[0].start_location.toUrlValue()
-          const destination = result.routes[0].legs[result.routes[0].legs.length - 1].end_location.toUrlValue()
-          const waypoints = result.routes[0].legs
-            .slice(1, -1) // Alla ben mellan start och slut
-            .map(leg => leg.start_location.toUrlValue())
-            .join('|') // Separera waypoints med |
+  for (let leg of myroute.legs) {
+    meter += leg.distance.value;
+    sec += leg.duration.value;
+  }
 
-          // Skapa URL
-          const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}&waypoints=${waypoints}&travelmode=driving`
+  const hours = Math.floor(sec / 3600);
+  const minutes = Math.floor((sec - hours * 3600) / 60);
+  const km = meter / 1000;
 
-          const linkRide = document.createElement('a')
-          linkRide.innerText = 'öppna i google maps'
-          linkRide.href = url
+  console.log('Total distance: ' + km + ' km');
+  console.log('Total time: ' + hours + ' hours ' + minutes + ' minutes');
+  // document.getElementById("total").innerHTML = total + " km";
+}
 
-          document.body.append(linkRide)
+async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  const d = globalThis.workWork
 
-          directionsRenderer.setDirections(result);
-        }, console.error)
+  const result = await directionsService.route({
+    origin: d.shift().location,
+    destination: d.pop().location,
+    travelMode: TravelMode.DRIVING,
+    // drivingOptions: {},
+    unitSystem: UnitSystem.METRIC,
+    provideRouteAlternatives: true,
+    waypoints: d,
+    optimizeWaypoints: true,
+  })
+  globalThis.result = result
+  // Hämta start, slut och waypoints från result
+  const origin = result.routes[0].legs[0].start_location.toUrlValue()
+  const destination = result.routes[0].legs[result.routes[0].legs.length - 1].end_location.toUrlValue()
+  const waypoints = result.routes[0].legs
+    .slice(1, -1) // Alla ben mellan start och slut
+    .map(leg => leg.start_location.toUrlValue())
+    .join('|') // Separera waypoints med |
+
+  // Skapa URL
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}&waypoints=${waypoints}&travelmode=driving`
+
+  const linkRide = document.createElement('a')
+  linkRide.innerText = 'öppna i google maps'
+  linkRide.href = url
+
+  document.body.append(linkRide)
+
+  directionsRenderer.setDirections(result);
+}
+
+const directionsRenderer = new google.maps.DirectionsRenderer({
+  draggable: true,
+  panel: $directionPanel,
+  routeIndex: 200,
+  suppressBicyclingLayer: true,
+  markerOptions: {
+    animation: google.maps.Animation.BOUNCE,
+    shape: 'circle'
+  },
+  map
+})
+const directionsService = new google.maps.DirectionsService()
+
+globalThis.directionsRenderer = directionsRenderer
+globalThis.directionsService = directionsService
+
+globalThis.calculateAndDisplayRoute = calculateAndDisplayRoute.bind(null, directionsService, directionsRenderer)
+
+directionsRenderer.addListener('directions_changed', () => {
+  const directions = directionsRenderer.getDirections()
+  if (directions) summarize(directions)
+})
+
+globalThis.foo = async function foo () {
+  const jobs = markHistory.map(elm => ({
+    id: elm.data.id,
+    location: elm.position.lngLat,
+    service: 300,
+  }))
+
+  const sample = {
+    vehicles: [
+      {
+        id: 1,
+        start: [ myLatLng().lng, myLatLng().lat ],
+        // end: jobs.pop().location,
+      },
+    ],
+    jobs
+  }
+
+  const q = new URLSearchParams({
+    cors: JSON.stringify({
+      url: 'http://solver.vroom-project.org/',
+    })
+  })
+
+  const response = await fetch('https://adv-cors.deno.dev/?' + q, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(sample)
+  })
+
+  const text = await response.text()
+  const { routes } = JSON.parse(text, (key, value) => {
+    return key === 'location' ? { lat: value[1], lng: value[0] } : value
+  })
+
+  globalThis.workWork = routes[0].steps.slice(1, -1).map(step => {
+    return {
+      location: step.location,
+      stopover: true
     }
+  })
 
-    const map = new google.maps.Map(wrapperDiv, {
-      // heading: 320,
-      // tilt: 47.5,
-      // default to satellite view
-      mapTypeId: google.maps.MapTypeId.SATELLITE,
-      mapId: '6ff586e93e18149f',
-      collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
-      // mapTypeControlOptions: {
-      //   mapTypeIds: ['roadmap', 'satellite', 'terrain', 'custom']
-      // }
-    })
+  globalThis.calculateAndDisplayRoute()
+}
 
+/*
     import('./karta/rita.js')
-
-    const directionsRenderer = new google.maps.DirectionsRenderer({
-      draggable: true,
-      map
-    })
-    const directionsService = new google.maps.DirectionsService()
-
-    globalThis.directionsService = directionsService
-
-    globalThis.calculateAndDisplayRoute = calculateAndDisplayRoute.bind(null, directionsService, directionsRenderer)
-
-    google.maps.event.addListener(map, 'click', (evt) => {
-      globalThis.infoWindow.close()
-      console.log(evt.domEvent, evt.domEvent.currentTarget, evt.domEvent.fromElement, evt.domEvent.srcElement)
-    })
 
     // Adds a search box to the map
     // Create the input HTML element, and append it.
@@ -539,8 +601,6 @@ window.e = getNearestItems
 */
 
 /*
-  // If we ever want to play with 3D maps
-  //
   // const Map3DElement = await google.maps.importLibrary("maps3d")
   // console.log(Map3DElement.connectForExplicitThirdPartyLoad())
 
