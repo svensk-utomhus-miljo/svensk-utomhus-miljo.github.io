@@ -60,13 +60,9 @@
   <gmpx-split-layout>
     <div slot="fixed" style="background: white;">
 
-      <gmpx-place-picker for-map="main-map" type="geocode"
-        placeholder="sök"
-        @gmpx-placechange=${this.updateSearchLocation}>
-      </gmpx-place-picker>
+      <input type="search" required class="query-input" placeholder="Search for a place">
 
-
-      <gmpx-place-data-provider id="place" place="x">
+      <gmpx-place-data-provider id="place">
         <!-- <gmpx-place-overview auto-fetch-disabled></gmpx-place-overview> -->
         <h2>
           <gmpx-place-field-text field="displayName"></gmpx-place-field-text>
@@ -196,17 +192,6 @@
     <!-- <customer-list></customer-list> -->
   </div>
   <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f">
-
-    <div class="overlay" slot="control-inline-start-block-start">
-      <div class="controls">
-        <input type="text" class="query-input" />
-        <button class="search-button">Search</button>
-      </div>
-      <div hidden class="list-container">
-        <gmp-place-list selectable></gmp-place-list>
-      </div>
-    </div>
-    <gmp-place-details hidden size="large"></gmp-place-details>
 
     <gmp-advanced-marker
       position="37.4220656,-122.0840897"

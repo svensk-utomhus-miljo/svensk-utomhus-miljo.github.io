@@ -67,6 +67,10 @@ const handler = async ctx => {
     const q = new URLSearchParams({
       cors: JSON.stringify({
         url: ctx.url,
+        setRequestHeaders: [
+          ['referer','http://localhost:5173/'],
+          ['accept-encoding', 'br'],
+        ]
       })
     })
 
@@ -74,7 +78,7 @@ const handler = async ctx => {
       method: ctx.request.method,
       headers: ctx.request.headers,
       body: ctx.request.body ? await ctx.request.arrayBuffer() : null,
-    }).then(r => r.text())
+    })
   }
 
   if (ctx.url.toString().includes('AuthenticationService.Authenticate')) {

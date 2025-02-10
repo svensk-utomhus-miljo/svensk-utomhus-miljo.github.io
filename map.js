@@ -1,5 +1,5 @@
 import { on, dispatch } from './event.js'
-import { currentPosition, myLatLng } from './geo.js'
+import { currentPosition, myLatLng, simulateWatchPosition, onUpdate } from './geo.js'
 import { supabase } from './db.js'
 import './info-window-content.js'
 import { $place, $map } from './main.js'
@@ -124,7 +124,7 @@ supabase.from('poi').select('*')
         strokeWeight: 2,
         fillColor: poi.meta.color,
         fillOpacity: 0.32,
-        editable: !false,
+        editable: false,
         clickable: false,
         data: poi,
       })
@@ -191,6 +191,7 @@ supabase.from('poi').select('*')
       allMarkers[poi.id] = marker
     }
   })
+  import('./karta/search.js')
 })
 
 const ArcLayer = deck.ArcLayer;
@@ -218,7 +219,11 @@ function updateArcs (arcs) {
 const sv = new StreetViewService()
 
 globalThis.markHistory = []
+map.addListener("click", evt => {
+  console.log(11, evt.placeId)
+})
 $map.addEventListener('gmp-click', evt => {
+  console.log(evt)
   const marker = evt.target
   const poi = marker.data
   globalThis.poi = poi
@@ -418,8 +423,124 @@ function summarize(result) {
   // document.getElementById("total").innerHTML = total + " km";
 }
 
+/**
+ * Dela upp en array i mindre grupper (chunks)
+ * @param {Array} array - Array att dela upp
+ * @param {number} size - Maxstorlek för varje chunk
+ * @returns {Array[]} - Array av chunks
+ */
+function chunkArray(array, size) {
+  const chunks = []
+  for (let i = 0; i < array.length; i += size) {
+    chunks.push(array.slice(i, i + size))
+  }
+  return chunks
+}
+
+/**
+ * Hämta vägbeskrivningar med flera waypoints i flera steg
+ * @param {Array} legs - Array av waypoints
+ * @param {Object} directionsService - Google Maps DirectionsService
+ * @param {Object} directionsRenderer - Google Maps DirectionsRenderer
+ */
+async function getDirectionsWithChunks(legs, directionsService, directionsRenderer) {
+  const chunkSize = 25
+  const chunks = chunkArray(legs, chunkSize)
+  let combinedResult = null
+
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i]
+    const origin = i === 0 ? chunk.shift().location : combinedResult.routes[0].legs.slice(-1)[0].end_location
+    const destination = i === chunks.length - 1 ? chunk.pop().location : chunk[chunk.length - 1].location
+
+    const result = await directionsService.route({
+      origin,
+      destination,
+      travelMode: TravelMode.DRIVING,
+      unitSystem: UnitSystem.METRIC,
+      waypoints: chunk,
+      optimizeWaypoints: false,
+      provideRouteAlternatives: false,
+    })
+
+    // Kombinera resultaten
+    if (combinedResult) {
+      combinedResult.request.waypoints = combinedResult.request.waypoints.concat(result.request.waypoints)
+      combinedResult.geocoded_waypoints = combinedResult.geocoded_waypoints.concat(result.geocoded_waypoints)
+      combinedResult.routes[0].legs = combinedResult.routes[0].legs.concat(result.routes[0].legs)
+      combinedResult.routes[0].overview_path = combinedResult.routes[0].overview_path.concat(result.routes[0].overview_path)
+    } else {
+      combinedResult = result
+    }
+  }
+  combinedResult.routes[0].waypoint_order = Array.from({ length: legs.length }, (_, i) => i)
+
+  globalThis.result = combinedResult
+  directionsRenderer.setDirections(combinedResult)
+}
+
+const renderers = []
+
+/**
+ * Rendera alla chunks på kartan
+ * @param {Array} chunks - Array av waypoint-chunks
+ */
+async function renderAllChunks(chunks) {
+  const promises = chunks.map(async (chunk, index) => {
+    const origin = index === 0 ? chunk.shift().location : chunks[index - 1].slice(-1)[0].location
+    const destination = index === chunks.length - 1 ? chunk.pop().location : chunk[chunk.length - 1].location
+
+    // Hämta rutt för aktuell chunk
+    const result = await directionsService.route({
+      origin,
+      destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+      waypoints: chunk,
+      optimizeWaypoints: false,
+      provideRouteAlternatives: false,
+    })
+
+    // Skapa renderer för aktuell rutt
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+      draggable: true,
+      map,
+    })
+    directionsRenderer.setDirections(result)
+
+    // Lägg till listener för ändringar
+    directionsRenderer.addListener('directions_changed', () => {
+      const updatedResult = directionsRenderer.getDirections()
+      chunks[index] = updatedResult.request.waypoints
+      console.log(`Chunk ${index} updated:`, chunks[index])
+    })
+
+    renderers.push(directionsRenderer)
+  })
+
+  // Vänta på att alla rutter renderas
+  await Promise.all(promises)
+}
+
+/**
+ * Rensa alla renderers från kartan
+ */
+function clearAllRenderers() {
+  renderers.forEach(renderer => renderer.setMap(null))
+  renderers.length = 0
+}
+
+
 async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   const d = globalThis.workWork
+
+  if (d.length > 25) {
+
+    const chunks = chunkArray(d, 25)
+    await renderAllChunks(chunks)
+
+    return
+  }
 
   const result = await directionsService.route({
     origin: d.shift().location,
@@ -643,3 +764,238 @@ globalThis.foo = async function foo () {
 // source.start(0)
 
 /* <audio loop controls src="https://github.com/anars/blank-audio/raw/refs/heads/master/1-hour-of-silence.mp3"></audio> */
+
+
+
+var polylines = []
+var placeIdArray = []
+var snappedCoordinates = []
+var data
+
+// Snap-to-road when the polyline is completed.
+drawingManager.addListener('polylinecomplete', function(poly) {
+  var path = poly.getPath();
+  polylines.push(poly);
+  placeIdArray = [];
+  runSnapToRoad(path);
+});
+
+
+// Snap a user-created polyline to roads and draw the snapped path
+async function runSnapToRoad(path) {
+  var pathValues = [];
+  for (var i = 0; i < path.getLength(); i++) {
+    pathValues.push(path.getAt(i).toUrlValue());
+  }
+
+  const q = new URLSearchParams({
+    interpolate: 'true',
+    path: pathValues.join('|'),
+    key: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg'
+  })
+
+  const json = await fetch('https://roads.googleapis.com/v1/snapToRoads?' + q)
+  data = await json.json()
+  console.log(data)
+  processSnapToRoadResponse(data);
+  drawSnappedPolyline();
+}
+
+// Store snapped polyline returned by the snap-to-road service.
+function processSnapToRoadResponse(data) {
+  snappedCoordinates = [];
+  placeIdArray = [];
+  for (var i = 0; i < data.snappedPoints.length; i++) {
+    var latlng = new google.maps.LatLng(
+        data.snappedPoints[i].location.latitude,
+        data.snappedPoints[i].location.longitude);
+    snappedCoordinates.push(latlng);
+    placeIdArray.push(data.snappedPoints[i].placeId);
+  }
+}
+
+// Draws the snapped polyline (after processing snap-to-road response).
+function drawSnappedPolyline() {
+  var snappedPolyline = new google.maps.Polyline({
+    path: snappedCoordinates,
+    strokeColor: '#add8e6',
+    strokeWeight: 4,
+    strokeOpacity: 0.9,
+  });
+
+  snappedPolyline.setMap(map);
+  polylines.push(snappedPolyline);
+}
+
+
+// simulateWatchPosition
+setTimeout(async () => {
+  console.log({
+    origin: getAllCustomers()[1].position,
+    destination: getAllCustomers()[2].position
+  })
+
+  const result = await directionsService.route({
+    origin: getAllCustomers()[1].position,
+    destination: getAllCustomers()[22].position,
+    travelMode: TravelMode.DRIVING,
+    unitSystem: UnitSystem.METRIC,
+    provideRouteAlternatives: false,
+    waypoints: [],
+    optimizeWaypoints: false,
+  })
+
+  const steps = result.routes[0].legs.map(e => e.steps).flatMap(e => {
+    return e.map(e => {
+      return {
+        distanceInMeter: e.distance.value,
+        durationInSeconds: e.duration.value,
+        path: e.path.map(e => e.toJSON())
+      }
+    })
+  })
+  console.log(steps)
+  console.log(preCalc(steps))
+  emulateWatchPosition(steps, onUpdate)
+
+  // simulateWatchPosition(route, (pos) => {
+  //   onUpdate(pos)
+  // }, console.error)
+
+  // setInterval(() => {
+  //   map.panTo(myLatLng())
+  // }, 2000)
+}, 1000)
+
+/**
+ * @typedef {Object} PathPoint
+ * @property {number} lat
+ * @property {number} lng
+ */
+
+/**
+ * @typedef {Object} RouteSegment
+ * @property {number} distanceInMeter
+ * @property {number} durationInSeconds
+ * @property {PathPoint[]} path
+ */
+
+/**
+ * @typedef {RouteSegment[]} Route
+ */
+
+/**
+ * Simulerar navigator.geolocation.watchPosition baserat på en given rutt.
+ * @param {Route} route
+ * @param {(pos: GeolocationPosition) => void} successCallback
+ * @returns {() => void} Stop function
+ */
+export function emulateWatchPosition(route, successCallback) {
+  let startTime = performance.now()
+  let stop = false
+
+  function interpolatePosition(segment, elapsedTime) {
+    const speed = segment.distanceInMeter / segment.durationInSeconds // m/s
+    let traveledDistance = speed * elapsedTime // Meter
+
+    for (let i = 0; i < segment.path.length - 1; i++) {
+      const p1 = segment.path[i]
+      const p2 = segment.path[i + 1]
+      const segmentDistance = haversineDistance(p1, p2)
+
+      if (traveledDistance < segmentDistance) {
+        const ratio = traveledDistance / segmentDistance
+        return {
+          lat: p1.lat + (p2.lat - p1.lat) * ratio,
+          lng: p1.lng + (p2.lng - p1.lng) * ratio
+        }
+      }
+      traveledDistance -= segmentDistance
+    }
+    return segment.path[segment.path.length - 1]
+  }
+
+  function update() {
+    if (stop) return
+    const elapsed = (performance.now() - startTime) / 1000 // Sekunder
+    let accumulatedTime = 0
+
+    for (const segment of route) {
+      accumulatedTime += segment.durationInSeconds
+      if (elapsed < accumulatedTime) {
+        const position = interpolatePosition(segment, elapsed - (accumulatedTime - segment.durationInSeconds))
+        successCallback({
+          coords: {
+            latitude: position.lat,
+            longitude: position.lng,
+            speed: segment.distanceInMeter / segment.durationInSeconds,
+            // heading: calculateHeading(segment.path)
+          },
+          timestamp: Date.now()
+        })
+        requestAnimationFrame(update)
+        return
+      }
+    }
+  }
+  requestAnimationFrame(update)
+  return () => { stop = true }
+}
+
+/**
+ * Beräknar Haversine-avstånd mellan två punkter.
+ * @param {PathPoint} p1
+ * @param {PathPoint} p2
+ * @returns {number} Distance in meters
+ */
+function haversineDistance(p1, p2) {
+  const R = 6371000 // Jordens radie i meter
+  const dLat = toRadians(p2.lat - p1.lat)
+  const dLng = toRadians(p2.lng - p1.lng)
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRadians(p1.lat)) * Math.cos(toRadians(p2.lat)) *
+            Math.sin(dLng / 2) ** 2
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  return R * c
+}
+
+/**
+ * Omvandlar grader till radianer.
+ * @param {number} degrees
+ * @returns {number}
+ */
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180)
+}
+
+
+
+
+/**
+ * @typedef {Object} PathPoint
+ * @property {number} lat - Latitude
+ * @property {number} lng - Longitude
+ * @property {number} meterFromPrev - Distance from previous point in meters
+ * @property {number} travelTimeInSec - Travel time to reach this point in seconds
+ */
+
+/**
+ * @typedef {PathPoint[]} Route
+ */
+
+function preCalc(temp1) {
+  let prev = temp1[0].path[0]
+
+  for (const leg of temp1) {
+    const { distanceInMeter, durationInSeconds } = leg
+    const factor = durationInSeconds / distanceInMeter
+    for (const path of leg.path) {
+      const d = google.maps.geometry.spherical.computeDistanceBetween(prev, path)
+      prev = path
+      path.meterFromPrev = d
+      path.travelTimeInSec = d * factor
+    }
+  }
+  console.log(Math.max(...temp1.map(e => e.path).flat().map(e => e.travelTimeInSec)))
+  return temp1.map(e => e.path).flat()
+}

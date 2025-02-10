@@ -9,7 +9,7 @@ import { Poi } from './poi.js'
 import './karta/rita.js'
 
 
-const { InfoWindow, LatLng, Polygon, Size, ImageMapType, StreetViewService } = google.maps
+const { InfoWindow, LatLng, LatLngAltitude, Polygon, Size, ImageMapType, StreetViewService } = google.maps
 const { PinElement, AdvancedMarkerElement } = google.maps.marker
 const { Marker3DElement, Marker3DInteractiveElement, Model3DElement } = google.maps.maps3d
 
@@ -127,8 +127,49 @@ supabase.from('poi').select('*')
   result.data?.forEach(poi => {
     poi = Poi(poi)
     if (poi.type === 'polygon') {
+
+      const polygonOptions = {
+        strokeColor: "#EA4335",
+        strokeWidth: 4,
+        fillColor: 'rgba(202, 23, 23, 0.32)',
+        altitudeMode: 'RELATIVE_TO_GROUND',
+        extruded: true,
+        drawsOccludedSegments: false,
+      }
+
+      const towerPolygon = new google.maps.maps3d.Polygon3DElement(polygonOptions)
+      const coords = poi.meta.paths.map(e => new LatLngAltitude({
+        lat: e.lat || 0,
+        lng: e.lng || 0,
+        altitude: 10
+      }))
+
+      towerPolygon.outerCoordinates = coords
+      globalThis.towerPolygon = towerPolygon
+
+      $map.append(towerPolygon)
+
+      // Add round anchor points to the polygon
+      poi.meta.paths.forEach((path, i) => {
+        return
+        const marker = new Marker3DInteractiveElement({
+          position: {...path, altitude: 0},
+          altitudeMode: 'RELATIVE_TO_GROUND',
+        })
+
+        // append a svg circle to the marker
+        const templateForSvg = document.createElement('template')
+        templateForSvg.content.append(pinSvg.cloneNode(true))
+
+        marker.append(templateForSvg)
+
+
+        $map.append(marker)
+      })
+
       return
-      const polygon = new Polygon({
+
+      const polygon = new google.maps.maps3d.Polygon3DElement({
         paths: poi.meta.paths,
         strokeColor: poi.meta.color,
         strokeOpacity: 0.8,
@@ -140,6 +181,7 @@ supabase.from('poi').select('*')
         data: poi,
       })
 
+      return
       listenToPolygonChanges(polygon)
 
       allMarkers[poi.id] = polygon
@@ -182,7 +224,7 @@ supabase.from('poi').select('*')
       })
 
       const templateForSvg = document.createElement('template')
-      // templateForSvg.content.append(pinSvg.cloneNode(true))
+      templateForSvg.content.append(pinSvg.cloneNode(true))
 
       marker.append(templateForSvg)
 
@@ -218,6 +260,9 @@ supabase.from('poi').select('*')
     }
   })
 })
+
+
+
 
 
 const position = {lat: 59.252285753120425, lng: 17.877159710399514, altitude: 10}

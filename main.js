@@ -68,34 +68,9 @@ sv.setOptions({
 
 globalThis.$place = $place
 
-google.maps.places.AutocompleteService.prototype.getPredictions = console.log
-
-const placeList = document.querySelector("gmp-place-list");
-const searchButton = document.querySelector(".search-button");
-const placeDetails = document.querySelector("gmp-place-details");
-const input = document.querySelector(".query-input");
-
-globalThis.placeList = placeList
-// placeList.configureFromSearchByTextRequest({
-//   textQuery: 'vårby allé 53',
-//   locationBias: map.getBounds()
-// }).then(addMarkers);
-
-placeList.addEventListener("gmp-placeselect", ({ place }) => {
-    console.log(place)
-});
+const placeDetails = document.querySelector('gmp-place-details')
 
 const markers = {}
-
-const options = {
-  componentRestrictions: { country: "sv" },
-  fields: ["address_components", "geometry", "icon", "name"],
-  strictBounds: false,
-}
-
-const autocomplete = new google.maps.places.Autocomplete(input, options);
-autocomplete.bindTo("bounds", map);
-globalThis.autocomplete = autocomplete
 
 const { AdvancedMarkerElement } = google.maps.marker
 const { LatLngBounds } = google.maps

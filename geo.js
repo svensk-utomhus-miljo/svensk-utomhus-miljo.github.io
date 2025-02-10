@@ -1,3 +1,4 @@
+import { savePosition } from './karta/history.js'
 globalThis.xFetch = function xFetch (url, opts, settings) {
   const q = new URLSearchParams({
     cors: JSON.stringify({
@@ -15,6 +16,7 @@ globalThis.xFetch = function xFetch (url, opts, settings) {
 
 // const info = await xFetch('https://ipapi.co/json')
 
+/** @type {} */
 let currentPosition = {
   timestamp: Date.now(),
   coords: {
@@ -28,6 +30,7 @@ let currentPosition = {
   },
 }
 
+/** @type {PositionOptions} */
 const options = {
   enableHighAccuracy: true,
   // timeout: 5000,
@@ -89,20 +92,22 @@ const userMarker = new google.maps.marker.AdvancedMarkerElement({
   map,
 })
 
-function onUpdate (evt) {
+
+/** @type {PositionCallback} */
+function onUpdate (position) {
   // update currentPosition
-  currentPosition = evt
+  currentPosition = position
 
   // Uppdatera cirkelns position och radie
   accuracyCircle.setCenter(myLatLng())
-  accuracyCircle.setRadius(evt.coords.accuracy)
-
+  accuracyCircle.setRadius(position.coords.accuracy)
+  savePosition(position)
   userMarker.position = myLatLng()
 }
 
-window.addEventListener('click', () => {
-  navigator.geolocation.watchPosition(onUpdate, console.error, options)
-}, { once: true })
+// window.addEventListener('click', () => {
+//   navigator.geolocation.watchPosition(onUpdate, console.error, options)
+// }, { once: true })
 
 function myLatLng() {
   return {
@@ -113,7 +118,70 @@ function myLatLng() {
 
 globalThis.myLatLng = myLatLng
 
+
+/**
+ * Emulates navigator.geolocation.watchPosition using Google Maps DirectionsResult.
+ * @param {google.maps.DirectionsResult} directionsResult
+ * @param {function(Position):void} onUpdate Callback that receives position updates
+ */
+function emulateWatchPosition(directionsResult, onUpdate) {
+  const steps = directionsResult.routes[0].legs.flatMap(leg => leg.steps)
+  let currentStepIndex = 0
+  let startTime = performance.now()
+  let stepStartTime = startTime
+  let step = steps[currentStepIndex]
+
+  function updatePosition() {
+    const now = performance.now()
+    const elapsedTime = (now - stepStartTime) / 1000 // Convert to seconds
+    const stepDuration = step.duration.value // In seconds
+
+    if (elapsedTime >= stepDuration) {
+      // Move to the next step
+      currentStepIndex++
+      if (currentStepIndex >= steps.length) return // Route completed
+      step = steps[currentStepIndex]
+      stepStartTime = now
+    }
+
+    // Interpolate position between two points
+    const path = step.path
+    const progress = elapsedTime / stepDuration
+    const index = Math.floor(progress * (path.length - 1))
+    const nextIndex = Math.min(index + 1, path.length - 1)
+
+    const lat1 = path[index].lat(), lng1 = path[index].lng()
+    const lat2 = path[nextIndex].lat(), lng2 = path[nextIndex].lng()
+    const lat = lat1 + (lat2 - lat1) * (progress % (1 / (path.length - 1)))
+    const lng = lng1 + (lng2 - lng1) * (progress % (1 / (path.length - 1)))
+
+    const position = {
+      coords: { latitude: lat, longitude: lng },
+      timestamp: Date.now()
+    }
+
+    onUpdate(position)
+    requestAnimationFrame(updatePosition)
+  }
+
+  requestAnimationFrame(updatePosition)
+}
+
+/**
+ * Avbryter simuleringen av watchPosition
+ *
+ * @param {object} simulation - Det id som returnerades av simulateWatchPosition
+ */
+const cancelSimulation = simulation => {
+  if (simulation) simulation.cancelled = true
+}
+
+const simulateWatchPosition = emulateWatchPosition
+
 export {
   currentPosition,
-  myLatLng
+  simulateWatchPosition,
+  cancelSimulation,
+  onUpdate,
+  myLatLng,
 }
