@@ -105,9 +105,9 @@ function onUpdate (position) {
   userMarker.position = myLatLng()
 }
 
-// window.addEventListener('click', () => {
-//   navigator.geolocation.watchPosition(onUpdate, console.error, options)
-// }, { once: true })
+window.addEventListener('click', () => {
+  navigator.geolocation.watchPosition(onUpdate, console.error, options)
+}, { once: true })
 
 function myLatLng() {
   return {

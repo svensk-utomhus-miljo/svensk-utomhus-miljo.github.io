@@ -830,6 +830,7 @@ function drawSnappedPolyline() {
 
 // simulateWatchPosition
 setTimeout(async () => {
+  return
   console.log({
     origin: getAllCustomers()[1].position,
     destination: getAllCustomers()[2].position

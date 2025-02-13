@@ -8,6 +8,19 @@
   <title>SPA Template</title>
   <!-- <link rel="stylesheet" href="https://unpkg.com/boltcss/bolt.min.css"> -->
 
+  <script type="module">
+    const CONFIGURATION = {
+        "locations": [
+          {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
+          {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
+          {"title":"Visättra","address1":"Visättra","address2":"141 50 Huddinge, Sverige","coords":{"lat":59.21679489951839,"lng":17.950791787549853},"placeId":"ChIJW0WZt-VwX0YR-yNG5wtgQd8"}
+        ],
+    };
+
+    const locator = document.querySelector('gmpx-store-locator');
+    locator.configureFromQuickBuilder(CONFIGURATION);
+
+  </script>
   <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
   <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
 
@@ -189,7 +202,33 @@
     </gmpx-place-overview>
     <div id="$directionPanel"></div>
     <button onclick="foo()">calc route</button>
-    <!-- <customer-list></customer-list> -->
+
+    <div>
+      <h1>Kunder</h1>
+      <hr>
+      <details>
+        <summary>Brf navigatören</summary>
+        <p>10 Seongsui-ro 7ga-gil<br>
+        Seongdong-gu, Seoul, Sydkorea</p>
+        <gmpx-icon-button icon="add_location_alt"></gmpx-icon-button>
+        <gmpx-icon-button icon="map"></gmpx-icon-button>
+        <gmpx-icon-button icon="directions"></gmpx-icon-button>
+      </details>
+      <hr>
+      <details>
+        <summary>Brf navigatören</summary>
+        <p>10 Seongsui-ro 7ga-gil<br>
+        Seongdong-gu, Seoul, Sydkorea</p>
+        <gmpx-icon-button icon="add_location_alt"></gmpx-icon-button>
+        <gmpx-icon-button icon="map"></gmpx-icon-button>
+        <gmpx-icon-button icon="directions"></gmpx-icon-button>
+      </details>
+      <hr>
+    </div>
+
+    <gmpx-store-locator></gmpx-store-locator>
+
+
   </div>
   <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f">
 
@@ -239,7 +278,6 @@
     gmp-place-details {
       width: 320px;
     }
-
   </style>
   <!-- <map-view></map-view> -->
   <script type="module" src="/main.js"></script>
