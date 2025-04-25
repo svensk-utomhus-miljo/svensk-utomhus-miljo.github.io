@@ -84,10 +84,11 @@ const handler = async ctx => {
     } catch (e) {
       // ignore
     }
+
     return fetch('https://adv-cors.deno.dev/?' + q, {
       method: ctx.request.method,
       headers: ctx.request.headers,
-      body: ctx.request.body ? await ctx.request.arrayBuffer() : null,
+      body,
     })
   }
 
