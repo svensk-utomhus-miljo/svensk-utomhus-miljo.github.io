@@ -1,7 +1,7 @@
 const map = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/map.js')
 const common = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/common.js')
 const getPlace = new URLPattern('https://*.googleapis.com/$rpc/*')
-const auth = new URLPattern('https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate')
+const auth = new URLPattern('https://maps.googleapis.com/maps/api/js/*')
 
 const matcher = ctx => {
   // console.log('ctx.url', ctx.url+'')
