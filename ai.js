@@ -8,7 +8,7 @@ audio.src = import.meta.resolve('./hotword/hey_google.mp3')
 audio.preload = 'metadata'
 
 console.log(recognition.lang)
-recognition.lang = 'sv-SE, en-US'
+recognition.lang = navigator.languages[0]
 console.log(recognition.lang)
 recognition.onresult = function (evt) {
   console.log(evt)
@@ -31,7 +31,6 @@ recognition.onend = function () {
 // recognition.onspeechend = console.log
 // recognition.onspeechstart = console.log
 // recognition.onstart = console.log
-
 // console.log(recognition)
 
 audio.onended = () => {

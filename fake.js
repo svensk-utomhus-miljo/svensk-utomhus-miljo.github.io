@@ -276,7 +276,7 @@ async function makePlaceFromMarker (marker, relatedMarkers) {
     .filter(Boolean)
     .map(uuid =>
       supabase.rpc("storage_object_get_path", { object_id: uuid })
-        .then(res => `https://ufvhoqbeacsvboztiwyp.supabase.co/storage/v1/object/public/images/${res.data}`)
+        .then(res => `https://braveivovmjoohyhufwe.supabase.co/storage/v1/object/public/images/${res.data}`)
     ))
     console.log(marker.data.type === 'customer')
   return makeFakePlace({

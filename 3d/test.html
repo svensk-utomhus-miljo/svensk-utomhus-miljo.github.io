@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <title>3D Maps Codelab</title>
+    <style>
+      gmp-map-3d,
+     html,
+     body {
+      width: 100%;
+      display: block;
+       height: 100%;
+       margin: 0;
+       padding: 0;
+     }
+   </style>
+  </head>
+  <body>
+
+    <gmpx-api-loader
+      key="AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"
+      language="sv"
+      region="SE"
+      solution-channel=""
+      version="alpha"
+    ></gmpx-api-loader>
+
+    <gmp-map-3d
+      center="59.253335263192554,17.878510185709075,5.742569702942788"
+      range="813.4283258060168"
+      roll="0"
+      tilt="0"
+      zoom="17"
+      mode="hybrid"
+    ></gmp-map-3d>
+
+
+    <script type="module">
+      const components = await import('https://unpkg.com/@googlemaps/extended-component-library')
+      console.log(components)
+      const { setStringLiterals, APILoader } = components
+      const maps = await APILoader.googleMapsDeferred.promise
+
+      await Promise.all([
+        maps.importLibrary("marker"),
+        maps.importLibrary("drawing"),
+        maps.importLibrary("geometry"),
+        maps.importLibrary("maps"),
+        maps.importLibrary("core"),
+        maps.importLibrary("places"),
+        maps.importLibrary("maps3d"),
+      ])
+
+    </script>
+
+  </body>
+</html>

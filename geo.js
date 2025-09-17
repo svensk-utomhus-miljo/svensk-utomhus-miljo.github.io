@@ -125,6 +125,7 @@ globalThis.myLatLng = myLatLng
  * @param {function(Position):void} onUpdate Callback that receives position updates
  */
 function emulateWatchPosition(directionsResult, onUpdate) {
+  return
   const steps = directionsResult.routes[0].legs.flatMap(leg => leg.steps)
   let currentStepIndex = 0
   let startTime = performance.now()

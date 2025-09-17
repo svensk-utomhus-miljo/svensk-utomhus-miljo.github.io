@@ -11,13 +11,12 @@ import './karta/rita.js'
 
 const { InfoWindow, LatLng, LatLngAltitude, Polygon, Size, ImageMapType, StreetViewService } = google.maps
 const { PinElement, AdvancedMarkerElement } = google.maps.marker
-const { Marker3DElement, Marker3DInteractiveElement, Model3DElement } = google.maps.maps3d
+const { Marker3DInteractiveElement, Polygon3DElement } = google.maps.maps3d
 
 globalThis.supabase = supabase
 globalThis.allMarkers = {}
 globalThis.allCustomersMarkers = {}
 globalThis.getAllCustomers = getAllCustomers
-
 
 function getAllCustomers () {
   return Object.keys(allCustomersMarkers)
@@ -137,7 +136,7 @@ supabase.from('poi').select('*')
         drawsOccludedSegments: false,
       }
 
-      const towerPolygon = new google.maps.maps3d.Polygon3DElement(polygonOptions)
+      const towerPolygon = new Polygon3DElement(polygonOptions)
       const coords = poi.meta.paths.map(e => new LatLngAltitude({
         lat: e.lat || 0,
         lng: e.lng || 0,
@@ -203,34 +202,51 @@ supabase.from('poi').select('*')
 
       polygon.setMap(map)
     } else {
-      const img = new Image()
-      img.src = new URL('http://localhost:5173/karta/pin.png')+''
-      img.style.width = '30px'
+      // const img = new Image()
+      // img.src = new URL('http://localhost:5173/karta/pin.png')+''
+      // img.style.width = '30px'
 
       const span = document.createElement('span')
       span.textContent = '👤'
       span.style.fontSize = '0.7rem'
       const pin = new PinElement({
-        glyph: pinSvg,
-        // background: '#caff60',
-        scale: 1
+        glyph: '👤',
+        background: '#caff60',
+        glyphColor: '#FF0000',
+        scale: 1,
+        borderColor: '#000',
       })
 
       const marker = new Marker3DInteractiveElement({
-        position: {...poi.meta.position, altitude: 10},
+        position: {...poi.meta.position, altitude: 10 },
         label: poi.name,
         altitudeMode: 'RELATIVE_TO_GROUND',
         extruded: true,
       })
 
+      const canvas = document.createElement('canvas')
+      canvas.width = 30
+      canvas.height = 30
+      const ctx = canvas.getContext('2d')
+      ctx.fillStyle = 'red'
+      ctx.fillRect(0, 0, 30, 30)
+      ctx.fillStyle = 'white'
+      ctx.font = '20px sans-serif'
+      ctx.fillText('👤', 5, 20)
+
+      const img = new Image()
+      img.src = canvas.toDataURL()
+      img.style.width = '30px'
+
       const templateForSvg = document.createElement('template')
-      templateForSvg.content.append(pinSvg.cloneNode(true))
+      templateForSvg.content.append(img)
 
       marker.append(templateForSvg)
 
       marker.addEventListener('click', (e) => {
         console.log('clicked', e)
       })
+
       // const marker = new AdvancedMarkerElement({
       //   position: poi.meta.position,
       //   map,
@@ -265,20 +281,21 @@ supabase.from('poi').select('*')
 
 
 
-const position = {lat: 59.252285753120425, lng: 17.877159710399514, altitude: 10}
-const altitudeMode = 'RELATIVE_TO_GROUND'
-const orientation = {tilt: -90, heading: 0, roll: 0}
+// const position = {lat: 59.252285753120425, lng: 17.877159710399514, altitude: 10}
+// const altitudeMode = 'RELATIVE_TO_GROUND'
+// const orientation = {tilt: -90, heading: 0, roll: 0}
 
-const model = new Model3DElement({
-  src: 'http://localhost:5173/3d/karta/bin.glb',
-  position,
-  altitudeMode,
-  orientation,
-  scale: 1,
-});
+// const model = new Model3DElement({
+//   src: 'http://localhost:5173/3d/karta/bin.glb',
+//   position,
+//   altitudeMode,
+//   orientation,
+//   scale: 1,
+// });
 
-$map.append(model);
-globalThis.model = model
+// $map.append(model);
+// globalThis.model = model
+
 const ArcLayer = deck.ArcLayer;
 const GoogleMapsOverlay = deck.GoogleMapsOverlay;
 

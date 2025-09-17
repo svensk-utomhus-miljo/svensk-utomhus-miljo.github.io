@@ -9,6 +9,7 @@ import { Poi } from './poi.js'
 import './karta/rita.js'
 
 
+
 const { UnitSystem, TravelMode, InfoWindow, LatLng, Polygon, Size, ImageMapType, StreetViewService } = google.maps
 const { PinElement, AdvancedMarkerElement } = google.maps.marker
 
@@ -19,17 +20,15 @@ globalThis.getAllCustomers = getAllCustomers
 
 
 function getAllCustomers () {
-  return Object.keys(allCustomersMarkers)
-    .filter(key => key !== 'undefined')
-      .map(key => allMarkers[key])
+  return Object.keys(allCustomersMarkers).map(key => allMarkers[key])
 }
 
 let zoomedIn = map.getZoom() > 16.48
 
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
+  for (const entry of entries) {
     entry.target.gmpClickable = entry.isIntersecting
-  })
+  }
 }, {
   root: map.getDiv(),
   rootMargin: "0px",
@@ -140,6 +139,10 @@ supabase.from('poi').select('*')
         }
       })
 
+      polygon.addListener('click', function (mev) {
+        globalThis.polygon = this
+        console.log('Polygon clicked:', this.data)
+      })
       // polygon.addListener('click', function (evt) {
       //   infoHeader.innerText = poi.name
       //   infoWindow.setPosition(evt.latLng)
@@ -164,6 +167,12 @@ supabase.from('poi').select('*')
         scale: 1
       })
 
+      // const busMarker = new google.maps.Marker({
+      //   position: new LatLng(poi.meta.position),
+      //   map,
+      //   title: "Bus Stop",
+      // })
+
       const marker = new AdvancedMarkerElement({
         position: new LatLng(poi.meta.position),
         map,
@@ -175,7 +184,6 @@ supabase.from('poi').select('*')
 
       // marker.addListener('dragend', function () {
       //   poi.meta.position = this.position.toJSON()
-
       //   supabase
       //     .from('poi')
       //     .upsert(poi)
@@ -218,23 +226,18 @@ function updateArcs (arcs) {
 
 const sv = new StreetViewService()
 
-globalThis.markHistory = []
+globalThis.markHistory = new Map()
 map.addListener("click", evt => {
   console.log(11, evt.placeId)
 })
+
 $map.addEventListener('gmp-click', evt => {
   console.log(evt)
   const marker = evt.target
   const poi = marker.data
   globalThis.poi = poi
   globalThis.marker = marker
-  markHistory.push(marker)
-  document.querySelector('info-window-content').poi = marker.data
-
-  if (poi.type !== 'customer' && !poi.meta.owner) {
-    console.warn('Kunden har ingen huvudplats')
-    return
-  }
+  markHistory.set(poi.id, {marker, poi})
 
   const relatedMarkers = poi.type === 'customer'
     ? allCustomersMarkers[poi.id]
@@ -267,13 +270,13 @@ $map.addEventListener('gmp-click', evt => {
 })
 
 Object.defineProperties(google.maps.LatLngAltitude.prototype, {
-  latLng: { get () { return [this.lat, this.lng] } },
-  lngLat: { get () { return [this.lng, this.lat] } }
+  latLng: { get () { return [ this.lat, this.lng ] } },
+  lngLat: { get () { return [ this.lng, this.lat ] } }
 })
 
 Object.defineProperties(google.maps.LatLng.prototype, {
-  latLng: { get () { return [this.lat(), this.lng()] } },
-  lngLat: { get () { return [this.lng(), this.lat()] } }
+  latLng: { get () { return [ this.lat(), this.lng() ] } },
+  lngLat: { get () { return [ this.lng(), this.lat() ] } }
 })
 
 google.maps.event.addListener(map, 'contextmenu', function(evt) {
@@ -397,7 +400,7 @@ function getNearestItems() {
 let mousePosition
 google.maps.event.addListener(map, 'mousemove', function (event) {
   mousePosition = event.latLng
-});
+})
 
 window.e = getNearestItems
 
@@ -597,9 +600,9 @@ directionsRenderer.addListener('directions_changed', () => {
 })
 
 globalThis.foo = async function foo () {
-  const jobs = markHistory.map(elm => ({
-    id: elm.data.id,
-    location: elm.position.lngLat,
+  const jobs = [...markHistory].map(([id, place]) => ({
+    id,
+    location: place.marker.position.lngLat,
     service: 300,
   }))
 
@@ -773,12 +776,12 @@ var snappedCoordinates = []
 var data
 
 // Snap-to-road when the polyline is completed.
-drawingManager.addListener('polylinecomplete', function(poly) {
-  var path = poly.getPath();
-  polylines.push(poly);
-  placeIdArray = [];
-  runSnapToRoad(path);
-});
+// drawingManager.addListener('polylinecomplete', function(poly) {
+//   var path = poly.getPath();
+//   polylines.push(poly);
+//   placeIdArray = [];
+//   runSnapToRoad(path);
+// })
 
 
 // Snap a user-created polyline to roads and draw the snapped path

@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="module">
+      const get = c => {
+        const q = new URLSearchParams({
+          cors: JSON.stringify({
+            ...c,
+            headers: {
+              origin: 'http://localhost:5173',
+              referer: 'http://localhost:5173/',
+            },
+            forwardRequestHeaders: false
+          })
+        })
+        return fetch('https://adv-cors.deno.dev/?' + q).then(r => r.text())
+      }
+
+      globalThis.sendRequestThroughCROSproxy = function sendRequestThroughCROSproxy(url, callback){
+        get({ url }).then(callback)
+      }
+
+      var map;
+      globalThis.initMap = function initMap() {
+        console.log("Initializing map...");
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+      await import('./reg-sw.js')
+
+// var args = '';
+
+// var bypass = function (googleAPIcomponentJS, googleAPIcomponentURL) {
+//   console.log(googleAPIcomponentURL)
+//     if (`${googleAPIcomponentURL}`.includes("common.js")) {
+//         var removeFailureAlert = function(googleAPIcomponentURL) {
+//             sendRequestThroughCROSproxy(googleAPIcomponentURL,(responseText)=>{
+//                 var anotherAppendChildToHeadJSRegex = /\.head;.*src=(.*?);/;
+//                 var anotherAppendChildToHeadJS = responseText.match(anotherAppendChildToHeadJSRegex);
+//                 var googleAPItrustedScriptURL = anotherAppendChildToHeadJS[1];
+//                 var bypassQuotaServicePayload = anotherAppendChildToHeadJS[0].replace(googleAPItrustedScriptURL, googleAPItrustedScriptURL+'.toString().indexOf("QuotaService.RecordEvent")!=-1?"":'+googleAPItrustedScriptURL);
+
+//                 var script = document.createElement('script');
+//                 script.innerHTML = responseText.replace(new RegExp(/;if\(![a-z]+?\).*Failure.*?\}/), ";").replace(new RegExp(/(\|\|\(\(\)=>\{\}\);\S+\?\S+?\()/), "$1true||").replace(anotherAppendChildToHeadJSRegex, bypassQuotaServicePayload);
+//                 document.head.appendChild(script);
+//             });
+//         }
+//         googleAPIcomponentJS.innerHTML = '(' + removeFailureAlert.toString() + ')("' + googleAPIcomponentURL.toString() + '")';
+//     } else if(googleAPIcomponentURL.toString().indexOf("map.js") != -1){
+//         var hijackMapJS = function(googleAPIcomponentURL) {
+//             sendRequestThroughCROSproxy(googleAPIcomponentURL,(responseText)=>{
+//                 var script = document.createElement('script');
+//                 script.innerHTML = responseText.replace(new RegExp(/if\(\w+!==1&&\w+!==2\)/), "if(false)");
+//                 document.head.appendChild(script);
+//             });
+//         }
+//         googleAPIcomponentJS.innerHTML = '(' + hijackMapJS.toString() + ')("' + googleAPIcomponentURL.toString() + '")';
+//     } else {
+//         googleAPIcomponentJS.src = googleAPIcomponentURL;
+//     }
+// }
+
+// var createAndExecutePayload = function (googleAPIjs){
+//     var script = document.createElement('script');
+//     var appendChildToHeadJS = googleAPIjs.match(/(\w+)\.src=(_.*?);/);
+//     var googleAPIcomponentJS = appendChildToHeadJS[1];
+//     var googleAPIcomponentURL = appendChildToHeadJS[2];
+//     script.innerHTML = googleAPIjs.replace(appendChildToHeadJS[0], '(' + bypass.toString() + ')(' + googleAPIcomponentJS + ', ' + googleAPIcomponentURL + ');');
+//     document.head.appendChild(script);
+// }
+
+import('https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap')
+// sendRequestThroughCROSproxy('https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap' + args, (googleAPIjs)=>{
+//     createAndExecutePayload(googleAPIjs);
+// });
+
+
+
+    </script>
+
+  </body>
+</html>

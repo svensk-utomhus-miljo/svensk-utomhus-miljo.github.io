@@ -60,15 +60,13 @@
   <gmpx-split-layout>
     <div slot="fixed" style="background: white;">
 
-
-
       <gmpx-place-picker for-map="main-map" type="geocode"
         placeholder="sök"
         @gmpx-placechange=${this.updateSearchLocation}>
       </gmpx-place-picker>
 
 
-      <gmpx-place-data-provider id="place" place="x">
+      <gmpx-place-data-provider id="place">
         <!-- <gmpx-place-overview auto-fetch-disabled></gmpx-place-overview> -->
         <h2>
           <gmpx-place-field-text field="displayName"></gmpx-place-field-text>
@@ -203,6 +201,7 @@
     roll="0"
     tilt="0"
     zoom="17"
+    mode="hybrid"
   ></gmp-map-3d>
 
   <!-- <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="x">

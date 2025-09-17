@@ -10,15 +10,15 @@
 
   <script type="module">
     const CONFIGURATION = {
-        "locations": [
-          {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
-          {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
-          {"title":"Visättra","address1":"Visättra","address2":"141 50 Huddinge, Sverige","coords":{"lat":59.21679489951839,"lng":17.950791787549853},"placeId":"ChIJW0WZt-VwX0YR-yNG5wtgQd8"}
-        ],
-    };
+      "locations": [
+        {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
+        {"title":"Huddinge","address1":"Huddinge","address2":"Sverige","coords":{"lat":59.236399360977956,"lng":17.98213717220561},"placeId":"ChIJ90fAuftwX0YR-1krreXF7og"},
+        {"title":"Visättra","address1":"Visättra","address2":"141 50 Huddinge, Sverige","coords":{"lat":59.21679489951839,"lng":17.950791787549853},"placeId":"ChIJW0WZt-VwX0YR-yNG5wtgQd8"}
+      ],
+  };
 
-    const locator = document.querySelector('gmpx-store-locator');
-    locator.configureFromQuickBuilder(CONFIGURATION);
+    // const locator = document.querySelector('gmpx-store-locator');
+    // locator.configureFromQuickBuilder(CONFIGURATION);
 
   </script>
   <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
@@ -73,7 +73,10 @@
   <gmpx-split-layout>
     <div slot="fixed" style="background: white;">
 
-      <input type="search" required class="query-input" placeholder="Search for a place">
+      <form id="search-form">
+        <input type="search" required class="query-input" placeholder="Search for a place">
+        <button type="submit" hidden>Search</button>
+      </form>
 
       <gmpx-place-data-provider id="place">
         <!-- <gmpx-place-overview auto-fetch-disabled></gmpx-place-overview> -->
@@ -230,7 +233,7 @@
 
 
   </div>
-  <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="6ff586e93e18149f">
+  <gmp-map slot="main" rendering-type="vector" center="59.2531,17.8781" zoom="17" map-id="a3efe1c035bad51b">
 
     <gmp-advanced-marker
       position="37.4220656,-122.0840897"
@@ -281,6 +284,9 @@
   </style>
   <!-- <map-view></map-view> -->
   <script type="module" src="/main.js"></script>
-
+  <script type="module">
+    await import('./reg-sw.js')
+    import('https://unpkg.com/@googlemaps/extended-component-library')
+  </script>
 </body>
 </html>

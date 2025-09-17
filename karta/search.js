@@ -23,6 +23,16 @@ getAllCustomers().sort(e => {
   datalist.appendChild(option)
 })
 
+input.form.addEventListener('submit', async (evt) => {
+  evt.preventDefault()
+  // check if it's a latlng
+  const latlng = input.value.split(',').map(e => parseFloat(e))
+  if (latlng.length === 2 && latlng.every(e => !isNaN(e))) {
+    map.panTo({ lat: latlng[0], lng: latlng[1] })
+    return
+  }
+})
+
 async function makeAcRequest(evt) {
   if (!evt.target.value) return
   console.log(evt.inputType)

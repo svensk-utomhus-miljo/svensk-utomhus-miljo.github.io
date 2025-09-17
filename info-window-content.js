@@ -158,11 +158,32 @@ globalThis.wis = {
     marker.data.meta.position = evt.latLng.toJSON()
     marker.gmpDraggable = !(marker.gmpClickable = true)
   },
+
+  async addPolygon () {
+    const ownerPoi = globalThis.marker.data
+    drawingManager.setDrawingMode('polygon')
+    const evt = await onceEvent(drawingManager, 'overlaycomplete')
+    drawingManager.setDrawingMode(null)
+    const polygon = evt.overlay
+
+    const result = await supabase.from('poi').insert({
+      name: 'area',
+      description: '',
+      type: 'polygon',
+      meta: {
+        paths: polygon.getPath().getArray().map(e => e.toJSON()),
+        color: '#ff5252',
+        owner: ownerPoi.id,
+      }
+    }).select()
+
+    polygon.data = Poi(result.data[0])
+  },
   async addMarker (type) {
     const ownerPoi = globalThis.marker.data
     drawingManager.setDrawingMode('marker')
     const evt = await onceEvent(drawingManager, 'overlaycomplete')
-    drawingManager.setDrawingMode('')
+    drawingManager.setDrawingMode(null)
     const marker = upgradeMarkerToAdvance(evt.overlay)
 
     const result = await supabase.from('poi').insert({

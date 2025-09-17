@@ -68,7 +68,9 @@ sv.setOptions({
 
 globalThis.$place = $place
 
-const placeDetails = document.querySelector('gmp-place-details')
+google.maps.places.AutocompleteService.prototype.getPredictions = console.log
+
+const placeDetails = document.querySelector("gmp-place-details")
 
 const markers = {}
 
