@@ -118,7 +118,7 @@ const handler = async ctx => {
       headers: { 'Content-Type': 'application/javascript' }
     })
   } else if (getDirections.exec(ctx.url) && ctx.url.search.includes('svensk-utomhus-miljo')) {
-
+    console.log('applying fix')
     ctx.url.searchParams.set('r_url', 'http://localhost:2222/')
     const final = ctx.url.toString()
       .replaceAll('=&', '&') // I have no fucking idea why google don't work without this
