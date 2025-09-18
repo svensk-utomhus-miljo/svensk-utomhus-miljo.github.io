@@ -9,7 +9,7 @@ const matcher = ctx => {
   return map.exec(ctx.url) ||
     common.exec(ctx.url) ||
     getPlace.exec(ctx.url) ||
-    getDirections.exec(ctx.url) ||
+    // getDirections.exec(ctx.url) ||
     auth.exec(ctx.url)
 }
 
@@ -81,7 +81,7 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getPlace.exec(ctx.url) || getDirections.exec(ctx.url)) {
+  } else if (getPlace.exec(ctx.url)) {
     const q = new URLSearchParams({
       cors: JSON.stringify({
         url: ctx.url,
@@ -117,6 +117,12 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
+  } else if (getDirections.exec(ctx.url) && ctx.url.toString().includes('5173')) {
+
+    ctx.url.searchParams.set('r_url', 'http://localhost:2222/')
+    const final = ctx.url.toString().replaceAll('=&', '&')
+
+    return Response.redirect(final)
   }
 }
 
