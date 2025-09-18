@@ -9,7 +9,7 @@ const matcher = ctx => {
   return map.exec(ctx.url) ||
     common.exec(ctx.url) ||
     getPlace.exec(ctx.url) ||
-    // getDirections.exec(ctx.url) ||
+    getDirections.exec(ctx.url) ||
     auth.exec(ctx.url)
 }
 
@@ -117,11 +117,19 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getDirections.exec(ctx.url)) {
+  } else if (getDirections.exec(ctx.url) && ctx.url.search.includes('svensk-utomhus-miljo')) {
+
+    console.log('ja')
+    console.log('ja')
+    console.log('ja')
+    console.log('ja')
+    console.log('ja')
     ctx.url.searchParams.set('r_url', 'http://localhost:5172')
 
     const final = ctx.url.toString()
       .replaceAll('=&', '&') // I have no fucking idea why google don't work without this
+
+    return Response.redirect(final)
 
     const q = new URLSearchParams({
       cors: JSON.stringify({
