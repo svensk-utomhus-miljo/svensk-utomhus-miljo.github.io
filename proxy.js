@@ -117,10 +117,11 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getDirections.exec(ctx.url) && ctx.url.toString().includes('5173')) {
+  } else if (getDirections.exec(ctx.url) && ctx.url.search.includes('svensk-utomhus-miljo')) {
 
     ctx.url.searchParams.set('r_url', 'http://localhost:2222/')
-    const final = ctx.url.toString().replaceAll('=&', '&')
+    const final = ctx.url.toString()
+      .replaceAll('=&', '&') // I have no fucking idea why google don't work without this
 
     return Response.redirect(final)
   }
