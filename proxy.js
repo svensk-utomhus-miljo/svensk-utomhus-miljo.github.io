@@ -1,13 +1,15 @@
 const map = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/map.js')
 const common = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/common.js')
 const getPlace = new URLPattern('https://*.googleapis.com/$rpc/*')
-const auth = new URLPattern('https://maps.googleapis.com/maps/api/js/*')
+const getDirections = new URLPattern('https://maps.googleapis.com/maps/api/js/DirectionsService.Route')
+const auth = new URLPattern('https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate')
 
 const matcher = ctx => {
   // console.log('ctx.url', ctx.url+'')
   return map.exec(ctx.url) ||
     common.exec(ctx.url) ||
     getPlace.exec(ctx.url) ||
+    getDirections.exec(ctx.url) ||
     auth.exec(ctx.url)
 }
 
@@ -25,7 +27,26 @@ const get = c => {
   return fetch('https://adv-cors.deno.dev/?' + q).then(r => r.text())
 }
 
+const get2 = c => {
+  console.log('ja')
+  const q = new URLSearchParams({
+    cors: JSON.stringify({
+      ...c,
+      headers: {
+        origin: 'http://localhost:5173',
+        referer: 'http://localhost:5173/',
+        'user-agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+        accept: '*/*',
+      },
+      forwardRequestHeaders: !true
+    })
+  })
+  return fetch('https://adv-cors.deno.dev/?' + q).then(r => r.text())
+}
+
 const handler = async ctx => {
+  console.log('ctx.url', ctx.url+'')
+
   if (map.exec(ctx.url)) {
     let script = await get({ url: ctx.url })
 
@@ -60,7 +81,7 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getPlace.exec(ctx.url)) {
+  } else if (getPlace.exec(ctx.url) || getDirections.exec(ctx.url)) {
     const q = new URLSearchParams({
       cors: JSON.stringify({
         url: ctx.url,
@@ -90,9 +111,7 @@ const handler = async ctx => {
       headers: ctx.request.headers,
       body,
     })
-  }
-
-  if (ctx.url.toString().includes('AuthenticationService.Authenticate')) {
+  } else if (ctx.url.toString().includes('AuthenticationService.Authenticate')) {
     const callback = ctx.url.searchParams.get('callback')
     const script = `${callback}([1,null,0,null,null,[1]])`
     return new Response(script, {
