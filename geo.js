@@ -110,9 +110,15 @@ window.addEventListener('click', () => {
 }, { once: true })
 
 function myLatLng() {
+  const a = currentPosition.coords,
+  b = a.latitude,
+  c = a.longitude
+
   return {
-    lat: currentPosition.coords.latitude,
-    lng: currentPosition.coords.longitude
+    lat: b,
+    latitude: b,
+    lng: c,
+    longitude: c
   }
 }
 

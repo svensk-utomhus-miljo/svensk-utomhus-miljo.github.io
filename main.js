@@ -15,6 +15,7 @@ await Promise.all([
   maps.importLibrary("core"),
   maps.importLibrary("places"),
   maps.importLibrary("maps3d"),
+  maps.importLibrary("routes"),
 ])
 
 setStringLiterals({

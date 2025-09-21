@@ -271,12 +271,16 @@ $map.addEventListener('gmp-click', evt => {
 
 Object.defineProperties(google.maps.LatLngAltitude.prototype, {
   latLng: { get () { return [ this.lat, this.lng ] } },
-  lngLat: { get () { return [ this.lng, this.lat ] } }
+  lngLat: { get () { return [ this.lng, this.lat ] } },
+  latitude: { get () { return this.lat } },
+  longitude: { get () { return this.lng } }
 })
 
 Object.defineProperties(google.maps.LatLng.prototype, {
   latLng: { get () { return [ this.lat(), this.lng() ] } },
-  lngLat: { get () { return [ this.lng(), this.lat() ] } }
+  lngLat: { get () { return [ this.lng(), this.lat() ] } },
+  latitude: { get () { return this.lat() } },
+  longitude: { get () { return this.lng() } }
 })
 
 google.maps.event.addListener(map, 'contextmenu', function(evt) {
@@ -533,47 +537,195 @@ function clearAllRenderers() {
   renderers.length = 0
 }
 
+function toDirectionsResult (computeRoutesResponse) {
+  const route = computeRoutesResponse.routes[0]
+
+  const legs = route.legs.map(leg => {
+    const steps = leg.steps.map(step => ({
+      start_location: new google.maps.LatLng(
+        step.startLocation.latLng.latitude,
+        step.startLocation.latLng.longitude
+      ),
+      end_location: new google.maps.LatLng(
+        step.endLocation.latLng.latitude,
+        step.endLocation.latLng.longitude
+      ),
+      path: google.maps.geometry.encoding.decodePath(
+        step.polyline.encodedPolyline
+      )
+    }))
+
+    return {
+      start_location: new google.maps.LatLng(
+        leg.startLocation.latLng.latitude,
+        leg.startLocation.latLng.longitude
+      ),
+      end_location: new google.maps.LatLng(
+        leg.endLocation.latLng.latitude,
+        leg.endLocation.latLng.longitude
+      ),
+      distance: { value: leg.distanceMeters },
+      duration: { value: parseInt(leg.duration) },
+      steps
+    }
+  })
+
+  return {
+    routes: [
+      {
+        legs,
+        overview_path: google.maps.geometry.encoding.decodePath(
+          route.polyline.encodedPolyline
+        )
+      }
+    ]
+  }
+}
+
 
 async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   const d = globalThis.workWork
 
-  if (d.length > 25) {
+  // const reqBody = {
+  //   // drivingOptions: {},
+  //   provideRouteAlternatives: true,
+  //   waypoints: d,
+  //   optimizeWaypoints: true,
+  // }
 
-    const chunks = chunkArray(d, 25)
-    await renderAllChunks(chunks)
 
-    return
+  function toURL (latLng) {
+    return `${latLng.latitude},${latLng.longitude}`
   }
 
-  const result = await directionsService.route({
-    origin: d.shift().location,
-    destination: d.pop().location,
-    travelMode: TravelMode.DRIVING,
-    // drivingOptions: {},
-    unitSystem: UnitSystem.METRIC,
-    provideRouteAlternatives: true,
-    waypoints: d,
-    optimizeWaypoints: true,
+  const work = [...markHistory].map(([_, place]) => {
+    const pos = place.marker.position
+
+    return {
+      location: {
+        latLng: {
+          latitude: pos.latitude,
+          longitude: pos.longitude
+        }
+      }
+    }
   })
+
+  const reqBody = {
+    computeAlternativeRoutes: false,
+    units: 'METRIC',
+    optimizeWaypointOrder: true,
+    origin: {
+      vehicleStopover: false,
+      sideOfRoad: false,
+      location: {
+        latLng: {
+          latitude: myLatLng().lat,
+          longitude: myLatLng().lng
+        }
+      }
+    },
+    destination: {
+      vehicleStopover: false,
+      sideOfRoad: false,
+      location: work.pop().location
+    },
+    intermediates: work,
+    travelMode: 'DRIVE',
+    routingPreference: 'TRAFFIC_AWARE',
+    polylineQuality: 'high_quality',
+    // departureTime:
+    routeModifiers: {
+      avoidTolls: false,
+      avoidHighways: false,
+      avoidFerries: false,
+      avoidIndoor: false
+    }
+  }
+
+  const q = new URLSearchParams({
+    cors: JSON.stringify({
+      url: "https://routes.googleapis.com/directions/v2:computeRoutes",
+      setRequestHeaders: [
+        ["x-goog-api-key", "AIzaSyAOWd855Jru-vGD_bVJqc6Qr-n8VpX0XsA"],
+        ["x-goog-fieldmask", "*"],
+        ['referer','https://developers-dot-devsite-v2-prod.appspot.com/'],
+        ['origin','https://developers-dot-devsite-v2-prod.appspot.com'],
+      ],
+      forwardRequestHeaders: false,
+    })
+  })
+
+  const result = await fetch('https://adv-cors.deno.dev/?' + q, {
+    method: 'POST',
+    body: JSON.stringify(reqBody)
+  }).then(res => res.json())
+
   globalThis.result = result
-  // Hämta start, slut och waypoints från result
-  const origin = result.routes[0].legs[0].start_location.toUrlValue()
-  const destination = result.routes[0].legs[result.routes[0].legs.length - 1].end_location.toUrlValue()
-  const waypoints = result.routes[0].legs
-    .slice(1, -1) // Alla ben mellan start och slut
-    .map(leg => leg.start_location.toUrlValue())
-    .join('|') // Separera waypoints med |
+
+  const [ route ] = result.routes
+
+  const path = google.maps.geometry.encoding.decodePath(
+    route.polyline.encodedPolyline
+  )
+
+  new google.maps.Polyline({
+    path,
+    map,
+    strokeColor: '#4285F4',
+    strokeWeight: 5
+  })
+
+  // Add a advanced marker for each waypoint
+  route.legs.forEach((leg, index) => {
+    const pin = new PinElement({
+      glyph: (index === 0 ? '🚗' : index === route.legs.length - 1 ? '🏁' : String.fromCharCode(64 + index)),
+      // borderColor: 'transparent',
+      background: '#caff60',
+      scale: 1
+    })
+
+    const { latLng } = leg.startLocation
+    const position = new LatLng(latLng.latitude, latLng.longitude)
+
+    const marker = new AdvancedMarkerElement({
+      position,
+      map,
+      title: `Stop ${index + 1}`,
+      content: pin.element,
+      gmpClickable: false,
+      gmpDraggable: false,
+    })
+  })
+
+  // result.routes[0].legs[2].endLocation.latLng
+
+  function toURL (latLng) {
+    return `${latLng.latitude},${latLng.longitude}`
+  }
 
   // Skapa URL
-  const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}&waypoints=${waypoints}&travelmode=driving`
+  const legs = [...route.legs]
+  // const origin = legs.shift()
+  // const destination = legs.pop()
+  const waypoints = legs
+    .map(leg => toURL(leg.endLocation.latLng))
+    .join('|')
+
+const url = `https://www.google.com/maps/dir/?api=1` +
+`&travelmode=driving` +
+// `&origin=${toURL(route.legs[0].startLocation.latLng)}` +
+`&destination=${toURL(destination.endLocation.latLng)}` +
+`&waypoints=${waypoints}`
 
   const linkRide = document.createElement('a')
   linkRide.innerText = 'öppna i google maps'
   linkRide.href = url
+  linkRide.target = '_blank'
 
-  document.body.append(linkRide)
+  document.querySelector('button[onclick]').after(linkRide)
 
-  directionsRenderer.setDirections(result);
+  // directionsRenderer.setDirections(toDirectionsResult(result));
 }
 
 const directionsRenderer = new google.maps.DirectionsRenderer({
@@ -631,15 +783,15 @@ globalThis.foo = async function foo () {
 
   const text = await response.text()
   const { routes } = JSON.parse(text, (key, value) => {
-    return key === 'location' ? { lat: value[1], lng: value[0] } : value
+    return key === 'location' ? {
+      latLng: {
+        longitude: value[0],
+        latitude: value[1]
+      }
+    } : value
   })
 
-  globalThis.workWork = routes[0].steps.slice(1, -1).map(step => {
-    return {
-      location: step.location,
-      stopover: true
-    }
-  })
+  globalThis.workWork = routes[0].steps
 
   globalThis.calculateAndDisplayRoute()
 }
@@ -972,9 +1124,6 @@ function toRadians(degrees) {
   return degrees * (Math.PI / 180)
 }
 
-
-
-
 /**
  * @typedef {Object} PathPoint
  * @property {number} lat - Latitude
@@ -1003,3 +1152,6 @@ function preCalc(temp1) {
   console.log(Math.max(...temp1.map(e => e.path).flat().map(e => e.travelTimeInSec)))
   return temp1.map(e => e.path).flat()
 }
+
+
+// https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=59.256997299999995,17.882370299999998&waypoints=59.2538395,17.8776054|59.25653329999999,17.8802984|59.256997299999995,17.882370299999998

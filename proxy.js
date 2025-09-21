@@ -1,7 +1,8 @@
 const map = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/map.js')
 const common = new URLPattern('https://maps.googleapis.com/maps-api-v3/api/js/:someId/:version/intl/:lang/common.js')
 const getPlace = new URLPattern('https://*.googleapis.com/$rpc/*')
-const getDirections = new URLPattern('https://maps.googleapis.com/maps/api/js/DirectionsService.Route')
+// const getDirections = new URLPattern('https://maps.googleapis.com/maps/api/js/DirectionsService.Route')
+const getDirections = new URLPattern('https://routes.googleapis.com/directions/v2:computeRoutes')
 const auth = new URLPattern('https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate')
 
 const matcher = ctx => {
@@ -81,7 +82,7 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getPlace.exec(ctx.url)) {
+  } else if (getPlace.exec(ctx.url) || getDirections.exec(ctx.url)) {
     const q = new URLSearchParams({
       cors: JSON.stringify({
         url: ctx.url,
@@ -117,28 +118,6 @@ const handler = async ctx => {
     return new Response(script, {
       headers: { 'Content-Type': 'application/javascript' }
     })
-  } else if (getDirections.exec(ctx.url) && ctx.url.search.includes('svensk-utomhus-miljo')) {
-
-    console.log('ja')
-    console.log('ja')
-    console.log('ja')
-    console.log('ja')
-    console.log('ja')
-    ctx.url.searchParams.set('r_url', 'http://localhost:5172')
-
-    const final = ctx.url.toString()
-      .replaceAll('=&', '&') // I have no fucking idea why google don't work without this
-
-    return Response.redirect(final)
-
-    const q = new URLSearchParams({
-      cors: JSON.stringify({
-        url: final,
-        forwardRequestHeaders: false,
-      })
-    })
-
-    return fetch('https://adv-cors.deno.dev/?' + q)
   }
 }
 
