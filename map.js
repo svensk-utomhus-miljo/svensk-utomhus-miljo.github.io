@@ -1153,5 +1153,22 @@ function preCalc(temp1) {
   return temp1.map(e => e.path).flat()
 }
 
+function setupGlobalErrorAlerts () {
+  window.addEventListener('error', event => {
+    console.error('Fel fångat:', event)
+    alert(
+      'Fel: ' + event.message +
+      '\nFil: ' + event.filename +
+      '\nRad: ' + event.lineno
+    )
+  })
+
+  window.addEventListener('unhandledrejection', event => {
+    console.error('Ohanterat promise-fel:', event)
+    alert('Ohanterat promise-fel: ' + event.reason)
+  })
+}
+
+setupGlobalErrorAlerts()
 
 // https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=59.256997299999995,17.882370299999998&waypoints=59.2538395,17.8776054|59.25653329999999,17.8802984|59.256997299999995,17.882370299999998
