@@ -707,17 +707,16 @@ async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   // Skapa URL
   const legs = [...route.legs]
   // const origin = legs.shift()
-  // const destination = legs.pop()
+  const destination = legs.pop()
   const waypoints = legs
     .map(leg => toURL(leg.endLocation.latLng))
     .join('|')
 
 const url = `https://www.google.com/maps/dir/?api=1` +
 `&travelmode=driving` +
-// `&origin=${toURL(route.legs[0].startLocation.latLng)}` +
+`&origin=${toURL(route.legs[0].startLocation.latLng)}` +
 `&destination=${toURL(destination.endLocation.latLng)}` +
 `&waypoints=${waypoints}`
-  alert(url)
 
   const linkRide = document.createElement('a')
   linkRide.innerText = 'öppna i google maps'
