@@ -717,6 +717,7 @@ const url = `https://www.google.com/maps/dir/?api=1` +
 // `&origin=${toURL(route.legs[0].startLocation.latLng)}` +
 `&destination=${toURL(destination.endLocation.latLng)}` +
 `&waypoints=${waypoints}`
+  alert(url)
 
   const linkRide = document.createElement('a')
   linkRide.innerText = 'öppna i google maps'
